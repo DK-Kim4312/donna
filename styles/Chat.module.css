@@ -14,8 +14,16 @@
     padding: 10px;
   }
   
-  .message {
-    background-color: #fff;
+  .usermessage {
+    background-color: lightgreen;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+
+  .botmessage {
+    background-color: #ffffff;
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 8px;
