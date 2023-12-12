@@ -1,0 +1,52 @@
+/* Calendar.module.css */
+
+.calendarview {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  .calendarTable {
+    width: 100%;
+    border-collapse: collapse;
+    align-items: flex-end;
+  }
+  
+  .calendarTable th,
+  .calendarTable td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 6vh;
+
+    
+  }
+  
+  .calendarTable th {
+    background-color: #f0f0f0;
+    padding: 10px;
+  }
+  
+  .calendarRow {
+    background-color: #fff;
+  }
+  
+  .calendarRow:nth-child(2n) {
+    background-color: #f0f0f0;
+  }
+  
+  .calendarday {
+    cursor: pointer;
+  }
+  
+  /* Style the header with the month and year */
+  .calendarview h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  /* Optional: Add hover effect to calendar days */
+  .calendarday:hover {
+    background-color: #f0f0f0;
+  }
+  

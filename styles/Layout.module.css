@@ -1,0 +1,27 @@
+
+.layout {
+    display: flex;
+    height: 100%;
+    width: 100%;
+  }
+.topnavbar {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .chatcontainer {
+    width: 38.2%; 
+    background-color: #f0f0f0;
+    padding: 20px;
+  }
+  
+  .calendarcontainer {
+    flex: 1; 
+    background-color: #ffffff;
+    padding: 20px;
+  }
+  
