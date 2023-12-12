@@ -3,58 +3,63 @@ import React from 'react';
 import styles from '../styles/Calendar.module.css';
 
 const CalendarView = () => {
-  // Function to generate an array of days in the current month
-  const getDaysInMonth = () => {
+  // Function to generate an array of days in the current week starting from Monday
+  const getDaysInWeek = () => {
     const currentDate = new Date();
-    const year = currentDate.getFullYear();
-    const month = currentDate.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = [];
+    const daysInWeek = [];
 
-    for (let date = firstDay; date <= lastDay; date.setDate(date.getDate() + 1)) {
-      daysInMonth.push(new Date(date));
+    // Find the previous Monday
+    currentDate.setDate(currentDate.getDate() - ((currentDate.getDay() + 6) % 7));
+
+    for (let i = 0; i < 7; i++) {
+      const day = new Date(currentDate);
+      day.setDate(currentDate.getDate() + i);
+      daysInWeek.push(day);
     }
 
-    return daysInMonth;
+    return daysInWeek;
   };
 
-  const daysInMonth = getDaysInMonth();
+  const daysInWeek = getDaysInWeek();
+
+  // Function to generate an array of 3-hour intervals in a day
+  const getHoursInDay = () => {
+    const hoursInDay = [];
+
+    for (let hour = 0; hour < 24; hour += 3) {
+      hoursInDay.push(hour);
+    }
+
+    return hoursInDay;
+  };
+
+  const hoursInDay = getHoursInDay();
 
   return (
     <div className={styles.calendarview}>
-      <h2>Calendar View - {new Date().toLocaleString('default', { month: 'long' })} {new Date().getFullYear()}</h2>
+      <h2>Week View</h2>
       <table className={styles.calendarTable}>
         <thead>
           <tr>
-            <th>Sun</th>
-            <th>Mon</th>
-            <th>Tue</th>
-            <th>Wed</th>
-            <th>Thu</th>
-            <th>Fri</th>
-            <th>Sat</th>
+            <th>Time</th>
+            {daysInWeek.map((day, index) => (
+              <th key={index}>
+                {day.toLocaleDateString('default', { weekday: 'short' })}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {daysInMonth.map((date, index) => {
-            if (index % 7 === 0) {
-              return (
-                <tr key={index} className={styles.calendarRow}>
-                  {Array.from({ length: 7 }).map((_, dayIndex) => {
-                    const dayDate = new Date(date);
-                    dayDate.setDate(date.getDate() + dayIndex);
-                    return (
-                      <td key={dayIndex} className={styles.calendarday}>
-                        {dayDate.getDate()}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            }
-            return null;
-          })}
+          {hoursInDay.map((hour, hourIndex) => (
+            <tr key={hourIndex}>
+              <td>{`${hour}:00 ~ ${hour+3}:00`}</td>
+              {daysInWeek.map((day, dayIndex) => (
+                <td key={dayIndex} className={styles.calendarday}>
+                  {/* You can render events for this hour and day here */}
+                </td>
+              ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>

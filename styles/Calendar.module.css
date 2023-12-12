@@ -10,16 +10,18 @@
   .calendarTable {
     width: 100%;
     border-collapse: collapse;
-    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
   }
   
   .calendarTable th,
   .calendarTable td {
     border: 1px solid #ccc;
     text-align: center;
-    padding: 6vh;
-
-    
+    padding: 10px;
+    width: 100px; /* Adjust the width as needed */
+    height: 60px; /* Adjust the height as needed */
   }
   
   .calendarTable th {
@@ -28,6 +30,7 @@
   }
   
   .calendarRow {
+    display: flex;
     background-color: #fff;
   }
   
@@ -39,7 +42,7 @@
     cursor: pointer;
   }
   
-  /* Style the header with the month and year */
+  /* Style the header with the week view title */
   .calendarview h2 {
     font-size: 20px;
     margin-bottom: 10px;
