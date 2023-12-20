@@ -3,6 +3,7 @@ import React from 'react';
 import styles from '../styles/Layout.module.css';
 import ChatView from './ChatView';
 import CalendarView from './CalendarView';
+import Calendar from './Calendar';
 
 const Layout = () => {
     return (
@@ -11,7 +12,8 @@ const Layout = () => {
                 <ChatView />
             </div>
             <div className={styles.calendarcontainer}>
-                <CalendarView />
+                {/* <CalendarView /> */}
+                <Calendar />
             </div>
 
 
