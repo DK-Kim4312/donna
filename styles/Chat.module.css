@@ -1,5 +1,5 @@
 .chatview {
-    background-color: #52ab9833;
+    background-color: transparent;
     border-radius: 5px;
     height: 50vh;
   }
@@ -28,8 +28,12 @@
   
   .inputcontainer {
     display: fixed;
+    flex-direction: row;
     align-items: center;
-    margin-bottom: 36px;
+    padding: 10px;
+    position: absolute;
+    bottom: 5vh;
+
   }
   
   .inputtext {

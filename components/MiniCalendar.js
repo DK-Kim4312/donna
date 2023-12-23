@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function MiniCalendar() {
     return (
-      <div className="bg-transparent rounded-lg ">
+      <div className="bg-transparent border border-[#52ab98] border-b-1 border-t-0 border-l-0 border-r-0 pb-3">
         <div className="flex items-center justify-between">
           <button className="text-gray-600">
             <ChevronLeftIcon className="w-5 h-5" />
