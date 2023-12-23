@@ -1,24 +1,34 @@
 import React from 'react';
+import styles from '../styles/DonnaCalendar.module.css';
 
-const daysOfWeek = ['','Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const daysOfWeek = ['', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const hoursOfDay = Array.from({ length: 25 }, (_, i) => i); // Hours from 00:00 to 24:00
 
 export default function DonnaCalendar() {
     return (
         // top buttons
         <div className="flex flex-col">
-            <div className="flex justify-between items-center p-4 border-b">
-                <div className="flex space-x-2">
-                    <button className="bg-gray-300">{`<`}</button>
-                    <button className="bg-gray-300">Today</button>
-                    <button className="bg-gray-300">{`>`}</button>
+            <div className="flex items-center p-4 border-b">
+                <div className="flex space-x-0.5">
+                    <button className="bg-gray-300 rounded-l-lg p-1">{`<`}</button>
+                    <button className="bg-gray-300 p-1">Today</button>
+                    <button className="bg-gray-300 rounded-r-lg p-1">{`>`}</button>
                 </div>
-                <div className="flex space-x-2">
-                    <button variant="ghost">Day</button>
-                    <button variant="ghost">Week</button>
-                    <button variant="ghost">Month</button>
-                    <button variant="ghost">Year</button>
+                <div className="flex ml-20 space-x-3">
+                    <button className={styles.button} variant="ghost">
+                        Day
+                    </button>
+                    <button className={styles.button} variant="ghost">
+                        Week
+                    </button>
+                    <button className={styles.button} variant="ghost">
+                        Month
+                    </button>
+                    <button className={styles.button} variant="ghost">
+                        Year
+                    </button>
                 </div>
+
             </div>
             { /* calendar */}
             <div className="container mx-auto mt-8">
@@ -38,7 +48,7 @@ export default function DonnaCalendar() {
                     </div>
 
 
-                    
+
                 </div>
             </div>
         </div>
