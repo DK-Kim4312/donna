@@ -4,7 +4,6 @@ import TopNavbar from '@/components/TopNavBar'
 export default function Home() {
   return (
     <div>
-      <TopNavbar />
       <Layout />
     </div>
   )

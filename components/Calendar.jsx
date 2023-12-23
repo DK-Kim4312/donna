@@ -1,3 +1,6 @@
+// uses FullCalendar library to create a calendar with the ability to add events
+// Need MIT license for FullCalendar
+
 import React, { useState, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";

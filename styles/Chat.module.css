@@ -1,11 +1,7 @@
 .chatview {
-    background-color: #f0f0f0;
-    border: 1px solid #ccc;
+    background-color: #52ab9833;
     border-radius: 5px;
-    padding: 20px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+    height: 50vh;
   }
   
   .messages {
@@ -15,25 +11,25 @@
   }
   
   .usermessage {
-    background-color: lightgreen;
-    border: 1px solid #ccc;
+    background-color: #52ab98;
+    border: 1px solid #52ab98;
     border-radius: 5px;
     padding: 8px;
     margin-bottom: 10px;
   }
 
   .botmessage {
-    background-color: #ffffff;
-    border: 1px solid #ccc;
+    background-color: #5292ab;
+    border: 1px solid #5292ab;
     border-radius: 5px;
     padding: 8px;
     margin-bottom: 10px;
   }
   
   .inputcontainer {
-    display: flex;
+    display: fixed;
     align-items: center;
-    margin-top: 10px;
+    margin-bottom: 36px;
   }
   
   .inputtext {
