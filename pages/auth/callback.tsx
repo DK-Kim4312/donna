@@ -16,7 +16,7 @@ const GoogleCallback = () => {
             router.push('/');
         })
         .catch((error) => {
-          console.error(error);s
+          console.error(error);
         });
     }
   }, [router.query]);
