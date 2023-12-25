@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import styles from '../styles/Login.module.css';
+import { authenticateWithGoogle } from '../lib/auth';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -77,6 +78,10 @@ export default function Login() {
             <Link href="/register">
               <button className={styles.button}>Register</button>
             </Link>
+          </div>
+          <div className={styles['form-group']}>
+            <p className={styles['form-label']}>Login with your Google Account!</p>
+            <button className={styles.button} onClick={authenticateWithGoogle}>Sign in with Google</button>
           </div>
         </div>
       </div>

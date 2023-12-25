@@ -40,16 +40,6 @@ const ChatView = () => {
 
   return (
     <div className={styles.chatview}>
-      <div className={styles.messages}>
-        {messages.map((message, index) => (
-          <div
-            key={index}
-            className={message.isUser ? styles.usermessage : styles.botmessage}
-          >
-            {message.text}
-          </div>
-        ))}
-      </div>
       <div className={styles.inputcontainer}>
         <input
           className={styles.inputtext}
@@ -61,6 +51,16 @@ const ChatView = () => {
         <button className={styles.sendMessageButton} onClick={handleSendMessage}>
           Send
         </button>
+      </div>
+      <div className={styles.messages}>
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={message.isUser ? styles.usermessage : styles.botmessage}
+          >
+            {message.text}
+          </div>
+        ))}
       </div>
     </div>
   );
