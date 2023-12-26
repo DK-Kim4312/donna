@@ -1,13 +1,8 @@
 "use client";
 import React from 'react';
 import styles from '../styles/Layout.module.css';
-import ChatView from './ChatView';
-import CalendarView from './CalendarView';
-import Calendar from './Calendar';
-import DonnaCalendar from './DonnaCalendar';
-import MiniCalendar from './MiniCalendar';
-import ProfileTab from './ProfileTab';
 import Sidebar from './Sidebar';
+import Calendar from './Calendar';
 
 const Layout = () => {
     return (
@@ -16,9 +11,7 @@ const Layout = () => {
                <Sidebar />
             </div>
             <div className={styles.calendarcontainer}>
-                {/* <CalendarView /> */}
-                {/* <Calendar /> */}
-                {/*<DonnaCalendar />*/}
+                <Calendar />
             </div>
             
         </div>

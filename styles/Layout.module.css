@@ -6,6 +6,7 @@
   }
   .sidebar {
     background-color: #52ab9833;
+    display: inline-block;
     width: 25vw;
     height: 100vh;
     display: flex;
@@ -17,8 +18,9 @@
   }
   .calendarcontainer {
     background-color: #ffffff;
-    display: flex;
-    width: 75%;
+    display: inline-block;
     height: 100%;
+    width: calc(100% - 25vw);
+
   }
   
