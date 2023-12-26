@@ -2,6 +2,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/Chat.module.css';
+import { CodiconSend } from '../styles/Icons';
 
 const ChatView = () => {
   const [messages, setMessages] = useState([]);
@@ -48,9 +49,7 @@ const ChatView = () => {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
-        <button className={styles.sendMessageButton} onClick={handleSendMessage}>
-          Send
-        </button>
+        <CodiconSend onClick={handleSendMessage}/>
       </div>
       <div className={styles.messages}>
         {messages.map((message, index) => (

@@ -29,35 +29,23 @@
   }
   
   .inputcontainer {
-    display: fixed;
+    display: flex;
     flex-direction: row;
     align-items: center;
-    padding: 10px;
     position: absolute;
     bottom: 5vh;
-
+    border-color: teal;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    background-color: #fff;
+    padding: 8px;
+    width: 22%;
   }
   
   .inputtext {
     flex-grow: 1;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 10px;
-    font-size: 16px;
-  }
-  
-  .sendMessageButton {
-    background-color: #007bff;
-    color: #fff;
     border: none;
-    border-radius: 5px;
-    padding: 8px 16px;
-    cursor: pointer;
     font-size: 16px;
-  }
-  
-  .sendMessageButton:hover {
-    background-color: #0056b3;
   }
   
