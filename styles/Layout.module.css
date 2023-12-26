@@ -4,21 +4,11 @@
     height: 100%;
     width: 100%;
   }
-.topnavbar {
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-
   .sidebar {
     background-color: #52ab9833;
     width: 25vw;
     height: 100vh;
-    display: fixed;
+    display: flex;
     flex-direction: column;
     padding-left: 1.5%;
     padding-right: 0.763%;
@@ -27,7 +17,7 @@
   }
   .calendarcontainer {
     background-color: #ffffff;
-    display: fill;
+    display: flex;
     width: 75%;
     height: 100%;
   }

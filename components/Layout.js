@@ -7,20 +7,20 @@ import Calendar from './Calendar';
 import DonnaCalendar from './DonnaCalendar';
 import MiniCalendar from './MiniCalendar';
 import ProfileTab from './ProfileTab';
+import Sidebar from './Sidebar';
 
 const Layout = () => {
     return (
         <div className={styles.layout}>
             <div className={styles.sidebar}>
-                <ProfileTab />
-                <MiniCalendar />
-                <ChatView />
+               <Sidebar />
             </div>
             <div className={styles.calendarcontainer}>
                 {/* <CalendarView /> */}
-                {/*<Calendar />*/}
-                <DonnaCalendar />
+                {/* <Calendar /> */}
+                {/*<DonnaCalendar />*/}
             </div>
+            
         </div>
     );
 };
