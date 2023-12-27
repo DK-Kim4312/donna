@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/Chat.module.css';
 import { IconamoonSend } from '../styles/Icons';
+import chatstyles from '../styles/ChatBox.module.css';
 
 const ChatView = () => {
   const [messages, setMessages] = useState([]);
@@ -58,13 +59,13 @@ const ChatView = () => {
       </div>
       <div className={styles.messages}>
         {messages.slice().reverse().map((message, index) => (
-          <div
+          <p
             key={index}
             className={message.isUser ? styles.usermessage : styles.botmessage}
-            style={{ alignSelf: message.isUser ? 'flex-end' : 'flex-start' }}
+            style={{ textAlign: message.isUser ? 'right' : 'left' }}
           >
             {message.text}
-          </div>
+          </p>
         ))}
       </div>
     </div>

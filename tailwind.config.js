@@ -7,6 +7,12 @@ module.exports = {
   ],
   theme: {
     extend: {
+      gridTemplateColumns: {
+        'auto-fill-col': 'repeat(7, minmax(auto, 1fr))',
+      },
+      gridTemplateRows: {
+        'auto-fill-row': 'repeat(5, minmax(auto, 1fr))',
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':

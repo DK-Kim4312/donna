@@ -3,7 +3,6 @@ import React, { useContext } from "react";
 import GlobalContext from "../context/GlobalContext";
 import { ChevronLeftIcon, ChevronRightIcon } from '../styles/Icons'
 
-
 export default function CalendarHeader() {
   const { monthIndex, setMonthIndex } = useContext(GlobalContext);
   function handlePrevMonth() {
@@ -20,7 +19,7 @@ export default function CalendarHeader() {
     );
   }
   return (
-    <header className="px-4 py-2 flex items-center justify-between">
+    <header className="px-4 py-2 flex items-center justify-between relative">
       <div>
         <button onClick={handlePrevMonth}>
           <ChevronLeftIcon className="w-5 h-5 pt-2" />
@@ -49,9 +48,6 @@ export default function CalendarHeader() {
         <div style={{ width: 69, height: 29, borderRadius: 5, justifyContent: 'center', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
           <div style={{ color: 'black', fontSize: 14, fontWeight: '400', wordWrap: 'break-word' }}>Year</div>
         </div>
-
-
-
       </div>
 
       <h2 className="ml-4 text-xl text-gray-500 font-bold">
