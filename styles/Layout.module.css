@@ -1,11 +1,6 @@
-
-.layout {
-    display: flex;
-    height: 100%;
-    width: 100%;
-  }
-  .sidebar {
+.sidebar {
     background-color: #52ab9833;
+    border:none;
     display: inline-block;
     width: 25vw;
     height: 100vh;
@@ -21,6 +16,5 @@
     display: inline-block;
     height: 100%;
     width: calc(100% - 25vw);
-
   }
   

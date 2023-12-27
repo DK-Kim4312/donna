@@ -16,8 +16,8 @@ export default function Calendar() {
 
     return (
         <React.Fragment>
+            {showEventModal && <EventModal />}
             <div className="h-screen flex flex-col">
-                {showEventModal && <EventModal />}
                 <CalendarHeader />
                 <div className="flex flex-1">
                     <Month month={currentMonth} />
