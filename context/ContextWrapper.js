@@ -7,9 +7,9 @@ import React, {
 import GlobalContext from "./GlobalContext";
 import dayjs from "dayjs";
 
-const PUSH_EVENT = "PUSH_EVENT";
-const UPDATE_EVENT = "UPDATE_EVENT";
-const DELETE_EVENT = "DELETE_EVENT";
+export const PUSH_EVENT = "PUSH_EVENT";
+export const UPDATE_EVENT = "UPDATE_EVENT";
+export const DELETE_EVENT = "DELETE_EVENT";
 
 function savedEventsReducer(state, { type, payload }) {
     switch (type) {

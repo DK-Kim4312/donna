@@ -2,7 +2,7 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import styles from '../styles/Chat.module.css';
-import { CodiconSend } from '../styles/Icons';
+import { IconamoonSend } from '../styles/Icons';
 
 const ChatView = () => {
   const [messages, setMessages] = useState([]);
@@ -49,13 +49,19 @@ const ChatView = () => {
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
-        <CodiconSend onClick={handleSendMessage}/>
+        {/* keep codiconsend on the left of inputcontainer*/}
+
+
+          <IconamoonSend onClick={handleSendMessage} />
+
+
       </div>
       <div className={styles.messages}>
-        {messages.map((message, index) => (
+        {messages.slice().reverse().map((message, index) => (
           <div
             key={index}
             className={message.isUser ? styles.usermessage : styles.botmessage}
+            style={{ alignSelf: message.isUser ? 'flex-end' : 'flex-start' }}
           >
             {message.text}
           </div>
