@@ -1,9 +1,9 @@
 // components/ChatView.js
 "use client";
 import React, { useState, useEffect } from 'react';
-import styles from '../styles/Chat.module.css';
 import { IconamoonSend } from '../styles/Icons';
-import chatstyles from '../styles/ChatBox.module.css';
+import styles from '../styles/ChatBox.module.scss';
+import cn from 'classnames'
 
 const ChatView = () => {
   const [messages, setMessages] = useState([]);
@@ -41,34 +41,30 @@ const ChatView = () => {
 
 
   return (
-    <div className={styles.chatview}>
-      <div className={styles.inputcontainer}>
+    <div className='flex flex-col h-[100%] w-[100%]'>
+      <div className="flex flex-col-reverse items-end justify-end overflow-y-auto p-4 h-[100%] w-[100%]">
+        <ol className={styles.list}>
+          {messages.map((message, index) => (
+            <li key={index} className={cn(styles.shared, message.isUser ? styles.user : styles.ai,)}>
+              {message.text}
+            </li>
+          )
+          )}
+        </ol>
+
+      </div>
+      <div className="flex flex-row justify-between border-teal-500 border-solid border-1 border rounded-lg bg-white p-2 w-22/100 shadow-md">
         <input
-          className={styles.inputtext}
+          className="max-w-full min-w-80p border-none text-base focus:outline-none"
           type="text"
-          placeholder="Type your message..."
+          placeholder="Ask Donna..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
-        {/* keep codiconsend on the left of inputcontainer*/}
-
-
-          <IconamoonSend onClick={handleSendMessage} />
-
-
-      </div>
-      <div className={styles.messages}>
-        {messages.slice().reverse().map((message, index) => (
-          <p
-            key={index}
-            className={message.isUser ? styles.usermessage : styles.botmessage}
-            style={{ textAlign: message.isUser ? 'right' : 'left' }}
-          >
-            {message.text}
-          </p>
-        ))}
+        <IconamoonSend onClick={handleSendMessage} />
       </div>
     </div>
+
   );
 };
 

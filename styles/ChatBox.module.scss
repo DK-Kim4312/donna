@@ -1,0 +1,79 @@
+.list {
+  --userColor: #52ab98;
+  --aiColor: #5292ab;
+  --bg: #c3e1db;
+
+  display: flex;
+  flex-direction: column;
+  max-width: 450px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.shared {
+  position: relative;
+  /* Setup a relative container for our psuedo elements */
+  max-width: 255px;
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  line-height: 24px;
+  font-size: 14px;
+  word-wrap: break-word;
+  /* Make sure the text wraps to multiple lines if long */
+  border-radius: 25px;
+
+  &:before {
+    width: 20px;
+  }
+
+  &:after {
+    width: 26px;
+    background-color: var(--bg);
+    /* All tails have the same bg cutout */
+  }
+
+  &:before,
+  &:after {
+    position: absolute;
+    bottom: 0;
+    height: 25px;
+    /* height of our bubble "tail" - should match the border-radius above */
+    content: '';
+  }
+}
+
+.user {
+  align-self: flex-end;
+  color: white;
+  background: var(--userColor);
+
+  &:before {
+    right: -8px;
+    background-color: var(--userColor);
+    border-bottom-left-radius: 16px 14px;
+  }
+
+  &:after {
+    right: -26px;
+    border-bottom-left-radius: 10px;
+  }
+}
+
+.ai {
+  align-self: flex-start;
+  color: white;
+  background: var(--aiColor);
+
+  &:before {
+    left: -8px;
+    background-color: var(--aiColor);
+    border-bottom-right-radius: 16px 14px;
+  }
+
+  &:after {
+    left: -26px;
+    border-bottom-right-radius: 10px;
+  }
+}

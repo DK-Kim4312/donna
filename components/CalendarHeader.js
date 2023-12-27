@@ -19,7 +19,7 @@ export default function CalendarHeader() {
     );
   }
   return (
-    <header className="px-4 py-2 flex items-center justify-between relative">
+    <header className="justify-between inline-flex p-2 w-[100vw]">
       <div>
         <button onClick={handlePrevMonth}>
           <ChevronLeftIcon className="w-5 h-5 pt-2" />

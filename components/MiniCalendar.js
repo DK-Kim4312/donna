@@ -47,27 +47,27 @@ export default function MiniCalendar() {
   }
   return (
     <div className="mt-9">
-      <header className="flex justify-between">
+      <header className="flex justify-between pr-4 pl-4">
         <div>
           <button onClick={handlePrevMonth}>
-            <ChevronLeftIcon className="w-5 h-5" />
+            <ChevronLeftIcon className="w-4 h-4" />
           </button>
         </div>
-        <p className="text-gray-500 font-bold">
+        <p className="text-[#52ab98] font-bold text-lg">
           {dayjs(new Date(dayjs().year(), currentMonthIdx)).format(
-            "MMMM YYYY"
+            "MMMM `YY"
           )}
         </p>
         <div>
           <button onClick={handleNextMonth}>
-            <ChevronRightIcon className="w-5 h-5" />
+            <ChevronRightIcon className="w-4 h-4" />
           </button>
         </div>
       </header>
       <div className="grid grid-cols-7 grid-rows-6">
         {currentMonth[0].map((day, i) => (
-          <span key={i} className="text-sm py-1 text-center">
-            {day.format("dd").charAt(0)}
+          <span key={i} className="text-sm pt-2 text-center">
+            {day.format("ddd")}
           </span>
         ))}
         {currentMonth.map((row, i) => (
@@ -81,7 +81,7 @@ export default function MiniCalendar() {
                 }}
                 className={`py-1 w-full ${getDayClass(day)}`}
               >
-                <span className="text-sm">{day.format("D")}</span>
+                <span className="text-xs">{day.format("D")}</span>
               </button>
             ))}
           </React.Fragment>
