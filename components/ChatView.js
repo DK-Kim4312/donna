@@ -41,8 +41,8 @@ const ChatView = () => {
 
 
   return (
-    <div className='flex flex-col h-[100%] w-[100%]'>
-      <div className="flex flex-col-reverse items-end justify-end overflow-y-auto p-4 h-[100%] w-[100%]">
+    <div className='flex flex-col h-[100%] w-[100%] p-1'>
+      <div className="flex flex-col-reverse items-end justify-end overflow-y-auto p-7 h-[100%] w-[100%]">
         <ol className={styles.list}>
           {messages.map((message, index) => (
             <li key={index} className={cn(styles.shared, message.isUser ? styles.user : styles.ai,)}>
@@ -53,9 +53,9 @@ const ChatView = () => {
         </ol>
 
       </div>
-      <div className="flex flex-row justify-between border-teal-500 border-solid border-1 border rounded-lg bg-white p-2 w-22/100 shadow-md">
+      <div className="flex flex-row justify-between border-teal-500 border-solid border-1 border rounded-lg bg-white p-2 w-[100%] shadow-lg">
         <input
-          className="max-w-full min-w-80p border-none text-base focus:outline-none"
+          className="w-[100%] border-none text-base focus:outline-none"
           type="text"
           placeholder="Ask Donna..."
           value={newMessage}

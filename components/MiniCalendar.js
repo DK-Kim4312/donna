@@ -87,6 +87,7 @@ export default function MiniCalendar() {
           </React.Fragment>
         ))}
       </div>
+      <div className="w-[100%] h-[1px] border border-[#52ab98] mb-[14px] mt-[8px]"></div>
     </div>
   );
 }
