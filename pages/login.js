@@ -4,8 +4,10 @@ import '../styles/NoBodyMargin.scss';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import styles from '../styles/Auth.module.css';
+import styles from '../styles/Login.module.css';
 import { authenticateWithGoogle } from '../lib/auth';
+import { GoogleIcon } from '../styles/GoogleIcon';
+import { DonnaIcon } from '../styles/DonnaIcon';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -40,11 +42,50 @@ export default function Login() {
   return (
     <div className={styles.background}>
       <div className={styles.sidebar}>
+        <div className={styles['logo-title']}>
+          <div className={styles['logo']}>
+          <DonnaIcon />
+          </div>
+          <div className={styles['sidebar-title']}>Donna AI</div>
+        </div>
+
+        <div className={styles['sidebar-subtitle']}>Focus On YOU</div>
       </div>
-      <div className={styles.formcontainer}>
-      </div>
+
+      <form onSubmit={handleLogin} className={styles.loginform}>
+        <div className={styles['form-title']}>Welcome Back!</div>
+        <div className={styles['form-subtitle']}>Log Into Donna AI</div>
+        <input
+          type="email"
+          id="email"
+          className={styles.input}
+          required
+          value={email.toLowerCase()}
+          placeholder='Email'
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          type="password"
+          id="password"
+          className={styles.input}
+          required
+          value={password}
+          placeholder='Password'
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button type="submit" className={styles.widebutton}>
+          Login
+        </button>
+        <div><span className={styles['redirect-line']}>Don’t have an account? </span><a href='/register' className={styles.redirect}>Create one here</a></div>
+        <div className={styles.divider}>
+          <div className={styles['divider-text']}>or sign in with</div>
+        </div>
+
+        <button onClick={authenticateWithGoogle} className={styles.googlebutton}>
+          <GoogleIcon />
+          Sign in with Google
+        </button>
+      </form>
     </div>
-
-
   );
 }
