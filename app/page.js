@@ -20,7 +20,7 @@ export default function Home() {
     <ContextWrapper>
       <React.Fragment>
         {showEventModal && <EventModal />}
-        <div className="h-screen v-screen inline-flex w-[100vw] h-[100vh]">
+        <div className="h-screen w-screen inline-flex w-[100vw] h-[100vh]">
           <div className="w-1/4 md:w-1/4 bg-[#52ab9833]">
             <Sidebar />
           </div>

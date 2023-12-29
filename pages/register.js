@@ -2,7 +2,8 @@
 
 import React from 'react';
 import { useState } from 'react';
-import styles from '../styles/Register.module.css';
+import '../styles/NoBodyMargin.scss';
+import styles from '../styles/Auth.module.css';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -79,7 +80,7 @@ export default function Register() {
             />
           </div>
           <div className={styles['form-group']}>
-            <button type="submit" className={styles.button}>Register</button>
+            <button type="submit" className={styles.widebutton}>Register</button>
           </div>
         </form>
       </div>
