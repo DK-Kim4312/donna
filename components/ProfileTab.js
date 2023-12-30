@@ -6,7 +6,7 @@ import { LoginContext } from '../app/page';
 export default function ProfileTab() {
     let isLoggedIn = false;
     return (
-        <div className="flex flex-column">
+        <div className="flex flex-column pl-3 pt-1">
             <button className="fit items-start bg-[#52ab98] p-2 rounded-lg w-10 h-10">
                 <div className="bg-[#transparent] text-white rounded-md ">UN</div>
             </button>

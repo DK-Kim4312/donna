@@ -12,7 +12,7 @@ const GlobalContext = React.createContext({
     yearIndex: 0,
     setYearIndex: (index) => { },
     /*implemented*/
-    monthIndex: 0,
+    monthIndex: null,
     setMonthIndex: (index) => {},
     miniCalendarMonth: 0,
     setMiniCalendarMonth: (index) => {},

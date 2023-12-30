@@ -12,6 +12,7 @@ const labelsClasses = [
 ];
 
 export default function EventModal() {
+  console.log("EventModal", "render");
   const {
     setShowEventModal,
     daySelected,
