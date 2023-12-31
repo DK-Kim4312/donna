@@ -3,6 +3,7 @@ import React, { useState, useContext, useEffect } from "react";
 import Sidebar from '../components/Sidebar';
 import CalendarHeader from "../components/CalendarHeader";
 import { getMonth } from "../lib/util";
+import Week from "../components/Week";
 import Month from "../components/Month";
 import GlobalContext from "../context/GlobalContext";
 import EventModal from "../components/EventModal";
@@ -43,7 +44,8 @@ export default function Home() {
               <CalendarHeader />
             </div>
             <div className="flex w-1/1 h-[100vh]">
-              <Month month={currentMonth} />
+              <Week />
+             {/* <Month month={currentMonth} />*/}
             </div>
           </div>
         </div>
