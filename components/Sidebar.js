@@ -6,7 +6,7 @@ import CreateEventButton from "./CreateEventButton";
 import GenerateScheduleButton from "./GenerateScheduleButton";
 export default function Sidebar() {
   return (
-    <aside className="bg-[#52ab9833] border-none inline-block h-screen flex flex-col pl-[1.5vw] pr-[0.763vw] pb-[2.41vh] pt-[2.31vh]">
+    <aside className="bg-teal-600 bg-opacity-50 relative flex flex-col w-[360px] shrink-0">
       <ProfileTab />
       <MiniCalendar />
       <div className="flex flex-row items-center justify-center">

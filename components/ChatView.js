@@ -42,7 +42,7 @@ const ChatView = () => {
 
   return (
     <div className='flex flex-col h-[100%] w-[100%] p-1'>
-      <div className="flex flex-col-reverse items-end justify-end overflow-y-auto p-7 h-[100%] w-[100%]">
+      <div className="flex flex-col-reverse h-[100%] w-[100%]">
         <ol className={styles.list}>
           {messages.map((message, index) => (
             <li key={index} className={cn(styles.shared, message.isUser ? styles.user : styles.ai,)}>
@@ -53,7 +53,7 @@ const ChatView = () => {
         </ol>
 
       </div>
-      <div className="flex flex-row justify-between border-teal-500 border-solid border-1 border bg-white rounded-[15px] shadow p-2 w-[100%]">
+      <div className="flex flex-row justify-between border-teal-500 border-solid border-1 border bg-white rounded-[15px] shadow p-2 w-[90%] ml-[5%] mb-[25px]">
         <input
           className="w-[100%] border-none text-base focus:outline-none"
           type="text"

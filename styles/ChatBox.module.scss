@@ -1,15 +1,19 @@
 .list {
   --userColor: #52ab98;
   --aiColor: #5292ab;
-  --bg: #9ACDC2;
+  --bg: #96C9C3;
 
   display: flex;
   flex-direction: column;
   max-width: 450px;
-  width: 100%;
+  width: 90%;
   margin: 0 auto;
   padding: 0;
   list-style: none;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scroll-snap-align: start;
+  max-height: 300px;
 }
 
 .shared {
@@ -48,6 +52,7 @@
   align-self: flex-end;
   color: white;
   background: var(--userColor);
+  margin-right: 10px;
 
   &:before {
     right: -8px;
@@ -65,6 +70,7 @@
   align-self: flex-start;
   color: white;
   background: var(--aiColor);
+  margin-left: 10px;
 
   &:before {
     left: -8px;

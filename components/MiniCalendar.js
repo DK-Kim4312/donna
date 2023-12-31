@@ -46,11 +46,11 @@ export default function MiniCalendar() {
     }
   }
   return (
-    <div className="mt-9">
+    <div className="ml-[5%] mt-[50px] w-[90%] relative shrink-0">
       <header className="flex justify-between pr-4 pl-4">
         <div>
           <button onClick={handlePrevMonth}>
-            <ChevronLeftIcon className="w-4 h-4" />
+            <ChevronLeftIcon className="w-4 h-4 mt-1.5" />
           </button>
         </div>
         <p className="text-[#52ab98] font-bold text-lg">
@@ -60,7 +60,7 @@ export default function MiniCalendar() {
         </p>
         <div>
           <button onClick={handleNextMonth}>
-            <ChevronRightIcon className="w-4 h-4" />
+            <ChevronRightIcon className="w-4 h-4 mt-1.5" />
           </button>
         </div>
       </header>
@@ -87,7 +87,7 @@ export default function MiniCalendar() {
           </React.Fragment>
         ))}
       </div>
-      <div className="w-[100%] h-[1px] border border-[#52ab98] mb-[14px] mt-[8px]"></div>
+      <div className="w-[100%] h-[0px] border border-[#52ab98] mb-[14px] mt-[8px]"></div>
     </div>
   );
 }

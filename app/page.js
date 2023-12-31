@@ -11,11 +11,17 @@ import ContextWrapper from "../context/ContextWrapper";
 export default function Home() {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
   const { monthIndex, showEventModal } = useContext(GlobalContext);
+  //const [currentWeek, setCurrentWeek] = useState(getWeek());
 
   useEffect(() => {
     if (monthIndex === null) setCurrentMonth(getMonth());
     else setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
+
+  // useEffect(() => {
+  //   if (weekIndex === null) setCurrentWeek(getWeek());
+  //   else setCurrentMonth(getWeek(weekIndex));
+  // }, [weekIndex]);
 
   useEffect(() => {
     if (showEventModal) {
@@ -28,12 +34,11 @@ export default function Home() {
   return (
     <ContextWrapper>
       <React.Fragment>
-        <div className="h-screen w-screen inline-flex w-[100vw] h-[100vh]">
+        <div className="min-h-screen max-h-screen max-w-screen min-w-screen flex">
           {showEventModal && <EventModal />}
-          <div className="w-1/4 md:w-1/4 bg-[#52ab98]/50">
             <Sidebar />
-          </div>
-          <div className="flex flex-col w-3/4 md:w-3/4 h-[100vh]">
+
+          <div className="shrink-1 flex flex-col h-[100vh]">
             <div className="flex w-1/1">
               <CalendarHeader />
             </div>
