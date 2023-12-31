@@ -20,11 +20,10 @@ const ChatView = () => {
   // function to return a random message after user sends a message
   const getBotMessage = () => {
     const botMessages = [
-      'Hello, how are you?',
-      'How are you doing?',
-      'How can I help you today?',
-      'I am here to help you',
-      'I am a bot'
+      'On it! Let me see what I can do.',
+      'I\'ll get right on it!',
+      'I\'m on it!',
+      'I\'ll get back to you on that.',
     ];
     return botMessages[Math.floor(Math.random() * botMessages.length)];
   };
@@ -57,7 +56,7 @@ const ChatView = () => {
         <input
           className="w-[100%] border-none text-base focus:outline-none"
           type="text"
-          placeholder="Ask Donna..."
+          placeholder="Talk to Donna..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
         />
