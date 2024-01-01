@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 
 export default function Week() {
-  const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const eventsOfWeek = [, , , , , ,];
   const [currentWeek, setCurrentWeek] = useState(new Date());
 
@@ -22,32 +22,33 @@ export default function Week() {
     }
 
     return (
-      <div className="">
-        <div className="flex ml-[8vw]">
+      <div>
+        <div className="flex ml-[9vw]">
           {calendarDays.map((day, index) => (
-            <div key={index} className="flex">
-              <div className="bg-[#fff] text-center border border-t-0 h-12 w-[8vw]">{daysOfWeek[index]+"\n"+dayjs(day).format("MMM DD")}</div>
+            <div key={"Weekview" + day} className="flex flex-col">
+              <div key={"Weekday" + index} className="bg-[#fff] text-center font-bold border border-y-0 h-6 w-[9vw]">{daysOfWeek[index]}</div>
+              <div key={"Day" + index} className="bg-[#fff] text-center text-[#52AB98] font-bold border border-t-0 h-6 w-[9vw]">{dayjs(day).format("MMM DD")}</div>
             </div>
           ))}
         </div>
         <div className="flex">
-        <div className="bg-[#fff] text-center h-12 w-[8vw]">all day</div>
+          <div className="bg-[#fff] text-gray-400 text-center h-12 w-[9vw]">all day</div>
           {calendarDays.map((day, index) => (
-            <div key={index} className="flex">
-              <div className="bg-[#fff] text-center border border-t-0 h-12 w-[8vw]">{eventsOfWeek[index]}</div>
+            <div key={"Week-Event" + index} className="flex">
+              <div className="bg-[#fff] text-center border border-t-0 h-12 w-[9vw]">{eventsOfWeek[index]}</div>
             </div>
           ))}
         </div>
         <div className="max-h-[600px] overflow-auto">
           {hours.map((hour) => (
-            <div className="flex ">
-              <div key={hour} className="bg-[#fff] p-2 text-center w-[8vw]">
+            <div key={"Hours" + hour} className="flex ">
+              <div className="bg-[#fff] text-gray-400 p-2 text-center w-[9vw]">
                 {hour < 10 ? `0${hour}:00` : `${hour}:00`}
               </div>
               <div className="inline-flex  justify-between">
                 {calendarDays.map((day, index) => (
-                  <div key={index} className="">
-                    <div className="bg-[#fff] p-2 text-center border w-[8vw] h-12">{eventsOfWeek[index]}</div>
+                  <div key={"Events Box" + index} className="">
+                    <div className="bg-[#fff] p-2 text-center border w-[9vw] h-12">{eventsOfWeek[index]}</div>
                   </div>
                 ))}
               </div>

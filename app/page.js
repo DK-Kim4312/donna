@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <ContextWrapper>
       <React.Fragment>
-        <div className="min-h-screen max-h-screen max-w-screen min-w-screen flex">
+        <div className="min-h-screen max-h-screen overflow-hidden max-w-screen min-w-screen flex">
           {showEventModal && <EventModal />}
             <Sidebar />
 

@@ -55,7 +55,7 @@ export default function MiniCalendar() {
         </div>
         <p className="text-[#52ab98] font-bold text-lg">
           {dayjs(new Date(dayjs().year(), currentMonthIdx)).format(
-            "MMMM `YY"
+            "MMMM 'YY"
           )}
         </p>
         <div>

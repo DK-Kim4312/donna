@@ -19,7 +19,7 @@ export default function CalendarHeader() {
     );
   }
   return (
-    <header className="justify-between inline-flex p-2 w-[calc(100vw-360px)]">
+    <header className="justify-between inline-flex max-w-[calc(100vw-360px)] p-2 w-[calc(100vw-360px)]">
       <div>
         <button onClick={handlePrevMonth}>
           <ChevronLeftIcon className="w-5 h-5 pt-2" />
