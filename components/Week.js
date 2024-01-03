@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import dayjs from 'dayjs';
+import { ChevronLeftIcon, ChevronRightIcon } from '../styles/Icons';
 
 export default function Week() {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -23,7 +24,7 @@ export default function Week() {
 
     return (
       <div>
-        <div className="flex ml-[9vw]">
+        <div className="flex ml-[5vw]">
           {calendarDays.map((day, index) => (
             <div key={"Weekview" + day} className="flex flex-col">
               <div key={"Weekday" + index} className="bg-[#fff] text-center font-bold border border-y-0 h-6 w-[9vw]">{daysOfWeek[index]}</div>
@@ -32,7 +33,7 @@ export default function Week() {
           ))}
         </div>
         <div className="flex">
-          <div className="bg-[#fff] text-gray-400 text-center h-12 w-[9vw]">all day</div>
+          <div className="bg-[#fff] text-gray-400 text-center h-12 w-[5vw]">all day</div>
           {calendarDays.map((day, index) => (
             <div key={"Week-Event" + index} className="flex">
               <div className="bg-[#fff] text-center border border-t-0 h-12 w-[9vw]">{eventsOfWeek[index]}</div>
@@ -42,7 +43,7 @@ export default function Week() {
         <div className="max-h-[600px] overflow-auto">
           {hours.map((hour) => (
             <div key={"Hours" + hour} className="flex ">
-              <div className="bg-[#fff] text-gray-400 p-2 text-center w-[9vw]">
+              <div className="bg-[#fff] text-gray-400 p-2 text-center w-[5vw]">
                 {hour < 10 ? `0${hour}:00` : `${hour}:00`}
               </div>
               <div className="inline-flex  justify-between">
@@ -73,18 +74,18 @@ export default function Week() {
 
   return (
     <div className="bg-white p-4 w-[100%]">
-      <div className="flex mb-4">
+      <div className="flex justify-center mb-4">
         <button
           onClick={previousWeek}
-          className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600"
+          className="px-4 py-2 rounded-md bg-[#52ab98] text-white hover:bg-blue-600"
         >
-          Previous Week
+          <ChevronLeftIcon className="w-4 h-4" />
         </button>
         <button
           onClick={nextWeek}
-          className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600"
+          className="px-4 py-2 rounded-md bg-[#52ab98] text-white hover:bg-blue-600"
         >
-          Next Week
+         <ChevronRightIcon className="w-4 h-4" />
         </button>
       </div>
       {renderCalendar()}

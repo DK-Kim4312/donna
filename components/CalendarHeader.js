@@ -1,10 +1,12 @@
 import dayjs from "dayjs";
-import React, { useContext } from "react";
-import GlobalContext from "../context/GlobalContext";
+import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from '../styles/Icons'
 
 export default function CalendarHeader() {
-  const { monthIndex, setMonthIndex } = useContext(GlobalContext);
+  const [monthIndex, setMonthIndex] = React.useState(
+    dayjs().month()
+  );
+
   function handlePrevMonth() {
     setMonthIndex(monthIndex - 1);
   }
@@ -36,19 +38,12 @@ export default function CalendarHeader() {
       </div>
 
       <div>
-        <div style={{ width: 69, height: 29, borderRadius: 5, justifyContent: 'center', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
-          <div style={{ color: 'black', fontSize: 14, fontWeight: '400', wordWrap: 'break-word' }}>Day</div>
-        </div>
-        <div style={{ width: 71, height: 29, borderRadius: 5, justifyContent: 'center', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
-          <div style={{ color: 'black', fontSize: 14, fontWeight: '400', wordWrap: 'break-word' }}>Week</div>
-        </div>
-        <div style={{ width: 69, height: 29, background: '#52AB98', borderRadius: 5, justifyContent: 'center', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
-          <div style={{ color: 'white', fontSize: 14, fontWeight: '400', wordWrap: 'break-word' }}>Month</div>
-        </div>
-        <div style={{ width: 69, height: 29, borderRadius: 5, justifyContent: 'center', alignItems: 'center', gap: 10, display: 'inline-flex' }}>
-          <div style={{ color: 'black', fontSize: 14, fontWeight: '400', wordWrap: 'break-word' }}>Year</div>
-        </div>
+        <button className="p-1">Day</button>
+        <button className="p-1">Week</button>
+        <button className="p-1">Month</button>
+        <button className="p-1">Year</button>
       </div>
+
 
       <h2 className="ml-4 text-xl text-gray-500 font-bold">
         {dayjs(new Date(dayjs().year(), monthIndex)).format(

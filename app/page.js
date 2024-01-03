@@ -1,17 +1,16 @@
 "use client";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Sidebar from '../components/Sidebar';
 import CalendarHeader from "../components/CalendarHeader";
 import { getMonth } from "../lib/util";
 import Week from "../components/Week";
 import Month from "../components/Month";
-import GlobalContext from "../context/GlobalContext";
 import EventModal from "../components/EventModal";
-import ContextWrapper from "../context/ContextWrapper";
+import dayjs from "dayjs";
 
 export default function Home() {
   const [currentMonth, setCurrentMonth] = useState(getMonth());
-  const { monthIndex, showEventModal } = useContext(GlobalContext);
+  const { monthIndex, showEventModal } = useState(null); // TODO:
   //const [currentWeek, setCurrentWeek] = useState(getWeek());
 
   useEffect(() => {
@@ -33,7 +32,7 @@ export default function Home() {
   }, [showEventModal]);
 
   return (
-    <ContextWrapper>
+
       <React.Fragment>
         <div className="min-h-screen max-h-screen overflow-hidden max-w-screen min-w-screen flex">
           {showEventModal && <EventModal />}
@@ -50,6 +49,6 @@ export default function Home() {
           </div>
         </div>
       </React.Fragment>
-    </ContextWrapper>
+
   );
 }

@@ -1,23 +1,8 @@
 import dayjs from "dayjs";
-import React, { useContext, useState, useEffect } from "react";
-import GlobalContext from "../context/GlobalContext";
+import React, { useState, useEffect } from "react";
 
 export default function Day({ day, rowIdx }) {
   const [dayEvents, setDayEvents] = useState([]);
-  const {
-    setDaySelected,
-    setShowEventModal,
-    filteredEvents,
-    setSelectedEvent,
-  } = useContext(GlobalContext);
-
-  useEffect(() => {
-    const events = filteredEvents.filter(
-      (evt) =>
-        dayjs(evt.day).format("DD-MM-YY") === day.format("DD-MM-YY")
-    );
-    setDayEvents(events);
-  }, [filteredEvents, day]);
 
   function getCurrentDayClass() {
     return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")

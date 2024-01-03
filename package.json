@@ -14,6 +14,7 @@
     "@fullcalendar/daygrid": "^6.1.10",
     "@fullcalendar/interaction": "^6.1.10",
     "@fullcalendar/react": "^6.1.10",
+    "@reduxjs/toolkit": "^2.0.1",
     "axios": "^1.6.2",
     "classnames": "^2.4.0",
     "dayjs": "^1.11.10",
@@ -24,6 +25,7 @@
     "passport-google-oauth20": "^2.0.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-redux": "^9.0.4",
     "sass": "^1.69.5"
   },
   "browser": {

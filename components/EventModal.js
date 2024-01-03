@@ -1,15 +1,5 @@
-import React, { useContext, useState } from "react";
-import GlobalContext from "../context/GlobalContext";
-import { PUSH_EVENT, UPDATE_EVENT, DELETE_EVENT } from "../context/ContextWrapper";
-
-const labelsClasses = [
-  "indigo",
-  "gray",
-  "green",
-  "blue",
-  "red",
-  "purple",
-];
+import React, { useState } from "react";
+import { PUSH_EVENT, UPDATE_EVENT, DELETE_EVENT } from "../lib/redux/event/eventSlice";
 
 export default function EventModal() {
   console.log("EventModal", "render");
@@ -26,18 +16,12 @@ export default function EventModal() {
   const [description, setDescription] = useState(
     selectedEvent ? selectedEvent.description : ""
   );
-  const [selectedLabel, setSelectedLabel] = useState(
-    selectedEvent
-      ? labelsClasses.find((lbl) => lbl === selectedEvent.label)
-      : labelsClasses[0]
-  );
 
   function handleSubmit(e) {
     e.preventDefault();
     const calendarEvent = {
       title,
       description,
-      label: selectedLabel,
       day: daySelected.valueOf(),
       id: selectedEvent ? selectedEvent.id : Date.now(),
     };
@@ -109,21 +93,6 @@ export default function EventModal() {
             <span className="material-icons-outlined text-gray-400">
               bookmark_border
             </span>
-            <div className="flex gap-x-2">
-              {labelsClasses.map((lblClass, i) => (
-                <span
-                  key={i}
-                  onClick={() => setSelectedLabel(lblClass)}
-                  className={`bg-${lblClass}-500 w-6 h-6 rounded-full flex items-center justify-center cursor-pointer`}
-                >
-                  {selectedLabel === lblClass && (
-                    <span className="material-icons-outlined text-white text-sm">
-                      check
-                    </span>
-                  )}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
         <footer className="flex justify-end border-t p-3 mt-5">

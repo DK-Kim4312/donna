@@ -1,4 +1,4 @@
-// auth.ts
+// googleAuth.ts
 import axios from 'axios';
 import { googleOAuthConfig } from './oauthConfig';
 

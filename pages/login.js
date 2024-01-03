@@ -1,50 +1,48 @@
 // pages/login.js
 import React from 'react';
 import '../styles/NoBodyMargin.scss';
-import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { userLogin } from '../lib/redux/slices/auth/authActions'
+import Error from '../components/Error'
 import styles from '../styles/Login.module.css';
-import { authenticateWithGoogle } from '../lib/auth';
+import { authenticateWithGoogle } from '../lib/googleAuth';
+import { handleGoogleCallback } from '../lib/googleAuth';
 import { GoogleIcon } from '../styles/GoogleIcon';
 import { DonnaIcon } from '../styles/DonnaIcon';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { loading, userInfo, error } = useSelector((state) => state.user)
+  const dispatch = useDispatch()
+  const { register, handleSubmit } = useForm()
   const router = useRouter();
 
-  let registeredUsers = {};
-  let userJSON = [ // Sample user data
-    { email: 'user1@example.com', name: 'User 1', password: 'password1' },
-    { email: 'user2@example.com', name: 'User 2', password: 'password2' },
-  ];
+  // redirect authenticated user to profile screen
+  useEffect(() => {
+    if (userInfo) {
+      navigate('/profile')
+    }
+  }, [navigate, userInfo])
 
-  for (var i = 0; i < userJSON.length; i++) {
-    registeredUsers[userJSON[i].email] = userJSON[i];
+  const submitForm = (data) => {
+    dispatch(userLogin(data))
   }
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    if (registeredUsers[email]) {
-      if (registeredUsers[email].password == password) {
-        console.log("login successful");
-        router.push('/');
-      }
-      else {
-        console.log("incorrect password");
-      }
-    } else {
-      console.log("user not found");
-    }
-  };
+  const loginwithGoogle = async () => {
+    await authenticateWithGoogle()
+    await handleGoogleCallback()
+
+    router.push('/profile')
+  }
 
   return (
     <div className={styles.background}>
       <div className={styles.sidebar}>
         <div className={styles['logo-title']}>
           <div className={styles['logo']}>
-          <DonnaIcon />
+            <DonnaIcon />
           </div>
           <div className={styles['sidebar-title']}>Donna AI</div>
         </div>
@@ -52,7 +50,8 @@ export default function Login() {
         <div className={styles['sidebar-subtitle']}>Focus On YOU</div>
       </div>
 
-      <form onSubmit={handleLogin} className={styles.loginform}>
+      <form onSubmit={handleSubmit(submitForm)} className={styles.loginform}>
+        {error && <Error>{error}</Error>}
         <div className={styles['form-title']}>Welcome Back!</div>
         <div className={styles['form-subtitle']}>Log Into Donna AI</div>
         <input
@@ -60,7 +59,7 @@ export default function Login() {
           id="email"
           className={styles.input}
           required
-          value={email.toLowerCase()}
+          {...register('email')}
           placeholder='Email'
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -69,19 +68,19 @@ export default function Login() {
           id="password"
           className={styles.input}
           required
-          value={password}
+          {...register('password')}
           placeholder='Password'
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button type="submit" className={styles.widebutton}>
-          Login
+        <button type="submit" className={styles.widebutton} disabled={loading}>
+          {loading ? 'Loading' : 'Login'}
         </button>
         <div><span className={styles['redirect-line']}>Don’t have an account? </span><a href='/register' className={styles.redirect}>Create one here</a></div>
         <div className={styles.divider}>
           <div className={styles['divider-text']}>or sign in with</div>
         </div>
 
-        <button onClick={authenticateWithGoogle} className={styles.googlebutton}>
+        <button onClick={loginwithGoogle} className={styles.googlebutton}>
           <GoogleIcon />
           Sign in with Google
         </button>

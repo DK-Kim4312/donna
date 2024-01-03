@@ -50,7 +50,6 @@ const ChatView = () => {
           )
           )}
         </ol>
-
       </div>
       <div className="flex flex-row justify-between border-teal-500 border-solid border-1 border bg-white rounded-[15px] shadow p-2 w-[90%] ml-[5%] mb-[25px]">
         <input
