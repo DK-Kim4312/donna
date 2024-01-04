@@ -28,7 +28,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "lib/redux/slices/authSlice/authSlice.js", "app/StoreProvider.jsx", "app/StoreProvider.jsx"  ],
+, "lib/redux/slices/authSlice/authSlice.js", "app/StoreProvider.jsx", "app/StoreProvider.jsx", "lib/redux/rootReducer.js"  ],
   "exclude": [
     "node_modules"
   ]

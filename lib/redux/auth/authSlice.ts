@@ -1,32 +1,25 @@
-"use server";
+"use strict";
 import { createSlice } from '@reduxjs/toolkit'
 import { registerUser, userLogin } from './authActions'
+import { LoginResponse } from '@/pages/api/user/login'
 
 
-// TODO: need backend first initialize userToken from local storage
-const userToken = //localStorage.getItem('userToken')
-    //? localStorage.getItem('userToken')
-   // : null
-   null
-
-const initialState = {
-    loading: false,
-    userInfo: {}, // for user object
-    userToken: null, // for storing the JWT
-    error: null,
-    success: false, // for monitoring the registration process.
-}
+const initialState: Partial<LoginResponse> = {};
 
 const authSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
         logout: (state) => {
-            // ...logout reducer
-          },
-          setCredentials: (state, { payload }) => {
+            state.userInfo = null
+            state.userToken = null
+            state.error = null
+            state.loading = false
+            state.success = false
+        },
+        setCredentials: (state, { payload }) => {
             state.userInfo = payload
-          },
+        },
     },
     extraReducers: {
         // login user
@@ -60,4 +53,4 @@ const authSlice = createSlice({
 })
 
 export const { logout, setCredentials } = authSlice.actions
-export default authSlice.reducer
+export const { authReducer } = authSlice.reducer
