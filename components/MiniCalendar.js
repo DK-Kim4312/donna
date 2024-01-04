@@ -19,7 +19,7 @@ export default function MiniCalendar() {
     setMiniCalendarMonth,
     setDaySelected,
     daySelected,
-  } = useContext(GlobalContext);
+  } = useState(null);
 
   useEffect(() => {
     setCurrentMonthIdx(monthIndex);

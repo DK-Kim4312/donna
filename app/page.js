@@ -1,49 +1,28 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import Sidebar from '../components/Sidebar';
-import CalendarHeader from "../components/CalendarHeader";
-import { getMonth } from "../lib/util";
-import Week from "../components/Week";
-import Month from "../components/Month";
-import EventModal from "../components/EventModal";
-import dayjs from "dayjs";
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { cookies } from 'next/headers';
+import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import Logout from '../components/Logout';
 
-export default function Home() {
-  const [currentMonth, setCurrentMonth] = useState(getMonth());
-  const { monthIndex, showEventModal } = useState(null); // TODO:
-  //const [currentWeek, setCurrentWeek] = useState(getWeek());
+export default async function Home() {
+  const supabase = createServerComponentClient({ cookies });
 
-  useEffect(() => {
-    if (monthIndex === null) setCurrentMonth(getMonth());
-    else setCurrentMonth(getMonth(monthIndex));
-  }, [monthIndex]);
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  useEffect(() => {
-    if (showEventModal) {
-      console.log("showEventModal");
-    } else {
-      console.log("hideEventModal");
-    }
-  }, [showEventModal]);
+  if (!user) {
+    redirect('/login');
+  }
 
   return (
-
-      <React.Fragment>
-        <div className="min-h-screen max-h-screen overflow-hidden max-w-screen min-w-screen flex">
-          {showEventModal && <EventModal />}
-            <Sidebar />
-
-          <div className="shrink-1 flex flex-col h-[100vh]">
-            <div className="flex w-1/1">
-              <CalendarHeader />
-            </div>
-            <div className="flex w-1/1 h-[100vh]">
-              <Week />
-             {/* <Month month={currentMonth} />*/}
-            </div>
-          </div>
-        </div>
-      </React.Fragment>
-
+    <div className="card">
+      <h2>Welcome!</h2>
+      <code className="highlight">{user.role}</code>
+      <Link className="button" href="/profile">
+        Go to Profile
+      </Link>
+      <Logout />
+    </div>
   );
 }

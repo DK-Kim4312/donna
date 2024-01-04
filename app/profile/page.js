@@ -2,8 +2,7 @@ import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-
-import SignOut from 'src/components/SignOut';
+import Logout from '../../components/Logout';
 
 export default async function Profile() {
   const supabase = createServerComponentClient({ cookies });
@@ -13,7 +12,7 @@ export default async function Profile() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect('/sign-in');
+    redirect('/');
   }
 
   return (
@@ -25,7 +24,7 @@ export default async function Profile() {
       <Link className="button" href="/">
         Go Home
       </Link>
-      <SignOut />
+      <Logout />
     </div>
   );
 }

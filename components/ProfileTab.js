@@ -1,9 +1,10 @@
 import React from 'react'
 import Link from 'next/link';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 
 export default async function ProfileTab() {
-    const supabase = createServerComponentClient({ cookies });
+    const supabase = createClientComponentClient();
 
     const {
       data: { user },

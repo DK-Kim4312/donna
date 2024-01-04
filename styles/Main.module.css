@@ -1,0 +1,25 @@
+.full {
+    min-height: 100vh;
+    max-height: 100vh;
+    overflow: hidden;
+    max-width: 100vw;
+    min-width: 100vw;
+    display: flex;
+}
+
+.calendar {
+    flex-shrink: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.calendar-header {
+    display: flex;
+    width: 1/1;
+}
+
+.calendar-body {
+    height: 100vh;
+    display: flex;
+}

@@ -1,9 +1,10 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import Register from '../components/Register';
 
-export default async function RegisterPage() {
+import ResetPassword from '../../components/ResetPassword';
+
+export default async function ResetPasswordPage() {
   const supabase = createServerComponentClient({ cookies });
   const { data } = await supabase.auth.getSession();
 
@@ -11,5 +12,5 @@ export default async function RegisterPage() {
     redirect('/');
   }
 
-  return <Register />;
+  return <ResetPassword />;
 }

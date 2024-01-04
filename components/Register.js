@@ -20,7 +20,7 @@ export default function Register() {
         if (password !== confirmPassword) {
             alert('Password mismatch') // TODO: add TOAST
         }
-        const { user, session, error } = await supabase.auth.signUp({
+        const { error } = await supabase.auth.signUp({
             email: email.toLowerCase(),
             password: password,
         },
@@ -51,7 +51,6 @@ export default function Register() {
 
 
             <form onSubmit={register} className={styles.loginform}>
-                {error && <Error>{error}</Error>}
                 <div className={styles['form-title']}>Try Donna Today!</div>
                 <div className={styles['form-subtitle']}>Create an Account</div>
                 <div className={styles['name-input-container']}>
@@ -102,7 +101,7 @@ export default function Register() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                 />
 
-                <button type="submit" className={styles.widebutton} disabled={loading}>Create Account</button>
+                <button type="submit" className={styles.widebutton}>Create Account</button>
                 <div><span className={styles['redirect-line']}>Already have an account? </span><a href='/login' className={styles.redirect}>Login</a></div>
                 <div className={styles.divider}>
                     <div className={styles['divider-text']}>or sign up with</div>

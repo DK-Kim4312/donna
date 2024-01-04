@@ -8,6 +8,7 @@ import { handleGoogleCallback } from '../lib/googleAuth';
 import { GoogleIcon } from '../styles/GoogleIcon';
 import { DonnaIcon } from '../styles/DonnaIcon';
 import { createClientComponentClient} from '@supabase/auth-helpers-nextjs';
+import { redirect } from 'next/dist/server/api-utils';
 
 
 const Login = () => {
@@ -22,7 +23,7 @@ const Login = () => {
         });
 
         if (error) {
-            return <Error/>;
+            redirect('/error')
         }
     }
 
@@ -49,7 +50,6 @@ const Login = () => {
             </div>
 
             <form onSubmit={login} className={styles.loginform}>
-                {error && <Error>{error}</Error>}
                 <div className={styles['form-title']}>Welcome Back!</div>
                 <div className={styles['form-subtitle']}>Log Into Donna AI</div>
                 <input
