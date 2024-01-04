@@ -18,11 +18,6 @@ export default function Home() {
     else setCurrentMonth(getMonth(monthIndex));
   }, [monthIndex]);
 
-  // useEffect(() => {
-  //   if (weekIndex === null) setCurrentWeek(getWeek());
-  //   else setCurrentMonth(getWeek(weekIndex));
-  // }, [weekIndex]);
-
   useEffect(() => {
     if (showEventModal) {
       console.log("showEventModal");

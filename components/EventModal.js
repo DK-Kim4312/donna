@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import { PUSH_EVENT, UPDATE_EVENT, DELETE_EVENT } from "../lib/redux/event/eventSlice";
 
 export default function EventModal() {
   console.log("EventModal", "render");
-  const {
-    setShowEventModal,
-    daySelected,
-    dispatchCalEvent,
-    selectedEvent,
-  } = useContext(GlobalContext);
+  const { selectedEvent, setShowEventModal, dispatchCalEvent } = useState( null );
 
   const [title, setTitle] = useState(
     selectedEvent ? selectedEvent.title : ""
