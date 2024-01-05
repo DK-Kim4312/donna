@@ -24,6 +24,8 @@ const Login = () => {
 
         if (error) {
             redirect('/error')
+        } else {
+            redirect('/auth/callback')
         }
     }
 

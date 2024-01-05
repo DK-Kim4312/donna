@@ -7,6 +7,7 @@ import { authenticateWithGoogle } from '../lib/googleAuth';
 import { DonnaIcon } from '../styles/DonnaIcon';
 import { GoogleIcon } from '../styles/GoogleIcon';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { redirect } from 'next/dist/server/api-utils';
 
 export default function Register() {
     const supabase = createClientComponentClient();
@@ -34,6 +35,8 @@ export default function Register() {
 
         if (error) {
             return <Error />;
+        } else {
+            redirect('/auth/callback');
         }
     }
 
