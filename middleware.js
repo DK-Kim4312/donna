@@ -14,5 +14,5 @@ export async function middleware(req) {
 }
 
 export const config = {
-  matcher: ['/', '/profile'],
+  matcher: ['/', '/login', '/register', '/update-password', '/reset-password','/profile'],
 };

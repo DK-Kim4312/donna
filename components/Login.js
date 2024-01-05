@@ -12,7 +12,7 @@ import { redirect } from 'next/dist/server/api-utils';
 
 
 const Login = () => {
-    const supabase = createClientComponentClient();
+    const supabase = createClientComponentClient('https://kyysqwafkfklqqawdolp.supabase.co','eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt5eXNxd2Fma2ZrbHFxYXdkb2xwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQzODM1ODIsImV4cCI6MjAxOTk1OTU4Mn0._s64NAhTTNRD4-s4pJWs7I-5pbtfuVHAHIecwjwKzGU');
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
