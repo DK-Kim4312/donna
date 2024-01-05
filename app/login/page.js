@@ -1,16 +1,26 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import AuthView from '../../components/AuthView';
+import React from 'react';
+import styles from '../../styles/Login.module.css';
+import { DonnaIcon } from '../../styles/DonnaIcon';
+import '../../styles/NoBodyMargin.scss';
 
-import Login from '../../components/Login';
 
-export default async function SignInPage() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.auth.getSession();
+export default async function Login() {
+  return (
+    <div className={styles.background}>
+      <div className={styles.sidebar}>
+        <div className={styles['logo-title']}>
+          <div className={styles['logo']}>
+            <DonnaIcon />
+          </div>
+          <div className={styles['sidebar-title']}>Donna AI</div>
+        </div>
 
-  if (data?.session) {
-    redirect('/');
-  }
-
-  return <Login />;
+        <div className={styles['sidebar-subtitle']}>Focus On YOU</div>
+      </div>
+      <div className={styles.loginform}>
+      <AuthView view={'sign-in'}/>
+      </div>
+    </div>
+  );
 }

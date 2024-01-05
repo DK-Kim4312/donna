@@ -12,13 +12,13 @@ export default async function Home() {
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect('/login');
+    return redirect('/error');
   }
+
 
   return (
     <div className="card">
       <h2>Welcome!</h2>
-      <code className="highlight">{user.role}</code>
       <Link className="button" href="/profile">
         Go to Profile
       </Link>

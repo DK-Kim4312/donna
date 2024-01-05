@@ -1,30 +1,14 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import Logout from '../../components/Logout';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
+import ProfileForm from './profile-form'
 
 export default async function Profile() {
-  const supabase = createServerComponentClient({ cookies });
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
 
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
+    data: { session },
+  } = await supabase.auth.getSession()
 
-  if (!user) {
-    redirect('/');
-  }
-
-  return (
-    <div className="card">
-      <h2>User Profile</h2>
-      <code className="highlight">{user.email}</code>
-      <div className="heading">Last Signed In:</div>
-      <code className="highlight">{new Date(user.last_sign_in_at).toUTCString()}</code>
-      <Link className="button" href="/">
-        Go Home
-      </Link>
-      <Logout />
-    </div>
-  );
+  return <ProfileForm session={session} />
 }

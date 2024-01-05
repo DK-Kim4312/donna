@@ -1,16 +1,26 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import AuthView from '../../components/AuthView';
+import React from 'react';
+import styles from '../../styles/Login.module.css';
+import { DonnaIcon } from '../../styles/DonnaIcon';
+import '../../styles/NoBodyMargin.scss';
 
-import ResetPassword from '../../components/ResetPassword';
 
-export default async function ResetPasswordPage() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.auth.getSession();
+export default async function ResetPassword() {
+  return (
+    <div className={styles.background}>
+      <div className={styles.sidebar}>
+        <div className={styles['logo-title']}>
+          <div className={styles['logo']}>
+            <DonnaIcon />
+          </div>
+          <div className={styles['sidebar-title']}>Donna AI</div>
+        </div>
 
-  if (data?.session) {
-    redirect('/');
-  }
-
-  return <ResetPassword />;
+        <div className={styles['sidebar-subtitle']}>Focus On YOU</div>
+      </div>
+      <div className={styles.loginform}>
+      <AuthView className ='ml-[10%] mr-[10%]' view='reset-password'/>
+      </div>
+    </div>
+  );
 }

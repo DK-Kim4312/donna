@@ -1,15 +1,27 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import Register from '../../components/Register';
+import AuthView from '../../components/AuthView';
+import React from 'react';
+import styles from '../../styles/Register.module.css';
+import { DonnaIcon } from '../../styles/DonnaIcon';
+import '../../styles/NoBodyMargin.scss';
 
-export default async function RegisterPage() {
-  const supabase = createServerComponentClient({ cookies });
-  const { data } = await supabase.auth.getSession();
 
-  if (data?.session) {
-    redirect('/');
-  }
+export default async function Register() {
+  return (
+    <div className={styles.background}>
+      <div className={styles.sidebar}>
+        <div className={styles['logo-title']}>
+          <div className={styles['logo']}>
+            <DonnaIcon />
+          </div>
+          <div className={styles['sidebar-title']}>Donna AI</div>
+        </div>
+      </div>
 
-  return <Register />;
+      <div className={styles.loginform}>
+        <AuthView view='sign-up' />
+      </div>
+
+    </div >
+
+  );
 }
