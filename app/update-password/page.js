@@ -19,7 +19,7 @@ export default async function UpdatePassword() {
         <div className={styles['sidebar-subtitle']}>Focus On YOU</div>
       </div>
       <div className={styles.loginform}>
-      <AuthView className ='ml-[10%] mr-[10%]' view='update-password'/>
+      <AuthView className ='ml-[10%] mr-[10%]' view='update_password'/>
       </div>
     </div>
   );

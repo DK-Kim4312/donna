@@ -18,7 +18,7 @@ export default async function Register() {
       </div>
 
       <div className={styles.loginform}>
-        <AuthView view='sign-up' />
+        <AuthView view="sign_up" />
       </div>
 
     </div >
