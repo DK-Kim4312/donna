@@ -17,8 +17,15 @@
   border-radius: 40px 0px 0px 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
 
+  justify-content: center;
+}
+
+.logincontents {
+  z-index: 2;
+  width: 80%;
+  margin: 10%;
+  height: auto;
 }
 
 .sidebar {

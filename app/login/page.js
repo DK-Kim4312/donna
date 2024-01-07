@@ -19,7 +19,10 @@ export default async function Login() {
         <div className={styles['sidebar-subtitle']}>Focus On YOU</div>
       </div>
       <div className={styles.loginform}>
-        <AuthView view = 'sign_in' />
+        <div className={styles.logincontents}>
+          <AuthView view='sign_in' />
+        </div>
+
       </div>
     </div>
   );

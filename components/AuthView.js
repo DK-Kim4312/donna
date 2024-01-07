@@ -3,7 +3,7 @@ import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
-export default function AuthView({view}) {
+export default function AuthView({ view }) {
     const supabase = createClientComponentClient()
     var redirect = null
 
@@ -17,14 +17,26 @@ export default function AuthView({view}) {
 
     return (
         <Auth
-        supabaseClient={supabase}
-        view={view}
-        appearance={{ theme: ThemeSupa }}
-        theme="system"
-        showLinks={true}
-        providers={[]}
-        redirectTo={redirect}
-    />
+            supabaseClient={supabase}
+            view={view}
+            appearance={{
+                theme: ThemeSupa,
+                variables: {
+                    default: {
+                        colors: {
+                            brand: 'hsl(167.2 35.2% 49.6%)',
+                            brandAccent: 'hsl(167.2 35.2% 49.6%)',
+                        },
+                    },
+                },
+            }}
+
+            theme="system"
+            showLinks={true}
+            providers={['google']}
+            redirectTo={redirect}
+        />
+
     );
 
 
