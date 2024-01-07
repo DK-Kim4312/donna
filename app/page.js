@@ -18,13 +18,19 @@ export default async function Home() {
   }
 
 
+  // make all components be in the center of the page
   return (
-    <div className="card">
-      <h2>Welcome!</h2>
-      <Link className="button" href="/profile">
-        Go to Profile
-      </Link>
-      <Logout />
+    <div className="bg-[#fff] h-[100%] w-[100%] flex flex-col">
+      <h1 className="mt-[30vh] m-auto text-3xl flex font-bold">Welcome to Donna!</h1>
+      <div className=" m-auto w-[8em]">
+        <Link className="flex" href="/profile">
+          Go to Profile
+        </Link>
+        <Link className="flex" href="/main">
+          Go to Calendar
+        </Link>
+        <Logout />
+      </div>
     </div>
   );
 }

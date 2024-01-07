@@ -2,3 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
+
+body {
+    font-family: 'Poppins';
+    padding: 0;
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+}
+
+button {
+    font-family: 'Poppins';
+}
+
+* {
+    box-sizing: border-box;
+}
+

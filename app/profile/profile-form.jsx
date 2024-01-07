@@ -1,6 +1,7 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import '../globals.css'
 
 export default function ProfileForm({ session }) {
   const supabase = createClientComponentClient()
@@ -64,55 +65,60 @@ export default function ProfileForm({ session }) {
   }
 
   return (
-    <div className="form-widget">
-      <div>
-        <label htmlFor="email">Email</label>
-        <input id="email" type="text" value={session?.user.email} disabled />
-      </div>
-      <div>
-        <label htmlFor="fullName">Full Name</label>
-        <input
-          id="fullName"
-          type="text"
-          value={fullname || ''}
-          onChange={(e) => setFullname(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          id="username"
-          type="text"
-          value={username || ''}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-      </div>
-      <div>
-        <label htmlFor="website">Website</label>
-        <input
-          id="website"
-          type="url"
-          value={website || ''}
-          onChange={(e) => setWebsite(e.target.value)}
-        />
-      </div>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="w-[100%] max-w-md bg-white p-4 shadow-md rounded-md">
+        <div className='flex justify-between'>
+          <label htmlFor="email">Email</label>
+          <input id="email" type="text" className='w-[70%] border-2 border-gray-300 rounded-md' value={session?.user.email} disabled />
+        </div>
+        <div className='flex justify-between'>
+          <label htmlFor="fullName">Full Name</label>
+          <input
+            id="fullName"
+            type="text"
+            className='w-[70%] border-2 border-gray-300 rounded-md'
+            value={fullname || ''}
+            onChange={(e) => setFullname(e.target.value)}
+          />
+        </div>
+        <div className='flex justify-between'>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            className='w-[70%] border-2 border-gray-300 rounded-md'
+            value={username || ''}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+        </div>
+        <div className='flex justify-between'>
+          <label htmlFor="website">Website</label>
+          <input
+            id="website"
+            type="url"
+            className='w-[70%] border-2 border-gray-300 rounded-md'
+            value={website || ''}
+            onChange={(e) => setWebsite(e.target.value)}
+          />
+        </div>
 
-      <div>
-        <button
-          className="button primary block"
-          onClick={() => updateProfile({ fullname, username, website, avatar_url })}
-          disabled={loading}
-        >
-          {loading ? 'Loading ...' : 'Update'}
-        </button>
-      </div>
-
-      <div>
-        <form action="/auth/signout" method="post">
-          <button className="button block" type="submit">
-            Sign out
+        <div className="mt-4">
+          <button
+            className="button primary block"
+            onClick={() => updateProfile({ fullname, username, website, avatar_url })}
+            disabled={loading}
+          >
+            {loading ? 'Loading ...' : 'Update'}
           </button>
-        </form>
+        </div>
+
+        <div className="mt-4">
+          <form action="/auth/signout" method="post">
+            <button className="button block" type="submit">
+              Sign out
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   )
