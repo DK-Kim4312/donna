@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from '../styles/Icons'
+import ButtonGroup from "./ButtonGroup";
 
 export default function CalendarHeader() {
   const [monthIndex, setMonthIndex] = React.useState(
@@ -37,12 +38,8 @@ export default function CalendarHeader() {
         </button>
       </div>
 
-      <div>
-        <button className="p-1">Day</button>
-        <button className="p-1">Week</button>
-        <button className="p-1">Month</button>
-        <button className="p-1">Year</button>
-      </div>
+
+      <ButtonGroup />
 
 
       <h2 className="ml-4 text-xl text-gray-500 font-bold">

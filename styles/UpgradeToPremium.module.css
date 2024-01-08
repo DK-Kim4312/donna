@@ -1,0 +1,55 @@
+/* styles/upgrade.css */
+.upgrade-to-premium {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .upgrade-to-premium h2 {
+    color: #333;
+    font-size: 24px;
+  }
+  
+  .premium-options {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .premium-plan {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .premium-plan h3 {
+    color: #333;
+    font-size: 20px;
+  }
+  
+  .premium-plan p {
+    font-size: 16px;
+    margin: 10px 0;
+  }
+  
+  .upgrade-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .upgrade-button:hover {
+    background-color: #0056b3;
+  }
+  

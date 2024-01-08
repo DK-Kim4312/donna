@@ -1,0 +1,20 @@
+.buttonGroup {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+  }
+  
+  .button {
+    padding: 0.5em 1em;
+    background-color: transparent;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .selected {
+    background-color: #52ab98;
+    color: #fff;
+    border-color: #52ab98;
+    border-radius: 5px;
+  }
+  

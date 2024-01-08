@@ -26,11 +26,28 @@ export default function ProfileTab({ uid, url, firstname }) {
         if (url) downloadImage(url)
     }, [url, supabase])
 
+    function toProfile() {
+        if (uid) {
+            window.location.href = `/profile`
+        } else {
+            window.location.href = `/login`
+        }
+    }
+
+    function toPremium() {
+        if (uid) {
+            window.location.href = `/upgrade-to-premium`
+        } else {
+            window.location.href = `/login`
+        }
+    }
+
+
     return (
 
         <div className="relative inline-flex shrink-0 rounded-md bg-[#fff] w-[60%] h-12 top-[25px] left-[36px]">
             {avatarUrl ? (<>
-                <button className="fit items-start bg-[#ccc] rounded-lg w-10 h-10 mt-1 ml-1">
+                <button className="fit items-start bg-[#ccc] rounded-lg w-10 h-10 mt-1 ml-1" onClick={toProfile}>
                     <div className="bg-[#transparent] text-white rounded-md ">
                         <Image
                             width={50}
@@ -44,7 +61,7 @@ export default function ProfileTab({ uid, url, firstname }) {
                 </button>
                 <div className="ml-2 mt-1">
                     <div className="text-sm font-semibold">{firstname}</div>
-                    <button className="text-xs h-0.5 w-13 font-light" variant="ghost">
+                    <button className="text-xs h-0.5 w-13 font-light" variant="ghost" onClick={toPremium}>
                         &gt; Upgrade to Premium
                     </button>
                 </div>
