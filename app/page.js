@@ -17,7 +17,6 @@ export default async function Home() {
     return redirect('/error');
   }
 
-
   // make all components be in the center of the page
   return (
     <div className="bg-[#fff] h-[100%] w-[100%] flex flex-col">

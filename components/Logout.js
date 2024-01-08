@@ -16,7 +16,7 @@ const Logout = () => {
   }
 
   return (
-    <button type="button" className="button-inverse" onClick={handleLogout}>
+    <button onClick={handleLogout}>
       Log Out
     </button>
   );

@@ -1,14 +1,17 @@
 'use client'
+import Avatar from './avatar'
 import { useCallback, useEffect, useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import '../globals.css'
+import './profile.module.css'
 
 export default function ProfileForm({ session }) {
   const supabase = createClientComponentClient()
   const [loading, setLoading] = useState(true)
-  const [fullname, setFullname] = useState(null)
+  const [firstname, setFirstname] = useState(null)
+  const [lastname, setLastname] = useState(null)
   const [username, setUsername] = useState(null)
-  const [website, setWebsite] = useState(null)
+  const [organization, setOrganization] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
   const user = session?.user
 
@@ -18,7 +21,7 @@ export default function ProfileForm({ session }) {
 
       const { data, error, status } = await supabase
         .from('profiles')
-        .select(`full_name, username, website, avatar_url`)
+        .select(`firstname, lastname, username, organization, avatar_url`)
         .eq('id', user?.id)
         .single()
 
@@ -27,9 +30,10 @@ export default function ProfileForm({ session }) {
       }
 
       if (data) {
-        setFullname(data.full_name)
+        setFirstname(data.firstname)
+        setLastname(data.lastname)
         setUsername(data.username)
-        setWebsite(data.website)
+        setOrganization(data.organization)
         setAvatarUrl(data.avatar_url)
       }
     } catch (error) {
@@ -43,15 +47,16 @@ export default function ProfileForm({ session }) {
     getProfile()
   }, [user, getProfile])
 
-  async function updateProfile({ username, website, avatar_url }) {
+  async function updateProfile({ firstname, lastname, username, organization, avatar_url }) {
     try {
       setLoading(true)
 
       const { error } = await supabase.from('profiles').upsert({
         id: user?.id,
-        full_name: fullname,
+        firstname,
+        lastname,
         username,
-        website,
+        organization,
         avatar_url,
         updated_at: new Date().toISOString(),
       })
@@ -65,20 +70,44 @@ export default function ProfileForm({ session }) {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="w-[100%] max-w-md bg-white p-4 shadow-md rounded-md">
+    <div className="min-h-screen min-w-screen h-[100%] w-[100%] flex items-center justify-center">
+      <div className="min-w-[50%] min-h-[90%] h-[90%] bg-white p-4 shadow-md rounded-md">
+        <div className='flex justify-between'>
+          <label htmlFor="profile_picture">Profile Picture</label>
+          <Avatar
+            uid={user.id}
+            url={avatar_url}
+            size={150}
+            placeholder={firstname ? firstname.charAt(0) : '?'}
+            onUpload={(url) => {
+              setAvatarUrl(url)
+              updateProfile({ firstname, lastname, username, organization, avatar_url: url })
+            }}
+          />
+        </div>
+
         <div className='flex justify-between'>
           <label htmlFor="email">Email</label>
           <input id="email" type="text" className='w-[70%] border-2 border-gray-300 rounded-md' value={session?.user.email} disabled />
         </div>
         <div className='flex justify-between'>
-          <label htmlFor="fullName">Full Name</label>
+          <label htmlFor="firstname">First name</label>
           <input
-            id="fullName"
+            id="firstname"
             type="text"
             className='w-[70%] border-2 border-gray-300 rounded-md'
-            value={fullname || ''}
-            onChange={(e) => setFullname(e.target.value)}
+            value={firstname || ''}
+            onChange={(e) => setFirstname(e.target.value)}
+          />
+        </div>
+        <div className='flex justify-between'>
+          <label htmlFor="lastname">Last name</label>
+          <input
+            id="lastname"
+            type="text"
+            className='w-[70%] border-2 border-gray-300 rounded-md'
+            value={lastname || ''}
+            onChange={(e) => setLastname(e.target.value)}
           />
         </div>
         <div className='flex justify-between'>
@@ -92,32 +121,42 @@ export default function ProfileForm({ session }) {
           />
         </div>
         <div className='flex justify-between'>
-          <label htmlFor="website">Website</label>
+          <label htmlFor="organization">Organization</label>
           <input
-            id="website"
+            id="organization"
             type="url"
             className='w-[70%] border-2 border-gray-300 rounded-md'
-            value={website || ''}
-            onChange={(e) => setWebsite(e.target.value)}
+            value={organization || ''}
+            onChange={(e) => setOrganization(e.target.value)}
           />
         </div>
+        <div className='flex'>
 
-        <div className="mt-4">
-          <button
-            className="button primary block"
-            onClick={() => updateProfile({ fullname, username, website, avatar_url })}
-            disabled={loading}
-          >
-            {loading ? 'Loading ...' : 'Update'}
-          </button>
-        </div>
-
-        <div className="mt-4">
-          <form action="/auth/signout" method="post">
-            <button className="button block" type="submit">
-              Sign out
+          <div className="mt-4">
+            <button
+              onClick={() => updateProfile({ firstname, lastname, username, organization, avatar_url })}
+              disabled={loading}
+            >
+              {loading ? 'Loading ...' : 'Update'}
             </button>
-          </form>
+          </div>
+
+          <div className="ml-4 mt-4">
+            <button
+              onClick={() => window.location.href = '/'}
+              disabled={loading}
+            >
+              Back to home
+            </button>
+          </div>
+
+          <div className="ml-4 mt-4">
+            <form action="/auth/logout" method="post">
+              <button type="submit">
+                Log out
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </div>

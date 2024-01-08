@@ -1,6 +1,6 @@
 import AuthView from '../../components/AuthView';
 import React from 'react';
-import styles from '../../styles/Login.module.css';
+import styles from '../../styles/Auth.module.css';
 import { DonnaIcon } from '../../styles/DonnaIcon';
 import '../../styles/NoBodyMargin.scss';
 
