@@ -5,6 +5,7 @@ import { cookies } from 'next/headers';
 import './globals.css'
 
 import AuthProvider from '../components/providers/AuthProvider';
+import ContextProvider from '../context/ContextProvider';
 
 export default async function RootLayout({ children }) {
   const supabase = createServerComponentClient({ cookies });
@@ -24,7 +25,9 @@ export default async function RootLayout({ children }) {
         </link>
       </head>
       <body>
-        <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>
+        <ContextProvider>
+          <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>
+        </ContextProvider>
       </body>
     </html>
 

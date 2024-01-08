@@ -1,15 +1,17 @@
 import React from 'react'
 import { useEffect, useState } from "react";
+import { useContext } from "react";
+import GlobalContext from "../context/GlobalContext";
 import dayjs from "dayjs";
 import { getMonth } from "../lib/util";
 import { ChevronLeftIcon, ChevronRightIcon } from "../styles/Icons";
-
 
 export default function MiniCalendar() {
   const [currentMonthIdx, setCurrentMonthIdx] = useState(
     dayjs().month()
   );
   const [currentMonth, setCurrentMonth] = useState(getMonth());
+
   useEffect(() => {
     setCurrentMonth(getMonth(currentMonthIdx));
   }, [currentMonthIdx]);
@@ -19,7 +21,7 @@ export default function MiniCalendar() {
     setMiniCalendarMonth,
     setDaySelected,
     daySelected,
-  } = useState(null);
+  } = useContext(GlobalContext);
 
   useEffect(() => {
     setCurrentMonthIdx(monthIndex);

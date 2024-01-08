@@ -19,6 +19,27 @@ button {
     font-family: 'Poppins';
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #52ab98;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #52ab98;
+    border-radius: 5px;
+  }
+
 
 * {
     box-sizing: border-box;

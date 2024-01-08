@@ -1,13 +1,14 @@
 // components/ButtonGroup.js
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import styles from '../styles/ButtonGroup.module.css';
+import GlobalContext from '../context/GlobalContext';
 
 const ButtonGroup = () => {
-  const [selectedButton, setSelectedButton] = useState(null);
+  const {calendarTypeSelected, setCalendarTypeSelected} = useContext(GlobalContext);
 
   const handleButtonClick = (buttonIndex) => {
-    setSelectedButton(buttonIndex);
+    setCalendarTypeSelected(buttonIndex);
   };
 
   return (
@@ -15,12 +16,11 @@ const ButtonGroup = () => {
       {["Day", "Week", "Month", "Year"].map((index) => (
         <button
           key={index}
-          className={`${styles.button} ${
-            selectedButton === index ? styles.selected : ''
-          }`}
+          className={`${styles.button} ${calendarTypeSelected === index ? styles.selected : ''
+            }`}
           onClick={() => handleButtonClick(index)}
         >
-            {index} 
+          {index}
         </button>
       ))}
     </div>

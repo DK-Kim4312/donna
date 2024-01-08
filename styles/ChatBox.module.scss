@@ -11,9 +11,10 @@
   padding: 0;
   list-style: none;
   overflow-y: auto;
+  overflow-x: hidden;
   scroll-behavior: smooth;
   scroll-snap-align: start;
-  max-height: 300px;
+  max-height: 250px;
 }
 
 .shared {

@@ -1,8 +1,14 @@
 import dayjs from "dayjs";
 import React, { useState, useEffect } from "react";
+import { useContext } from "react";
+import GlobalContext from "../context/GlobalContext";
 
 export default function Day({ day, rowIdx }) {
   const [dayEvents, setDayEvents] = useState([]);
+  const {
+    setDaySelected,
+    setShowEventModal,
+  } = useContext(GlobalContext);
 
   function getCurrentDayClass() {
     return day.format("DD-MM-YY") === dayjs().format("DD-MM-YY")
@@ -30,7 +36,7 @@ export default function Day({ day, rowIdx }) {
           setShowEventModal(true);
         }}
       >
-        {dayEvents.map((evt, idx) => (
+        {/* {dayEvents.map((evt, idx) => (
           <div
             key={idx}
             onClick={() => setSelectedEvent(evt)}
@@ -38,7 +44,7 @@ export default function Day({ day, rowIdx }) {
           >
             {evt.title}
           </div>
-        ))}
+        ))} */}
       </div>
     </div>
   );
