@@ -69,6 +69,8 @@ export default function ProfileForm({ session }) {
     }
   }
 
+  console.log("url", avatar_url)
+
   return (
     <div className="min-h-screen min-w-screen h-[100%] w-[100%] flex items-center justify-center">
       <div className="min-w-[50%] min-h-[90%] h-[90%] bg-white p-4 shadow-md rounded-md">
