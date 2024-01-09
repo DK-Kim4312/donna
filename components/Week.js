@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
 import dayjs from 'dayjs';
-import { ChevronLeftIcon, ChevronRightIcon } from '../styles/Icons';
 import GlobalContext from '../context/GlobalContext';
 
 

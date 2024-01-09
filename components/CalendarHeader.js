@@ -53,7 +53,7 @@ export default function CalendarHeader() {
         </button>
         <button
           onClick={handleReset}
-          className="border-1 p-1"
+          className="border-1 pt-2 ml-1 mr-1"
         >
           Today
         </button>

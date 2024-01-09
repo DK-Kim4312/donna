@@ -12,8 +12,10 @@ const GlobalContext = React.createContext(
         setShowEventModal: () => {},
         calendarTypeSelected: null,
         setCalendarTypeSelected: () => {},
-        
-        
+        selectedEvent: null,
+        setSelectedEvent: () => {},
+        dispatchCalEvent: ({ type, payload }) => {},
+        savedEvents: [],
     }
 );
 

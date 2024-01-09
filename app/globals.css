@@ -32,6 +32,7 @@ button {
   /* Handle */
   ::-webkit-scrollbar-thumb {
     background: #52ab98;
+    border-radius: 5px;
   }
   
   /* Handle on hover */

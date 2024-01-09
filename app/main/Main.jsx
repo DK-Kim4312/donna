@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useContext } from "react";
 import Sidebar from './Sidebar';
 import CalendarHeader from "../../components/CalendarHeader";
 import { getMonth } from "../../lib/util";
@@ -13,17 +13,31 @@ import MiniCalendar from "../../components/MiniCalendar";
 import ProfileTab from "./profile-tab";
 import CreateEventButton from "../../components/CreateEventButton";
 import GenerateScheduleButton from "../../components/GenerateScheduleButton";
+import GlobalContext from "../../context/GlobalContext";
 
 
 export default function Main({ session }) {
-  const [currentMonth, setCurrentMonth] = useState(getMonth());
-  const { monthIndex, showEventModal } = useState(null); // TODO:
-  //const [currentWeek, setCurrentWeek] = useState(getWeek());
+  const { daySelected } = useContext(GlobalContext);
+  const [currentMonth, setCurrentMonth] = useState(getMonth(daySelected.month()));
+  const { showEventModal } = useContext(GlobalContext);
+  const { calendarTypeSelected } = useContext(GlobalContext);
+
+  const [calendarType, setCalendarType] = useState(calendarTypeSelected);
+
+  useEffect(
+    () => {
+      setCurrentMonth(getMonth(daySelected.month()));
+    },
+    [daySelected]
+  );
 
   useEffect(() => {
-    if (monthIndex === null) setCurrentMonth(getMonth());
-    else setCurrentMonth(getMonth(monthIndex));
-  }, [monthIndex]);
+    setCalendarType(calendarTypeSelected);
+  }, [calendarTypeSelected]);
+
+  useEffect(() => {
+    setCurrentMonth(getMonth(daySelected.month()));
+  }, []);
 
   useEffect(() => {
     if (showEventModal) {
@@ -32,6 +46,7 @@ export default function Main({ session }) {
       console.log("hideEventModal");
     }
   }, [showEventModal]);
+
   // ---------Sidebar -----------
   const supabase = createClientComponentClient()
   const [loading, setLoading] = useState(true)
@@ -71,8 +86,9 @@ export default function Main({ session }) {
 
   return (
     <React.Fragment>
+      {showEventModal && <EventModal />}
       <div className={styles.full}>
-        {showEventModal && <EventModal />}
+
         {/*Sidebar*/}
         <aside className="bg-teal-600 bg-opacity-50 relative flex flex-col w-[360px] shrink-0">
           <ProfileTab
@@ -93,8 +109,12 @@ export default function Main({ session }) {
             <CalendarHeader />
           </div>
           <div className={styles["calendar-body"]}>
-            <Week />
-            {/* <Month month={currentMonth} />*/}
+            {
+              calendarType === "Month" ?
+                <Month month={currentMonth} />
+                :
+                <Week />
+            }
           </div>
         </div>
       </div>

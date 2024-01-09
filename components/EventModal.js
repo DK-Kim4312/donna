@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import GlobalContext from "../context/GlobalContext";
+import { DELETE_EVENT, PUSH_EVENT, UPDATE_EVENT } from "../context/ContextProvider";
 
 export default function EventModal() {
   console.log("EventModal", "render");
-  const { selectedEvent, setShowEventModal, dispatchCalEvent } = useState( null );
-
+  const { daySelected, selectedEvent, setShowEventModal, dispatchCalEvent } = useContext(GlobalContext);
+  
   const [title, setTitle] = useState(
     selectedEvent ? selectedEvent.title : ""
   );
