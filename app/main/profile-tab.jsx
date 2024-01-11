@@ -47,8 +47,8 @@ export default function ProfileTab({ uid, url, firstname }) {
 
         <div className="relative inline-flex shrink-0 rounded-md bg-[#fff] w-[60%] h-12 top-[25px] left-[36px]">
             {avatarUrl ? (<>
-                <button className="fit items-start bg-[#ccc] rounded-lg w-10 h-10 mt-1 ml-1" onClick={toProfile}>
-                    <div className="bg-[#transparent] text-white rounded-md ">
+                <button className="fit items-start bg-[#ccc] rounded-lg w-10 h-10 mt-1 ml-1  overflow-hidden" onClick={toProfile}>
+                    <div className="bg-[#transparent] text-white rounded-md">
                         <Image
                             width={50}
                             height={50}

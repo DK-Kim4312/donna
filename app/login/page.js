@@ -15,14 +15,12 @@ export default async function Login() {
           </div>
           <div className={styles['sidebar-title']}>Donna AI</div>
         </div>
-
         <div className={styles['sidebar-subtitle']}>Focus On YOU</div>
       </div>
       <div className={styles.loginform}>
         <div className={styles.logincontents}>
           <AuthView view='sign_in' />
         </div>
-
       </div>
     </div>
   );

@@ -35,6 +35,9 @@ export default function AuthView({ view }) {
             showLinks={true}
             providers={['google']}
             redirectTo={redirect}
+            providerScopes={{
+                google: 'https://www.googleapis.com/auth/calendar.events.readonly',
+              }}
         />
 
     );

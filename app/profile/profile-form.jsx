@@ -2,6 +2,7 @@
 import Avatar from './avatar'
 import { useCallback, useEffect, useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import Link from 'next/link'
 import '../globals.css'
 import './profile.module.css'
 
@@ -150,6 +151,11 @@ export default function ProfileForm({ session }) {
             >
               Back to home
             </button>
+          </div>
+          <div className="ml-4 mt-4">
+              <Link href='/update-password'>
+                Update Password
+              </Link>
           </div>
 
           <div className="ml-4 mt-4">

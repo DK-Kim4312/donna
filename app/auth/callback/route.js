@@ -9,6 +9,7 @@ export async function GET(req) {
   const code = searchParams.get('code')
 
   if (code) {
+    // Exchange the code for auth token and then the auth token for a session cookie
     await supabase.auth.exchangeCodeForSession(code);
   }
 
