@@ -11,18 +11,9 @@ export default function AuthView({ view }) {
 
     useEffect(() => {
         setOriginalUrl(window.location.origin)
+        console.log("originalUrl", originalUrl)
 
-    }, [])
-
-    if (originalUrl !== null) {
-        if (view === "sign_in" || view == "sign_up" || view == "magic_link") {
-            redirect = originalUrl + '/auth/callback'
-        } else if (view == "update_password") {
-            redirect = originalUrl + '/auth/callback'
-        } else if (view == "reset_password") {
-            redirect = originalUrl + '/auth/callback'
-        }
-    }
+    }, [originalUrl])
 
     return (
         <Auth
@@ -43,7 +34,7 @@ export default function AuthView({ view }) {
             theme="system"
             showLinks={true}
             providers={['google']}
-            redirectTo={redirect}
+            redirectTo={'donna-two.vercel.app/auth/callback'}
             providerScopes={{
                 google: 'https://www.googleapis.com/auth/calendar.events.readonly',
             }}
