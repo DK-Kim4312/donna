@@ -5,14 +5,17 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 export default function AuthView({ view }) {
     const supabase = createClientComponentClient()
+    const originalUrl = window.location.origin
     var redirect = null
 
+
     if (view === "sign_in" || view == "sign_up" || view == "magic_link") {
-        redirect = 'http://localhost:3000/auth/callback'
+        redirect = originalUrl+'/auth/callback'
+
     } else if (view == "update_password") {
-        redirect = 'http://localhost:3000/auth/callback'
+        redirect = originalUrl+'/auth/callback'
     } else if (view == "reset_password") {
-        redirect = 'http://localhost:3000/auth/callback'
+        redirect = originalUrl+'/auth/callback'
     }
 
     return (
