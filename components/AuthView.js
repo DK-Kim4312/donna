@@ -15,6 +15,11 @@ export default function AuthView({ view }) {
 
     }, [originalUrl])
 
+    if (originalUrl) {
+        redirect = new URL('/auth/callback', originalUrl)
+        console.log("redirect", redirect)
+    }
+
     return (
         <Auth
             supabaseClient={supabase}
@@ -34,7 +39,7 @@ export default function AuthView({ view }) {
             theme="system"
             showLinks={true}
             providers={['google']}
-            redirectTo={'donna-two.vercel.app/auth/callback'}
+            redirectTo={redirect}
             providerScopes={{
                 google: 'https://www.googleapis.com/auth/calendar.events.readonly',
             }}
