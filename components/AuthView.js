@@ -2,20 +2,26 @@
 import { Auth } from '@supabase/auth-ui-react'
 import { ThemeSupa } from '@supabase/auth-ui-shared'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useEffect, useState } from 'react'
 
 export default function AuthView({ view }) {
     const supabase = createClientComponentClient()
-    const originalUrl = window.location.origin
+    const [originalUrl, setOriginalUrl] = useState(null)
     var redirect = null
 
+    useEffect(() => {
+        setOriginalUrl(window.location.origin)
 
-    if (view === "sign_in" || view == "sign_up" || view == "magic_link") {
-        redirect = originalUrl+'/auth/callback'
+    }, [])
 
-    } else if (view == "update_password") {
-        redirect = originalUrl+'/auth/callback'
-    } else if (view == "reset_password") {
-        redirect = originalUrl+'/auth/callback'
+    if (originalUrl !== null) {
+        if (view === "sign_in" || view == "sign_up" || view == "magic_link") {
+            redirect = originalUrl + '/auth/callback'
+        } else if (view == "update_password") {
+            redirect = originalUrl + '/auth/callback'
+        } else if (view == "reset_password") {
+            redirect = originalUrl + '/auth/callback'
+        }
     }
 
     return (
@@ -40,7 +46,7 @@ export default function AuthView({ view }) {
             redirectTo={redirect}
             providerScopes={{
                 google: 'https://www.googleapis.com/auth/calendar.events.readonly',
-              }}
+            }}
         />
 
     );
