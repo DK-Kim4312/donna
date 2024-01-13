@@ -9,6 +9,8 @@ export default async function BackendTest() {
     data: { session },
   } = await supabase.auth.getSession()
 
+  console.log(session)
+
   const BACKEND_API_URL = "https://donna-backend.vercel.app";
 
   fetch(`${BACKEND_API_URL}/receive-token`, {
@@ -21,9 +23,33 @@ export default async function BackendTest() {
     }),
   }
   ).then((response) => {
-    console.log("response", response)
+    console.log("receive-token response", response)
   }).catch((error) => {
     console.log("error", error)
   })
+
+  // fetch(`${BACKEND_API_URL}/list_events`, {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // }
+  // ).then((response) => {
+  //   console.log("list_events response", response)
+  // }).catch((error) => {
+  //   console.log("error", error)
+  // })
+
+  // fetch(`${BACKEND_API_URL}/axios`, {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  // }
+  // ).then((response) => {
+  //   console.log("axios response", response)
+  // }).catch((error) => {
+  //   console.log("error", error)
+  // })
 };
 

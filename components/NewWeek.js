@@ -91,8 +91,6 @@ export default function NewWeek() {
         hours.push(i);
     }
 
-
-
     return (
         <div className="bg-white p-4 w-[100%]">
             {/* Render the days and dates */}

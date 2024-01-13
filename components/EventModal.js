@@ -13,6 +13,16 @@ export default function EventModal() {
     selectedEvent ? selectedEvent.description : ""
   );
 
+  const [day, setDay] = useState(selectedEvent ? selectedEvent.day : daySelected ? daySelected.format("YYYY-MM-DD") : "");
+
+  const [startTime, setStartTime] = useState(
+    selectedEvent ? selectedEvent.startTime : ""
+  );
+
+  const [endTime, setEndTime] = useState(
+    selectedEvent ? selectedEvent.endTime : ""
+  );
+
   function handleSubmit(e) {
     e.preventDefault();
     const calendarEvent = {
@@ -30,11 +40,11 @@ export default function EventModal() {
     setShowEventModal(false);
   }
   return (
-    <div className="h-screen w-full fixed left-0 top-0 flex justify-center items-center">
-      <form className="bg-white rounded-lg shadow-2xl w-1/4">
+    <div className="h-screen w-[100%] fixed left-0 top-0 flex justify-center items-center z-50">
+      <form className="bg-white rounded-lg shadow-2xl w-[350px]">
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
           <span className="material-icons-outlined text-gray-400">
-            drag_handle
+            Event Menu
           </span>
           <div>
             {selectedEvent && (
@@ -73,10 +83,29 @@ export default function EventModal() {
             <span className="material-icons-outlined text-gray-400">
               schedule
             </span>
-            <p>{daySelected.format("dddd, MMMM DD")}</p>
-            <span className="material-icons-outlined text-gray-400">
-              segment
-            </span>
+            <input
+              type="date"
+              name="date"
+              value={day}
+              required
+              className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              onChange={(e) => setDay(e.target.value)}
+            />
+
+            <input
+              type="time"
+              name="startTime"
+              required
+              className="pt-3 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              onChange={(e) => setStartTime(e.target.value)}
+            />
+            <input
+              type="time"
+              name="endTime"
+              required
+              className="pt-3 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              onChange={(e) => setEndTime(e.target.value)}
+            />
             <input
               type="text"
               name="description"
@@ -86,16 +115,13 @@ export default function EventModal() {
               className="pt-3 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               onChange={(e) => setDescription(e.target.value)}
             />
-            <span className="material-icons-outlined text-gray-400">
-              bookmark_border
-            </span>
           </div>
         </div>
         <footer className="flex justify-end border-t p-3 mt-5">
           <button
             type="submit"
             onClick={handleSubmit}
-            className="bg-blue-500 hover:bg-blue-600 px-6 py-2 rounded text-white"
+            className="bg-[#52ab98] hover:bg-blue-600 px-6 py-2 rounded text-white"
           >
             Save
           </button>
