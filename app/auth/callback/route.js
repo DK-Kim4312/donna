@@ -8,12 +8,13 @@ export async function GET(req) {
   const { searchParams } = new URL(req.url)
   const code = searchParams.get('code')
 
+
   if (code) {
     // Exchange the code for auth token and then the auth token for a session cookie
     await supabase.auth.exchangeCodeForSession(code);
   }
 
-  return NextResponse.redirect(new URL('/', req.url));
+  return NextResponse.redirect(new URL('/profile', req.url));
 
   // URL to redirect to after sign in process completes
   //return NextResponse.redirect(new URL('/profile', req.url));

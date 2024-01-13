@@ -9,8 +9,6 @@ export default async function Profile() {
   const {
     data: { session },
   } = await supabase.auth.getSession()
-
-  console.log("session", session) // TODO: remove
   
   return <ProfileForm session={session} />
 }
