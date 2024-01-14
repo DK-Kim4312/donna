@@ -5,7 +5,7 @@ import GlobalContext from '../context/GlobalContext';
 
 export default function Week() {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const eventsOfWeek = [/* Add your events here */];
+  const eventsOfWeek = [];
   const { daySelected } = useContext(GlobalContext);
 
   const [weekStartDate, setStartDate] = useState(getWeekStartDate(daySelected));
@@ -36,8 +36,8 @@ export default function Week() {
       <div className="flex ml-[5vw]">
         {calendarDays.map((day, index) => (
           <div key={"Weekview" + day} className="flex flex-col">
-            <div key={"Weekday" + index} className="bg-[#fff] text-center font-bold border border-y-0 h-6 w-[9vw]">{daysOfWeek[index]}</div>
-            <div key={"Day" + index} className="bg-[#fff] text-center text-[#52AB98] font-bold border border-t-0 h-6 w-[9vw]">{dayjs(day).format("MMM DD")}</div>
+            <div key={"Weekday" + index} className="bg-[#fff] text-center font-bold border border-y-0 h-6 w-[9.5vw]">{daysOfWeek[index]}</div>
+            <div key={"Day" + index} className="bg-[#fff] text-center text-[#52AB98] font-bold border border-t-0 h-6 w-[9.5vw]">{dayjs(day).format("MMM DD")}</div>
           </div>
         ))}
       </div>
@@ -45,7 +45,7 @@ export default function Week() {
         <div className="bg-[#fff] text-gray-400 text-center h-12 w-[5vw]">all day</div>
         {calendarDays.map((day, index) => (
           <div key={"Week-Event" + index} className="flex">
-            <div className="bg-[#fff] text-center border border-t-0 h-12 w-[9vw]">{eventsOfWeek[index]}</div>
+            <div className="bg-[#fff] text-center border border-t-0 h-12 w-[9.5vw]">{eventsOfWeek[index]}</div>
           </div>
         ))}
       </div>
@@ -58,7 +58,7 @@ export default function Week() {
             <div className="inline-flex  justify-between">
               {calendarDays.map((day, index) => (
                 <div key={"Events Box" + index} className="">
-                  <div className="bg-[#fff] p-2 text-center border w-[9vw] h-12">{eventsOfWeek[index]}</div>
+                  <div className="bg-[#fff] p-2 text-center border w-[9.5vw] h-12">{eventsOfWeek[index]}</div>
                 </div>
               ))}
             </div>

@@ -93,7 +93,7 @@ export default function Main({ session }) {
         {/*Sidebar*/}
         <aside className="bg-teal-600 bg-opacity-50 relative flex flex-col w-[360px] shrink-0">
           <ProfileTab
-            uid={user.id}
+            uid={user?.id}
             firstname={firstname}
             url={avatar_url}
             placeholder={firstname ? firstname.charAt(0) : '?'} />

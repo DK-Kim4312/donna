@@ -18,9 +18,10 @@ export default async function BackendTest() {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      token: session.access_token,
-    }),
+    body: 
+      JSON.stringify({
+        token: session.provider_token
+      })
   }
   ).then((response) => {
     console.log("receive-token response", response)
@@ -28,17 +29,18 @@ export default async function BackendTest() {
     console.log("error", error)
   })
 
-  // fetch(`${BACKEND_API_URL}/list_events`, {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // }
-  // ).then((response) => {
-  //   console.log("list_events response", response)
-  // }).catch((error) => {
-  //   console.log("error", error)
-  // })
+  fetch(`${BACKEND_API_URL}/list_events`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${session.provider_token}`
+    },
+  }
+  ).then((response) => {
+    console.log("list_events response", response)
+  }).catch((error) => {
+    console.log("error", error)
+  })
 
   // fetch(`${BACKEND_API_URL}/axios`, {
   //   method: "GET",

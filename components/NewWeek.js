@@ -108,11 +108,7 @@ export default function NewWeek() {
                 <div className="bg-[#fff] text-gray-400 text-center h-12 w-[5vw]">all day</div>
                 {calendarDays.map((day, index) => (
                     <div key={"Week-Event" + index} className="flex">
-                        {eventsOfWeek[index].map((event, eventIndex) => (
-                            <div key={"Event-" + eventIndex} className="bg-[#fff] text-center border border-t-0 h-12 w-[9vw]">
-                                {event.title}
-                            </div>
-                        ))}
+                       
                     </div>
                 ))}
             </div>

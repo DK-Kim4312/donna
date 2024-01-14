@@ -1,4 +1,5 @@
 import React from 'react';
+import EventBlock from './EventBlock.jsx'
 
 const WeekDay = ({ eventsData }) => {
   // Calculate the total number of hours (adjust this based on your needs)
@@ -17,14 +18,7 @@ const WeekDay = ({ eventsData }) => {
         ))}
       </div>
       <div className="events">
-        {eventsData.map((event) => (
-          <div
-            key={event.title}
-            className={`p-1 mr-3 text-gray-600 text-sm rounded mb-1 truncate`}
-          >
-            {event.title}
-          </div>
-        ))}
+        <EventBlock eventsData={eventsData}></EventBlock>
       </div>
     </div>
   );

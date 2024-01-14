@@ -25,18 +25,10 @@ function savedEventsReducer(state, { type, payload }) {
     }
 }
 function initEvents() {
-    if (typeof localStorage !== 'undefined') {
-        const events = localStorage.getItem("savedEvents");
-        return events ? JSON.parse(events) : [];
-    } else if (typeof sessionStorage !== 'undefined') {
-        // Fallback to sessionStorage if localStorage is not supported
-        sessionStorage.setItem('key', 'value');
-        const events = sessionStorage.getItem("savedEvents");
-        return events ? JSON.parse(events) : [];
-    } else {
-        // If neither localStorage nor sessionStorage is supported
-        console.log('Web Storage is not supported in this environment.');
+    if (typeof window === "undefined") {
+        return [];
     }
+    return JSON.parse(localStorage.getItem("savedEvents")) || [];
 }
 export default function ContextProvider(props) {
     const [monthIndex, setMonthIndex] = useState(dayjs().month());

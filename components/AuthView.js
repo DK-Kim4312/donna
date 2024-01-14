@@ -41,7 +41,7 @@ export default function AuthView({ view }) {
             providers={['google']}
             redirectTo={redirect}
             providerScopes={{
-                google: 'https://www.googleapis.com/auth/calendar.events.readonly',
+                google: 'https://www.googleapis.com/auth/calendar/events',
             }}
         />
 
