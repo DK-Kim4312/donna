@@ -13,45 +13,33 @@ export default async function BackendTest() {
 
   const BACKEND_API_URL = "https://donna-backend.vercel.app";
 
-  fetch(`${BACKEND_API_URL}/receive-token`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: 
-      JSON.stringify({
-        token: session.provider_token
-      })
-  }
-  ).then((response) => {
-    console.log("receive-token response", response)
-  }).catch((error) => {
-    console.log("error", error)
-  })
+  // fetch(`${BACKEND_API_URL}/receive-token`, {
+  //   method: "POST",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   body: 
+  //     JSON.stringify({
+  //       token: session.provider_token
+  //     })
+  // }
+  // ).then((response) => {
+  //   console.log("receive-token response", response)
+  // }).catch((error) => {
+  //   console.log("error", error)
+  // })
 
-  fetch(`${BACKEND_API_URL}/list_events`, {
+  fetch(`${BACKEND_API_URL}/calendar`, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
       "Authorization": `Bearer ${session.provider_token}`
     },
   }
   ).then((response) => {
-    console.log("list_events response", response)
+    console.log("calendar response", response)
   }).catch((error) => {
     console.log("error", error)
   })
 
-  // fetch(`${BACKEND_API_URL}/axios`, {
-  //   method: "GET",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  // }
-  // ).then((response) => {
-  //   console.log("axios response", response)
-  // }).catch((error) => {
-  //   console.log("error", error)
-  // })
 };
 
