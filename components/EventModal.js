@@ -1,11 +1,18 @@
 import React, { useContext, useState } from "react";
 import GlobalContext from "../context/GlobalContext";
 import { DELETE_EVENT, PUSH_EVENT, UPDATE_EVENT } from "../context/ContextProvider";
+import dayjs from "dayjs";
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import HoverRating from "../styles/objects/HoverRating";
+
+import SwitchCheckbox from "../styles/objects/SwitchCheckbox";
 
 export default function EventModal() {
   console.log("EventModal", "render");
   const { daySelected, selectedEvent, setShowEventModal, dispatchCalEvent } = useContext(GlobalContext);
-  
+
   const [title, setTitle] = useState(
     selectedEvent ? selectedEvent.title : ""
   );
@@ -13,15 +20,16 @@ export default function EventModal() {
     selectedEvent ? selectedEvent.description : ""
   );
 
-  const [day, setDay] = useState(selectedEvent ? selectedEvent.day : daySelected ? daySelected.format("YYYY-MM-DD") : "");
+  const [startDate, setStartDate] = useState(selectedEvent ? selectedEvent.startDate : daySelected ? daySelected.format("YYYY-MM-DDTHH:mm") : "");
+  const [endDate, setEndDate] = useState(selectedEvent ? selectedEvent.endDate : daySelected ? daySelected.add(1, 'hour').format("YYYY-MM-DDTHH:mm") : "");
+  const [allDay, setAllDay] = useState(selectedEvent ? selectedEvent.allDay : false);
+  const [flexible, setFlexible] = useState(selectedEvent ? selectedEvent.flexible : false);
+  const [repeat, setRepeat] = useState(selectedEvent ? selectedEvent.repeat : false);
+  const [priority, setPriority] = useState(selectedEvent ? selectedEvent.priority : 3);
 
-  const [startTime, setStartTime] = useState(
-    selectedEvent ? selectedEvent.startTime : ""
-  );
-
-  const [endTime, setEndTime] = useState(
-    selectedEvent ? selectedEvent.endTime : ""
-  );
+  function handlePriorityChange(newPriority) {
+    setPriority(newPriority);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -41,7 +49,7 @@ export default function EventModal() {
   }
   return (
     <div className="h-screen w-[100%] fixed left-0 top-0 flex justify-center items-center z-50">
-      <form className="bg-white rounded-lg shadow-2xl w-[350px]">
+      <form className="bg-white rounded-lg shadow-2xl w-[500px]">
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
           <span className="material-icons-outlined text-gray-400">
             Event Menu
@@ -70,49 +78,60 @@ export default function EventModal() {
         </header>
         <div className="p-3">
           <div className="grid grid-cols-1/5 items-end gap-y-7">
-            <div></div>
             <input
               type="text"
               name="title"
               placeholder="Add title"
               value={title}
               required
-              className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className="pt-1 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-[#52ab98]"
               onChange={(e) => setTitle(e.target.value)}
             />
-            <span className="material-icons-outlined text-gray-400">
-              schedule
-            </span>
-            <input
-              type="date"
-              name="date"
-              value={day}
-              required
-              className="pt-3 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-              onChange={(e) => setDay(e.target.value)}
-            />
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DateTimePicker
+                label="startDate"
+                value={dayjs(startDate)}
+                className=" w-full focus:border-[#52ab98]"
+                onChange={(newDate) => setStartDate(newDate)}
+              />
+              <DateTimePicker
+                label="endDate"
+                value={dayjs(endDate)}
+                className="w-full focus:border-[#52ab98]"
+                onChange={(newDate) => setEndDate(newDate)}
+              />
+            </LocalizationProvider>
 
-            <input
-              type="time"
-              name="startTime"
-              required
-              className="pt-3 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-              onChange={(e) => setStartTime(e.target.value)}
+            <SwitchCheckbox
+              label="All Day"
+              checked={allDay}
+              onChange={(e) => setAllDay(e.target.checked)}
             />
-            <input
-              type="time"
-              name="endTime"
-              required
-              className="pt-3 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
-              onChange={(e) => setEndTime(e.target.value)}
+            <SwitchCheckbox
+              label="Flexible"
+              checked={flexible}
+              onChange={(e) => setFlexible(e.target.checked)}
             />
+            <SwitchCheckbox
+              label="Repeat"
+              checked={repeat}
+              onChange={(e) => setRepeat(e.target.checked)}
+            />
+            <div className="inline-flex">
+              <HoverRating
+                label="Priority Level"
+                level={priority}
+                onChange={handlePriorityChange}
+              />
+            </div>
+
             <input
               type="text"
               name="description"
               placeholder="Add a description"
               value={description}
               required
-              className="pt-3 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className="pt-1 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>

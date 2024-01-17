@@ -39,9 +39,9 @@ export default function MiniCalendar() {
     const currDay = day.format(format);
     const slcDay = daySelected && daySelected.format(format);
     if (nowDay === currDay) {
-      return "bg-blue-500 rounded-full text-white";
+      return "bg-[#52ab98] font-medium rounded-full text-white outline-none";
     } else if (currDay === slcDay) {
-      return "bg-blue-100 rounded-full text-blue-600 font-bold";
+      return "rounded-full font-semibold bg-[#a6d9cc] font-bold text-[#39816b] outline-none";
     } else {
       return "";
     }

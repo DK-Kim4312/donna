@@ -15,6 +15,7 @@ import ProfileTab from "./profile-tab";
 import CreateEventButton from "../../components/CreateEventButton";
 import GenerateScheduleButton from "../../components/GenerateScheduleButton";
 import GlobalContext from "../../context/GlobalContext";
+import DayCalendar from "../../components/DayCalendar";
 
 
 export default function Main({ session }) {
@@ -114,8 +115,14 @@ export default function Main({ session }) {
               calendarType === "Month" ?
                 <Month month={currentMonth} />
                 :
-                <Week />
-                //<NewWeek />
+                calendarType === "Week" ?
+                  <Week />
+                  //<NewWeek />
+                  :
+                  calendarType === "Day" ?
+                    <DayCalendar />
+                    :
+                    <div>ERROR</div>
             }
           </div>
         </div>

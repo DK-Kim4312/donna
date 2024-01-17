@@ -46,7 +46,7 @@ export default function CalendarHeader() {
     setDaySelected(dayjs());
   }
   return (
-    <header className="justify-between inline-flex max-w-[calc(100vw-360px)] p-2 w-[calc(100vw-360px)]">
+    <header className="justify-between inline-flex max-w-[calc(100vw-360px)] p-2 pl-5 pt-5 w-[calc(100vw-360px)]">
       <div className="inline-flex">
         <button onClick={handlePrev}>
           <ChevronLeftIcon className="w-5 h-5 pt-2" />
@@ -66,7 +66,7 @@ export default function CalendarHeader() {
       <ButtonGroup />
 
 
-      <h2 className="text-nowrap ml-4 text-xl text-gray-500 font-bold">
+      <h2 className="text-nowrap ml-4 pr-7 text-xl text-gray-500 font-bold">
         {dayjs(new Date(dayjs().year(), monthIndex)).format(
           "MMMM YYYY"
         )}
