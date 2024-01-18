@@ -131,7 +131,7 @@ export default function EventModal() {
               placeholder="Add a description"
               value={description}
               required
-              className="pt-1 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-blue-500"
+              className="pt-1 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-[#52ab98]"
               onChange={(e) => setDescription(e.target.value)}
             />
           </div>

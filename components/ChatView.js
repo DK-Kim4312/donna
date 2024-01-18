@@ -40,7 +40,7 @@ const ChatView = () => {
 
 
   return (
-    <div className='flex flex-col h-[100%] w-[100%] p-1'>
+    <div className='flex flex-col h-[60vh] w-[100%] p-1'>
       <div className="flex flex-col-reverse h-[100%] w-[100%]">
         <ol className={styles.list}>
           {messages.map((message, index) => (
