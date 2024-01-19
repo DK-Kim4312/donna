@@ -1,0 +1,12 @@
+.special-border {
+    border-top-style: dotted;
+    border-bottom-style: solid;
+    border-right-style: solid;
+    border-left-style: solid;
+    background-color: #fff;
+    text-align: center;
+    height: 1.5rem;
+    width: 10vw;
+    border-color: #e8e4ec;
+    border-width: 1px;
+}

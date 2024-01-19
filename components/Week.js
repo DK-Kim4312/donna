@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import GlobalContext from '../context/GlobalContext';
+import styles from '../styles/WeekView.module.css';
+import TimeSlot from './TimeSlot';
 
 
 export default function Week() {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const eventsOfWeek = [];
   const { daySelected } = useContext(GlobalContext);
 
   const [weekStartDate, setStartDate] = useState(getWeekStartDate(daySelected));
@@ -42,23 +43,28 @@ export default function Week() {
         ))}
       </div>
       <div className="flex">
-        <div className="bg-[#fff] text-gray-400 text-[12px] text-center h-12 w-[3vw]">all day</div>
+        <div className="bg-[#fff] text-gray-400 text-[12px] h-12 w-[3vw]">all day</div>
         {calendarDays.map((day, index) => (
-          <div key={"Week-Event" + index} className="flex">
-            <div className="bg-[#fff] text-center border border-t-0 h-12 w-[10vw]">{eventsOfWeek[index]}</div>
+          <div key={"Week-Event" + index} className="flex flex-col">
+            <div className="bg-[#fff] text-center border border-t-0 h-12 w-[10vw]">{ }</div>
           </div>
         ))}
       </div>
       <div className="max-h-[600px] overflow-auto">
         {hours.map((hour) => (
           <div key={"Hours" + hour} className="flex ">
-            <div className="bg-[#fff] text-gray-400 text-[12px] p-2 text-center w-[3vw]">
+            <div className="bg-[#fff] text-gray-400 text-[12px] w-[3vw]">
               {hour < 10 ? `0${hour}:00` : `${hour}:00`}
             </div>
             <div className="inline-flex  justify-between">
               {calendarDays.map((day, index) => (
                 <div key={"Events Box" + index} className="">
-                  <div className="bg-[#fff] p-2 text-center border w-[10vw] h-12">{eventsOfWeek[index]}</div>
+                  <TimeSlot date={day} hour={hour} isFrontTime={true}>
+
+                  </TimeSlot>
+                  <TimeSlot date={day} hour={hour} isFrontTime={false}>
+
+                  </TimeSlot>
                 </div>
               ))}
             </div>
