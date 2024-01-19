@@ -10,11 +10,10 @@ export default async function Home() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  console.log(user)
 
   if (!user) {
-    console.log("error in page.js")
-    return redirect('/error');
+    console.log("User Not Logged In!")
+    return redirect('/login');
   }
 
   // make all components be in the center of the page

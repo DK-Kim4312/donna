@@ -35,7 +35,6 @@ export default function AuthView({ view }) {
                     },
                 },
             }}
-
             theme="system"
             showLinks={true}
             providers={['google']}

@@ -4,7 +4,6 @@ import Sidebar from './Sidebar';
 import CalendarHeader from "../../components/CalendarHeader";
 import { getMonth } from "../../lib/util";
 import Week from "../../components/Week";
-import NewWeek from "../../components/NewWeek";
 import Month from "../../components/Month";
 import EventModal from "../../components/EventModal";
 import styles from "../../styles/Main.module.css";
@@ -117,7 +116,6 @@ export default function Main({ session }) {
                 :
                 calendarType === "Week" ?
                   <Week />
-                  //<NewWeek />
                   :
                   calendarType === "Day" ?
                     <DayCalendar />

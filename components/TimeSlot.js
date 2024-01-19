@@ -26,22 +26,22 @@ export default function TimeSlot({ date, hour, isFrontTime }) {
             setEvents(["Current Time"]);
         }
     }
-    if (events.length == 1 ) {
-        if( dayjs(date).format("DD/MM/YYYY") !== dayjs().format("DD/MM/YYYY") || hour !== dayjs().hour()) {
-            setEvents([]);
-        } else if (dayjs().minute() >= 0 && dayjs().minute() <= 29 && !isFrontTime) {
-            setEvents([]);
-        } else if(dayjs().minute() >= 30 && dayjs().minute() <= 59 && isFrontTime) {
-            setEvents([]);
-        }
-    }
+    // if (events.length == 1 ) {
+    //     if( dayjs(date).format("DD/MM/YYYY") !== dayjs().format("DD/MM/YYYY") || hour !== dayjs().hour()) {
+    //         setEvents([]);
+    //     } else if (dayjs().minute() >= 0 && dayjs().minute() <= 29 && !isFrontTime) {
+    //         setEvents([]);
+    //     } else if(dayjs().minute() >= 30 && dayjs().minute() <= 59 && isFrontTime) {
+    //         setEvents([]);
+    //     }
+    // }
 
 
 
 
     if (isFrontTime) {
         return (
-            <div className="bg-[#fff] text-center border border-t-0 border-b-0 h-6 w-[10vw]" onDrop={handleOnDrop} onDragOver={handleDragOver}>
+            <div className="relative bg-[#fff] text-center border border-t-0 border-b-0 h-6 w-[10vw]" onDrop={handleOnDrop} onDragOver={handleDragOver}>
                 {
                     events.map((event, index) => (
                         <div key={"Slot-Event" + index} className='event' draggable onDragStart={(e) => handleOnDrag(e, index)} >

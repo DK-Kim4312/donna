@@ -1,13 +1,73 @@
+'use client'
 import React, { useContext, useState, useEffect } from 'react';
 import dayjs from 'dayjs';
 import GlobalContext from '../context/GlobalContext';
 import styles from '../styles/WeekView.module.css';
 import TimeSlot from './TimeSlot';
+import EventFrame from './EventFrame';
+import EventBlock from './EventBlock';
 
 
 export default function Week() {
   const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   const { daySelected } = useContext(GlobalContext);
+  const testEvents = [
+    {
+      'id': '1', // this is the id of the event, it should be unique
+      'name': 'event 1',
+      'startDate': dayjs(),
+      'endDate': dayjs().add(1, 'hour'),
+    },
+    {
+      'id': '2',
+      'name': 'event 2',
+      'startDate': dayjs().add(1, 'day'),
+      'endDate': dayjs().add(1, 'day').add(1, 'hour'),
+    },
+    {
+      'id': '3',
+      'name': 'event 3',
+      'startDate': dayjs().add(2, 'day'),
+      'endDate': dayjs().add(2, 'day').add(1, 'hour'),
+    },
+
+  ]
+
+  const widthPerDay = 1000 / 7;
+const heightPerMinute = 700 / 1440;
+
+// functions for events
+function getPixelsFromTop(date) {
+  const minutes = dayjs(date).hour() * 60 + dayjs(date).minute();
+  return minutes * heightPerMinute;
+}
+
+function getPixelsFromLeft(date) {
+  const weekDay = dayjs(date).format('ddd')
+  if (weekDay === 'Sun') {
+    return 0;
+  } else if (weekDay === 'Mon') {
+    return widthPerDay;
+  } else if (weekDay === 'Tue') {
+    return widthPerDay * 2;
+  } else if (weekDay === 'Wed') {
+    return widthPerDay * 3;
+  } else if (weekDay === 'Thu') {
+    return widthPerDay * 4;
+  } else if (weekDay === 'Fri') {
+    return widthPerDay * 5;
+  } else if (weekDay === 'Sat') {
+    return widthPerDay * 6;
+  }
+}
+
+//TODO: implement for events in more than one day
+function getEventHeight(startDate, endDate) {
+  const startMinutes =dayjs(startDate).hour() * 60 + dayjs(startDate).minute();
+  const endMinutes = dayjs(endDate).hour() * 60 + dayjs(endDate).minute();
+  return (endMinutes - startMinutes) * heightPerMinute;
+}
+
 
   const [weekStartDate, setStartDate] = useState(getWeekStartDate(daySelected));
 
@@ -32,6 +92,26 @@ export default function Week() {
     hours.push(i);
   }
 
+  function getElementWidth(id) {
+    // if (typeof document !== 'undefined') {
+    //   const element = document.getElementById(id);
+    //   const rect = element.getBoundingClientRect();
+    //   return rect.width;
+    // }
+    return 800; //vw
+  }
+
+  function getElementHeight(id) {
+    // if (typeof document !== 'undefined') {
+    //   const element = document.getElementById(id);
+    //   const rect = element.getBoundingClientRect();
+    //   return rect.height;
+    // }
+    return 800; //vh
+  }
+
+
+
   return (
     <div className="bg-white p-4 w-[100%]">
       <div className="flex ml-[3vw]">
@@ -50,26 +130,46 @@ export default function Week() {
           </div>
         ))}
       </div>
-      <div className="max-h-[600px] overflow-auto">
+      <div className="relative max-h-[600px] overflow-auto">
         {hours.map((hour) => (
           <div key={"Hours" + hour} className="flex ">
             <div className="bg-[#fff] text-gray-400 text-[12px] w-[3vw]">
               {hour < 10 ? `0${hour}:00` : `${hour}:00`}
             </div>
-            <div className="inline-flex  justify-between">
-              {calendarDays.map((day, index) => (
-                <div key={"Events Box" + index} className="">
-                  <TimeSlot date={day} hour={hour} isFrontTime={true}>
+            <div id='event-box'>
+              <div className="inline-flex  justify-between">
+                {calendarDays.map((day, index) => (
+                  <div key={"Events Box" + index} className="">
+                    <TimeSlot date={day} hour={hour} isFrontTime={true}>
 
-                  </TimeSlot>
-                  <TimeSlot date={day} hour={hour} isFrontTime={false}>
+                    </TimeSlot>
+                    <TimeSlot date={day} hour={hour} isFrontTime={false}>
 
-                  </TimeSlot>
-                </div>
-              ))}
+                    </TimeSlot>
+                  </div>
+
+                ))}
+
+              </div>
+
             </div>
           </div>
         ))}
+        {testEvents.map((event, index) => {
+        const { startDate, endDate } = event;
+        const top = getPixelsFromTop(startDate);
+        const left = getPixelsFromLeft(startDate);
+        const eventHeight = getEventHeight(startDate, endDate);
+        const eventWidth = widthPerDay;
+          <EventBlock key={'Events' + index} eventId={event.id} eventName={event.name} xPosition={left} yPosition={top} height={eventHeight} width={eventWidth}/>
+      })}
+          {/* <EventFrame
+            numDays={7}
+            events={testEvents}
+            height={700}
+            width={1000}>
+
+          </EventFrame> */}
       </div>
     </div>
   );
