@@ -1,4 +1,4 @@
-
+import React from "react"
 export default function EventBlock(
     width, 
     height,
@@ -21,7 +21,7 @@ export default function EventBlock(
                 border: '1px solid black',
             }}
         >
-            <p>{eventName}</p>
+            {eventName}
         </div>
     )
 }

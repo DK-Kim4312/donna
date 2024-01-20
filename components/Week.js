@@ -5,7 +5,7 @@ import GlobalContext from '../context/GlobalContext';
 import styles from '../styles/WeekView.module.css';
 import TimeSlot from './TimeSlot';
 import EventFrame from './EventFrame';
-import EventBlock from './EventBlock';
+import EventBlock from './EventBlock.jsx';
 
 
 export default function Week() {
@@ -34,39 +34,39 @@ export default function Week() {
   ]
 
   const widthPerDay = 1000 / 7;
-const heightPerMinute = 700 / 1440;
+  const heightPerMinute = 700 / 1440;
 
-// functions for events
-function getPixelsFromTop(date) {
-  const minutes = dayjs(date).hour() * 60 + dayjs(date).minute();
-  return minutes * heightPerMinute;
-}
-
-function getPixelsFromLeft(date) {
-  const weekDay = dayjs(date).format('ddd')
-  if (weekDay === 'Sun') {
-    return 0;
-  } else if (weekDay === 'Mon') {
-    return widthPerDay;
-  } else if (weekDay === 'Tue') {
-    return widthPerDay * 2;
-  } else if (weekDay === 'Wed') {
-    return widthPerDay * 3;
-  } else if (weekDay === 'Thu') {
-    return widthPerDay * 4;
-  } else if (weekDay === 'Fri') {
-    return widthPerDay * 5;
-  } else if (weekDay === 'Sat') {
-    return widthPerDay * 6;
+  // functions for events
+  function getPixelsFromTop(date) {
+    const minutes = dayjs(date).hour() * 60 + dayjs(date).minute();
+    return minutes * heightPerMinute;
   }
-}
 
-//TODO: implement for events in more than one day
-function getEventHeight(startDate, endDate) {
-  const startMinutes =dayjs(startDate).hour() * 60 + dayjs(startDate).minute();
-  const endMinutes = dayjs(endDate).hour() * 60 + dayjs(endDate).minute();
-  return (endMinutes - startMinutes) * heightPerMinute;
-}
+  function getPixelsFromLeft(date) {
+    const weekDay = dayjs(date).format('ddd')
+    if (weekDay === 'Sun') {
+      return 0;
+    } else if (weekDay === 'Mon') {
+      return widthPerDay;
+    } else if (weekDay === 'Tue') {
+      return widthPerDay * 2;
+    } else if (weekDay === 'Wed') {
+      return widthPerDay * 3;
+    } else if (weekDay === 'Thu') {
+      return widthPerDay * 4;
+    } else if (weekDay === 'Fri') {
+      return widthPerDay * 5;
+    } else if (weekDay === 'Sat') {
+      return widthPerDay * 6;
+    }
+  }
+
+  //TODO: implement for events in more than one day
+  function getEventHeight(startDate, endDate) {
+    const startMinutes = dayjs(startDate).hour() * 60 + dayjs(startDate).minute();
+    const endMinutes = dayjs(endDate).hour() * 60 + dayjs(endDate).minute();
+    return (endMinutes - startMinutes) * heightPerMinute;
+  }
 
 
   const [weekStartDate, setStartDate] = useState(getWeekStartDate(daySelected));
@@ -140,30 +140,35 @@ function getEventHeight(startDate, endDate) {
               <div className="inline-flex  justify-between">
                 {calendarDays.map((day, index) => (
                   <div key={"Events Box" + index} className="">
-                    <TimeSlot date={day} hour={hour} isFrontTime={true}>
-
-                    </TimeSlot>
-                    <TimeSlot date={day} hour={hour} isFrontTime={false}>
-
-                    </TimeSlot>
+                    <TimeSlot date={day} hour={hour} isFrontTime={true} />
+                    <TimeSlot date={day} hour={hour} isFrontTime={false} />
                   </div>
-
                 ))}
-
               </div>
-
+              {testEvents.map((event, index) => {
+                const { startDate, endDate } = event;
+                const top = getPixelsFromTop(startDate);
+                const left = getPixelsFromLeft(startDate);
+                const eventHeight = getEventHeight(startDate, endDate);
+                const eventWidth = widthPerDay;
+                console.log("top", top);
+                console.log("left", left);
+                console.log("eventHeight", eventHeight);
+                console.log("eventWidth", eventWidth);
+                <EventBlock
+                  key={'Events' + index}
+                  eventId={event.id}
+                  eventName={event.name}
+                  xPosition={left}
+                  yPosition={top}
+                  height={eventHeight}
+                  width={eventWidth} />
+              })}
             </div>
           </div>
         ))}
-        {testEvents.map((event, index) => {
-        const { startDate, endDate } = event;
-        const top = getPixelsFromTop(startDate);
-        const left = getPixelsFromLeft(startDate);
-        const eventHeight = getEventHeight(startDate, endDate);
-        const eventWidth = widthPerDay;
-          <EventBlock key={'Events' + index} eventId={event.id} eventName={event.name} xPosition={left} yPosition={top} height={eventHeight} width={eventWidth}/>
-      })}
-          {/* <EventFrame
+
+        {/* <EventFrame
             numDays={7}
             events={testEvents}
             height={700}

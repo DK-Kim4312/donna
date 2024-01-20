@@ -41,7 +41,7 @@ export default function TimeSlot({ date, hour, isFrontTime }) {
 
     if (isFrontTime) {
         return (
-            <div className="relative bg-[#fff] text-center border border-t-0 border-b-0 h-6 w-[10vw]" onDrop={handleOnDrop} onDragOver={handleDragOver}>
+            <div className="bg-[#fff] text-center border border-t-0 border-b-0 h-6 w-[10vw]" onDrop={handleOnDrop} onDragOver={handleDragOver}>
                 {
                     events.map((event, index) => (
                         <div key={"Slot-Event" + index} className='event' draggable onDragStart={(e) => handleOnDrag(e, index)} >
