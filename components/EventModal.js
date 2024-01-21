@@ -6,6 +6,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import HoverRating from "../styles/objects/HoverRating";
+import { toast } from "sonner"
+
 
 import SwitchCheckbox from "../styles/objects/SwitchCheckbox";
 
@@ -44,6 +46,9 @@ export default function EventModal() {
     } else {
       dispatchCalEvent({ type: PUSH_EVENT, payload: calendarEvent });
     }
+    toast("Event has been created.");
+
+    
 
     setShowEventModal(false);
   }

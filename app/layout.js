@@ -2,6 +2,7 @@
 "use server";
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
+import { Toaster } from "../components/ui/sonner";
 import './globals.css'
 
 import AuthProvider from '../components/providers/AuthProvider';
@@ -28,6 +29,7 @@ export default async function RootLayout({ children }) {
         <ContextProvider>
           <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>
         </ContextProvider>
+        <Toaster />
       </body>
     </html>
 

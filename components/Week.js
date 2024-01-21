@@ -5,7 +5,7 @@ import GlobalContext from '../context/GlobalContext';
 import styles from '../styles/WeekView.module.css';
 import TimeSlot from './TimeSlot';
 import EventFrame from './EventFrame';
-import EventBlock from './EventBlock.jsx';
+import EventBlock from './EventBlock';
 
 
 export default function Week() {
