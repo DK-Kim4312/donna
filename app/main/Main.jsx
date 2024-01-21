@@ -1,44 +1,17 @@
 'use client';
 import React, { useState, useEffect, useCallback, useContext } from "react";
-import Sidebar from './Sidebar';
-import CalendarHeader from "../../components/CalendarHeader";
-import { getMonth } from "../../lib/util";
-import Week from "../../components/Week";
-import Month from "../../components/Month";
 import EventModal from "../../components/EventModal";
 import styles from "../../styles/Main.module.css";
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import ChatView from "../../components/ChatView";
-import MiniCalendar from "../../components/MiniCalendar";
 import ProfileTab from "./profile-tab";
 import CreateEventButton from "../../components/CreateEventButton";
 import GenerateScheduleButton from "../../components/GenerateScheduleButton";
+import Calendar from "../../components/Calendar";
 import GlobalContext from "../../context/GlobalContext";
-import DayCalendar from "../../components/DayCalendar";
-
 
 export default function Main({ session }) {
-  const { daySelected } = useContext(GlobalContext);
-  const [currentMonth, setCurrentMonth] = useState(getMonth(daySelected.month()));
   const { showEventModal } = useContext(GlobalContext);
-  const { calendarTypeSelected } = useContext(GlobalContext);
-
-  const [calendarType, setCalendarType] = useState(calendarTypeSelected);
-
-  useEffect(
-    () => {
-      setCurrentMonth(getMonth(daySelected.month()));
-    },
-    [daySelected]
-  );
-
-  useEffect(() => {
-    setCalendarType(calendarTypeSelected);
-  }, [calendarTypeSelected]);
-
-  useEffect(() => {
-    setCurrentMonth(getMonth(daySelected.month()));
-  }, []);
 
   useEffect(() => {
     if (showEventModal) {
@@ -88,43 +61,27 @@ export default function Main({ session }) {
   return (
     <React.Fragment>
       {showEventModal && <EventModal />}
-      <div className={styles.full}>
-
+      <div className="flex flex-row min-w-[100vw] min-h-[100vh] w-[100vw] h-[100vh]">
         {/*Sidebar*/}
-        <aside className="bg-teal-600 bg-opacity-50 relative flex flex-col w-[360px] shrink-0">
-          <ProfileTab
-            uid={user?.id}
-            firstname={firstname}
-            url={avatar_url}
-            placeholder={firstname ? firstname.charAt(0) : '?'} />
-          <MiniCalendar />
-          <div className="flex flex-row items-center justify-center">
+        <aside className="bg-[#52ab98] bg-opacity-50 relative flex flex-col w-[360px] shrink-0 pl-[25px] pt-[36px]">
+          <div className="relative h-[90px] w-[360px] shrink-0">
+            <ProfileTab
+              uid={user?.id}
+              firstname={firstname}
+              url={avatar_url}
+              placeholder={firstname ? firstname.charAt(0) : '?'} />
+          </div>
+          <div className="relative flex flex-row items-center justify-center">
             <CreateEventButton />
             <GenerateScheduleButton />
           </div>
-          <ChatView />
+          <div className="absolute bottom-[5px] w-[100%] ml-[5px] mr-[5px]">
+            <ChatView />
+          </div>
         </aside>
-        {/*Calendar*/}
-        <div className={styles.calendar}>
-          <div className={styles["calendar-header"]}>
-            <CalendarHeader />
-          </div>
-          <div className={styles["calendar-body"]}>
-            {
-              calendarType === "Month" ?
-                <Month month={currentMonth} />
-                :
-                calendarType === "Week" ?
-                  <Week />
-                  :
-                  calendarType === "Day" ?
-                    <DayCalendar />
-                    :
-                    <div>ERROR</div>
-            }
-          </div>
-        </div>
+        <Calendar />
       </div>
+
     </React.Fragment>
 
   );

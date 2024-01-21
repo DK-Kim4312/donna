@@ -15,6 +15,7 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    border: #52ab98;
 }
 
 .calendar-header {

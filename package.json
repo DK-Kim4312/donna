@@ -11,6 +11,9 @@
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
+    "@fullcalendar/react": "^6.1.10",
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "@mui/icons-material": "^5.14.5",
     "@mui/material": "^5.15.5",
     "@mui/x-date-pickers": "^6.19.0",
@@ -24,6 +27,7 @@
     "dayjs": "^1.11.10",
     "dotenv": "^16.3.1",
     "fs": "^0.0.1-security",
+    "fullcalendar": "^6.1.10",
     "next": "14.0.4",
     "next-themes": "^0.2.1",
     "passport": "^0.7.0",

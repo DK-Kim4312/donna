@@ -45,7 +45,7 @@ export default function ProfileTab({ uid, url, firstname }) {
 
     return (
 
-        <div className="relative inline-flex shrink-0 rounded-md bg-[#fff] w-[60%] h-12 top-[25px] left-[36px]">
+        <div className="relative inline-flex shrink-0 rounded-md bg-[#fff] h-12 ">
             {avatarUrl ? (<>
                 <button className="fit items-start bg-[#ccc] rounded-lg w-10 h-10 mt-1 ml-1  overflow-hidden" onClick={toProfile}>
                     <div className="bg-[#transparent] text-white rounded-md">
