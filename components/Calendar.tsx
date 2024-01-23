@@ -10,10 +10,20 @@ import { EventSourceInput } from '@fullcalendar/core/index.js'
 
 
 interface Event {
+  id: number;
   title: string;
   start: Date | string;
+  end: Date | string;
   allDay: boolean;
-  id: number;
+
+  extendedProps: {
+    description: string;
+    recurring: boolean;
+    priority: number;
+    location: string;
+    created_by: string;
+    created_date: Date | string;
+  }
 }
 
 export default function Calendar() {
@@ -31,8 +41,17 @@ export default function Calendar() {
   const [newEvent, setNewEvent] = useState<Event>({
     title: '',
     start: '',
+    end: '',
     allDay: false,
-    id: 0
+    id: 0,
+    extendedProps: {
+      description: '',
+      recurring: false,
+      priority: 0,
+      location: '',
+      created_by: '',
+      created_date: ''
+    }
   })
 
   useEffect(() => {
@@ -44,7 +63,7 @@ export default function Calendar() {
           let title = eventEl.getAttribute("title")
           let id = eventEl.getAttribute("data")
           let start = eventEl.getAttribute("start")
-          return { title, id, start }
+          return { title: title, id, start }
         }
       })
     }
@@ -53,6 +72,10 @@ export default function Calendar() {
   function handleDateClick(arg: { date: Date, allDay: boolean }) {
     setNewEvent({ ...newEvent, start: arg.date, allDay: arg.allDay, id: new Date().getTime() })
     setShowModal(true)
+  }
+
+  function handleEventClick(arg: { event: Event }) {
+    console.log(arg.event)
   }
 
   function addEvent(data: DropArg) {
@@ -104,8 +127,8 @@ export default function Calendar() {
 
   return (
     <>
-      <main className="w-[calc(100vw-360px)] min-w-[calc(100vw-360px)] h-[100vh] min-h-[100vh] items-center justify-between p-5">
-        <div className="grid grid-cols-10">
+      <main className="w-[100%] items-center justify-between p-5">
+        <div className="grid grid-cols-8">
           <div className="col-span-8">
             <FullCalendar
               plugins={[
@@ -114,10 +137,11 @@ export default function Calendar() {
                 timeGridPlugin
               ]}
               headerToolbar={{
-                left: 'prev,next today',
-                center: 'dayGridMonth,timeGridWeek',
-                right: 'title',
+                left: 'prev,today,next',
+                center: 'timeGridDay,timeGridWeek,dayGridMonth',
+                right: '',
               }}
+              initialView="timeGridWeek"
               events={allEvents as EventSourceInput}
               nowIndicator={true}
               editable={true}
@@ -263,7 +287,6 @@ export default function Calendar() {
                               type="button"
                               className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
                               onClick={handleCloseModal}
-
                             >
                               Cancel
                             </button>

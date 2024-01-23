@@ -15,6 +15,11 @@ a {
     text-decoration: underline;
 }
 
+aside {
+    background-color: #52ab9880;
+
+}
+
 /* width */
 ::-webkit-scrollbar {
     width: 10px;
@@ -53,6 +58,8 @@ input {
   .fc-header-toolbar {
     display: inline-block;
     padding: 4px 4px;
+    margin-right: 10vw;
+
     
     @apply space-x-8;
 }
@@ -66,7 +73,7 @@ input {
 }
 
 .fc-view {
-  @apply w-full h-full lg:h-3/4 xl:h-2/3 bg-white;
+  @apply w-full h-full lg:h-[85vh] xl:h-[85vh] bg-white;
 }
 
 .fc-h-event {
@@ -75,7 +82,7 @@ input {
 }
 
 .fc .fc-daygrid-day.fc-day-today {
-  @apply bg-[#52ab9833];
+  @apply bg-[#52ab9833] ;
 }
 
 .fc .fc-button{
@@ -99,7 +106,7 @@ input {
 }
 
 .fc .fc-button:focus {
-  @apply bg-[#3c8d72] border-none hover:border-none ;
+  @apply bg-[#3c8d72] border-none hover:border-none;
 }
 
 .fc .fc-button-primary:disabled {

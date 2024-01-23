@@ -61,9 +61,9 @@ export default function Main({ session }) {
   return (
     <React.Fragment>
       {showEventModal && <EventModal />}
-      <div className="flex flex-row min-w-[100vw] min-h-[100vh] w-[100vw] h-[100vh]">
+      <div className="flex flex-row min-w-[100vw] min-h-[100vh] w-[100vw] h-[100vh] max-w-[100vw] max-h-[100vh] overflow-hidden">
         {/*Sidebar*/}
-        <aside className="bg-[#52ab98] bg-opacity-50 relative flex flex-col w-[360px] shrink-0 pl-[25px] pt-[36px]">
+        <aside className="relative flex flex-col w-[360px] shrink-0 pl-[25px] pt-[36px]">
           <div className="relative h-[90px] w-[360px] shrink-0">
             <ProfileTab
               uid={user?.id}
@@ -79,7 +79,8 @@ export default function Main({ session }) {
             <ChatView />
           </div>
         </aside>
-        <Calendar />
+          <Calendar />
+
       </div>
 
     </React.Fragment>
