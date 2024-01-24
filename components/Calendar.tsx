@@ -15,7 +15,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { toast } from "sonner"
 
-
+// TODO: When dragging and selecting a date, the modal should appear with the date selected
+// TODO: add use callback to handle the event
 
 interface Event {
   id: number;
@@ -96,8 +97,6 @@ export default function Calendar() {
         created_date: new Date().toISOString()
       }
     })
-
-
     setShowAddModal(true)
   }
 
