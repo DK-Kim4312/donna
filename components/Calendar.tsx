@@ -7,6 +7,14 @@ import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 import { EventSourceInput } from '@fullcalendar/core/index.js'
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import HoverRating from "../styles/objects/HoverRating";
+import SwitchCheckbox from "../styles/objects/SwitchCheckbox";
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import { toast } from "sonner"
+
 
 
 interface Event {
@@ -27,102 +35,157 @@ interface Event {
 }
 
 export default function Calendar() {
-  const [events, setEvents] = useState([
-    { title: 'event 1', id: '1' },
-    { title: 'event 2', id: '2' },
-    { title: 'event 3', id: '3' },
-    { title: 'event 4', id: '4' },
-    { title: 'event 5', id: '5' },
-  ])
   const [allEvents, setAllEvents] = useState<Event[]>([])
-  const [showModal, setShowModal] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [idToDelete, setIdToDelete] = useState<number | null>(null)
-  const [newEvent, setNewEvent] = useState<Event>({
-    title: '',
-    start: '',
-    end: '',
-    allDay: false,
-    id: 0,
-    extendedProps: {
-      description: '',
-      recurring: false,
-      priority: 0,
-      location: '',
-      created_by: '',
-      created_date: ''
-    }
-  })
+  const [idToEdit, setIdToEdit] = useState<number | null>(null)
+  const [showAddModal, setShowAddModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
 
-  useEffect(() => {
-    let draggableEl = document.getElementById('draggable-el')
-    if (draggableEl) {
-      new Draggable(draggableEl, {
-        itemSelector: ".fc-event",
-        eventData: function (eventEl) {
-          let title = eventEl.getAttribute("title")
-          let id = eventEl.getAttribute("data")
-          let start = eventEl.getAttribute("start")
-          return { title: title, id, start }
-        }
-      })
+  const [title, setTitle] = useState<String>();
+  const [description, setDescription] = useState<String>('');
+
+  const [start, setStart] = useState<Date>("");
+  const [end, setEnd] = useState<Date>("");
+  const [allDay, setAllDay] = useState<boolean>(false);
+  const [flexible, setFlexible] = useState(false);
+  const [repeat, setRepeat] = useState(false);
+  const [priority, setPriority] = useState(3);
+  const [newEvent, setNewEvent] = useState<Event>(
+    {
+      id: 0,
+      title: '',
+      start: '',
+      end: '',
+      allDay: false,
+      extendedProps: {
+        description: '',
+        recurring: false,
+        priority: 3,
+        location: '',
+        created_by: '',
+        created_date: ''
+      }
     }
-  }, [])
+  )
+
+  function handlePriorityChange(newPriority) {
+    setPriority(newPriority);
+  }
 
   function handleDateClick(arg: { date: Date, allDay: boolean }) {
-    setNewEvent({ ...newEvent, start: arg.date, allDay: arg.allDay, id: new Date().getTime() })
-    setShowModal(true)
+    setTitle('')
+    setStart(arg.date.toISOString())
+    setEnd(dayjs(arg.date).add(1, 'hour').toDate().toISOString())
+    setAllDay(arg.allDay)
+    setFlexible(false)
+    setRepeat(false)
+    setPriority(3)
+    setDescription('')
+    setNewEvent({
+      id: allEvents.length + 1,
+      title: title,
+      start: start,
+      end: end,
+      allDay: allDay,
+      extendedProps: {
+        description: description,
+        recurring: repeat,
+        priority: priority,
+        created_by: 'user',
+        created_date: new Date().toISOString()
+      }
+    })
+
+
+    setShowAddModal(true)
   }
 
   function handleEventClick(arg: { event: Event }) {
+    handleEditModal(arg)
     console.log(arg.event)
   }
 
-  function addEvent(data: DropArg) {
-    const event = { ...newEvent, start: data.date.toISOString(), title: data.draggedEl.innerText, allDay: data.allDay, id: new Date().getTime() }
-    setAllEvents([...allEvents, event])
-  }
-
-  function handleDeleteModal(data: { event: { id: string } }) {
-    setShowDeleteModal(true)
+  function handleEditModal(data: { event: { id: string } }) {
+    setShowEditModal(true)
+    setIdToEdit(Number(data.event.id))
     setIdToDelete(Number(data.event.id))
   }
 
+  function handleDeleteModal() {
+    setShowDeleteModal(true)
+  }
+
   function handleDelete() {
-    setAllEvents(allEvents.filter(event => Number(event.id) !== Number(idToDelete)))
-    setShowDeleteModal(false)
-    setIdToDelete(null)
+    if (window.confirm("Are you sure you want to change the event date?")) {
+
+      setAllEvents(allEvents.filter(event => Number(event.id) !== Number(idToDelete)))
+      setShowEditModal(false)
+      setIdToDelete(null)
+      setIdToEdit(null)
+    }
   }
 
-  function handleCloseModal() {
-    setShowModal(false)
-    setNewEvent({
-      title: '',
-      start: '',
-      allDay: false,
-      id: 0
-    })
-    setShowDeleteModal(false)
-    setIdToDelete(null)
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    setNewEvent({
-      ...newEvent,
-      title: e.target.value
-    })
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  function handleCloseAddModal(e) {
     e.preventDefault()
+    setShowAddModal(false)
+  }
+
+  function handleCloseDeleteModal(e) {
+    e.preventDefault()
+    setShowDeleteModal(false)
+    setIdToDelete(null)
+  }
+
+  function handleCloseEditModal(e) {
+    e.preventDefault()
+    setShowEditModal(false)
+  }
+
+
+
+  function handleSubmitAdd(e) {
+    e.preventDefault()
+    const newEvent = {
+      id: allEvents.length + 1,
+      title: title,
+      start: start,
+      end: end,
+      allDay: allDay,
+      extendedProps: {
+        description: description,
+        recurring: repeat,
+        priority: priority,
+        location: '',
+        created_by: 'user',
+        created_date: new Date().toISOString()
+      }
+    }
     setAllEvents([...allEvents, newEvent])
-    setShowModal(false)
-    setNewEvent({
-      title: '',
-      start: '',
-      allDay: false,
-      id: 0
-    })
+    toast("Event has been created.");
+    setShowAddModal(false)
+  }
+
+  function handleSubmitEdit(e) {
+    e.preventDefault()
+    const updatedEvent = {
+      id: newEvent.id,
+      title: title,
+      start: start,
+      end: end,
+      allDay: allDay,
+      extendedProps: {
+        description: description,
+        recurring: repeat,
+        priority: priority,
+        location: '',
+        created_by: 'user',
+        created_date: new Date().toISOString()
+      }
+    }
+    setAllEvents(allEvents.map(event => event.id === updatedEvent.id ? updatedEvent : event))
+    toast("Event has been updated.");
+    setShowEditModal(false)
   }
 
   return (
@@ -131,6 +194,7 @@ export default function Calendar() {
         <div className="grid grid-cols-8">
           <div className="col-span-8">
             <FullCalendar
+
               plugins={[
                 dayGridPlugin,
                 interactionPlugin,
@@ -145,26 +209,17 @@ export default function Calendar() {
               events={allEvents as EventSourceInput}
               nowIndicator={true}
               editable={true}
-              droppable={true}
               selectable={true}
               selectMirror={true}
               dateClick={handleDateClick}
-              drop={(data) => addEvent(data)}
-              eventClick={(data) => handleDeleteModal(data)}
+              eventClick={(arg) => handleEventClick(arg)}
+              slotDuration={'01:00:00'}
+              snapDuration={'00:01:00'}
+              defaultTimedEventDuration={'01:00:00'}
+              unselectAuto={true}
+              
             />
           </div>
-          {/* <div id="draggable-el" className="ml-8 w-full border-2 p-2 rounded-md mt-16 lg:h-1/2 bg-violet-50">
-            <h1 className="font-bold text-lg text-center">Drag Event</h1>
-            {events.map(event => (
-              <div
-                className="fc-event p-1 m-2 w-full rounded-md ml-auto text-center bg-white"
-                title={event.title}
-                key={event.id}
-              >
-                {event.title}
-              </div>
-            ))}
-          </div> */}
         </div>
 
         <Transition.Root show={showDeleteModal} as={Fragment}>
@@ -221,7 +276,7 @@ export default function Calendar() {
                       </button>
                       <button type="button" className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 
                       shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
-                        onClick={handleCloseModal}
+                        onClick={handleCloseDeleteModal}
                       >
                         Cancel
                       </button>
@@ -232,8 +287,8 @@ export default function Calendar() {
             </div>
           </Dialog>
         </Transition.Root>
-        <Transition.Root show={showModal} as={Fragment}>
-          <Dialog as="div" className="relative z-10" onClose={setShowModal}>
+        <Transition.Root show={showAddModal} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={setShowAddModal}>
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -257,44 +312,205 @@ export default function Calendar() {
                   leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                   leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 >
-                  <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
-                    <div>
-                      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                        <CheckIcon className="h-6 w-6 text-green-600" aria-hidden="true" />
+                  <form className="bg-white rounded-lg shadow-2xl w-[500px]">
+                    <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                      <span className="material-icons-outlined text-gray-400">
+                        Add Event
+                      </span>
+                      <div>
+                        <button onClick={(e) => handleCloseAddModal}>
+                          <span className="material-icons-outlined text-gray-400">
+                            close
+                          </span>
+                        </button>
                       </div>
-                      <div className="mt-3 text-center sm:mt-5">
-                        <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                          Add Event
-                        </Dialog.Title>
-                        <form action="submit" onSubmit={handleSubmit}>
-                          <div className="mt-2">
-                            <input type="text" name="title" className="block w-full rounded-md border-0 py-1.5 text-gray-900 
-                            shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 
-                            focus:ring-2 
-                            focus:ring-inset focus:ring-violet-600 
-                            sm:text-sm sm:leading-6"
-                              value={newEvent.title} onChange={(e) => handleChange(e)} placeholder="Title" />
-                          </div>
-                          <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
-                            <button
-                              type="submit"
-                              className="inline-flex w-full justify-center rounded-md bg-violet-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-violet-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-violet-600 sm:col-start-2 disabled:opacity-25"
-                              disabled={newEvent.title === ''}
-                            >
-                              Create
-                            </button>
-                            <button
-                              type="button"
-                              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"
-                              onClick={handleCloseModal}
-                            >
-                              Cancel
-                            </button>
-                          </div>
-                        </form>
+                    </header>
+                    <div className="p-3">
+                      <div className="grid grid-cols-1/5 items-end gap-y-7">
+                        <input
+                          type="text"
+                          name="title"
+                          placeholder="Add title"
+                          value={title}
+                          className="pt-1 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-[#52ab98]"
+                          onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DateTimePicker
+                            label="startDate"
+                            value={dayjs(start)}
+                            className=" w-full focus:border-[#52ab98]"
+                            onChange={(newDate) => setStart(newDate)}
+                          />
+                          <DateTimePicker
+                            label="endDate"
+                            value={dayjs(end)}
+                            className="w-full focus:border-[#52ab98]"
+                            onChange={(newDate) => setEnd(newDate)}
+                          />
+                        </LocalizationProvider>
+
+                        <SwitchCheckbox
+                          label="All Day"
+                          checked={allDay}
+                          onChange={(e) => setAllDay(e.target.checked)}
+                        />
+                        <SwitchCheckbox
+                          label="Flexible"
+                          checked={flexible}
+                          onChange={(e) => setFlexible(e.target.checked)}
+                        />
+                        <SwitchCheckbox
+                          label="Repeat"
+                          checked={repeat}
+                          onChange={(e) => setRepeat(e.target.checked)}
+                        />
+                        <div className="inline-flex">
+                          <HoverRating
+                            label="Priority Level"
+                            level={priority}
+                            onChange={handlePriorityChange}
+                          />
+                        </div>
+
+                        <input
+                          type="text"
+                          name="description"
+                          placeholder="Add a description"
+                          value={description}
+                          className="pt-1 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-[#52ab98]"
+                          onChange={(e) => setDescription(e.target.value)}
+                        />
                       </div>
                     </div>
-                  </Dialog.Panel>
+                    <footer className="flex justify-end border-t p-3 mt-5">
+                      <button
+                        type="submit"
+                        onClick={handleSubmitAdd}
+                        className="bg-[#52ab98] hover:bg-blue-600 px-6 py-2 rounded text-white"
+                      >
+                        Save
+                      </button>
+                    </footer>
+                  </form>
+                </Transition.Child>
+              </div>
+            </div>
+          </Dialog>
+        </Transition.Root>
+        <Transition.Root show={showEditModal} as={Fragment}>
+          <Dialog as="div" className="relative z-10" onClose={setShowEditModal}>
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0"
+              enterTo="opacity-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100"
+              leaveTo="opacity-0"
+            >
+              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+            </Transition.Child>
+
+            <div className="fixed inset-0 z-10 overflow-y-auto">
+              <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                <Transition.Child
+                  as={Fragment}
+                  enter="ease-out duration-300"
+                  enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                  enterTo="opacity-100 translate-y-0 sm:scale-100"
+                  leave="ease-in duration-200"
+                  leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                  leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                >
+                  <form className="bg-white rounded-lg shadow-2xl w-[500px]">
+                    <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
+                      <span className="material-icons-outlined text-gray-400">
+                        Edit Event
+                      </span>
+                      <div>
+                        <button onClick={(e) => handleCloseEditModal}>
+                          <span className="material-icons-outlined text-gray-400">
+                            close
+                          </span>
+                        </button>
+                      </div>
+                    </header>
+                    <div className="p-3">
+                      <div className="grid grid-cols-1/5 items-end gap-y-7">
+                        <input
+                          type="text"
+                          name="title"
+                          placeholder="Add title"
+                          value={title}
+                          className="pt-1 border-0 text-gray-600 text-xl font-semibold pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-[#52ab98]"
+                          onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                          <DateTimePicker
+                            label="startDate"
+                            value={dayjs(start)}
+                            className=" w-full focus:border-[#52ab98]"
+                            onChange={(newDate) => setStart(newDate)}
+                          />
+                          <DateTimePicker
+                            label="endDate"
+                            value={dayjs(end)}
+                            className="w-full focus:border-[#52ab98]"
+                            onChange={(newDate) => setEnd(newDate)}
+                          />
+                        </LocalizationProvider>
+
+                        <SwitchCheckbox
+                          label="All Day"
+                          checked={allDay}
+                          onChange={(e) => setAllDay(e.target.checked)}
+                        />
+                        <SwitchCheckbox
+                          label="Flexible"
+                          checked={flexible}
+                          onChange={(e) => setFlexible(e.target.checked)}
+                        />
+                        <SwitchCheckbox
+                          label="Repeat"
+                          checked={repeat}
+                          onChange={(e) => setRepeat(e.target.checked)}
+                        />
+                        <div className="inline-flex">
+                          <HoverRating
+                            label="Priority Level"
+                            level={priority}
+                            onChange={handlePriorityChange}
+                          />
+                        </div>
+
+                        <input
+                          type="text"
+                          name="description"
+                          placeholder="Add a description"
+                          value={description}
+                          className="pt-1 border-0 text-gray-600 pb-2 w-full border-b-2 border-gray-200 focus:outline-none focus:ring-0 focus:border-[#52ab98]"
+                          onChange={(e) => setDescription(e.target.value)}
+                        />
+                      </div>
+                    </div>
+                    <footer className="flex justify-end border-t p-3 mt-5">
+                      <button
+                        type="submit"
+                        onClick={handleDelete}
+                        className="bg-[#52ab98] hover:bg-blue-600 px-6 py-2 rounded text-white"
+                      >
+                        Delete
+                      </button>
+                      <button
+                        type="submit"
+                        onClick={handleSubmitEdit}
+                        className="bg-[#52ab98] hover:bg-blue-600 px-6 py-2 rounded text-white"
+                      >
+                        Save
+                      </button>
+                    </footer>
+                  </form>
                 </Transition.Child>
               </div>
             </div>
@@ -302,5 +518,5 @@ export default function Calendar() {
         </Transition.Root>
       </main >
     </>
-  )
+  );
 }
