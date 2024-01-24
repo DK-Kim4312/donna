@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Link from 'next/link'
 import '../globals.css'
-import ProfileTab from './profile-tab'
+import ProfileTab from '../../components/ProfileTab'
 
 export default function AccountPage({ session }) {
     const supabase = createClientComponentClient()
@@ -52,8 +52,19 @@ export default function AccountPage({ session }) {
                         url={avatar_url}
                         placeholder={firstname ? firstname.charAt(0) : '?'} />
                 </div>
-
             </aside>
+            
+                <div className='relative grid grid-rows-1 grid-flow-col gap-4'>
+                    <div className='bg-[#ccc] h-full w-[20vw] mt-2 mb-10'>
+                        01
+                    </div>
+                    <div className='bg-[#ccc] h-full w-[20vw]'>
+                        02
+                    </div>
+                    <div className='bg-[#ccc] h-full w-[20vw]'>
+                        03
+                    </div>
+                </div>
         </div>
     )
 }

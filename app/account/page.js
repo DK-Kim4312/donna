@@ -12,9 +12,6 @@ export default async function Account() {
   } = await supabase.auth.getSession()
 
   return (
-    <div>
       <AccountPage session={session}/>
-    </div>
-
   );
 }
