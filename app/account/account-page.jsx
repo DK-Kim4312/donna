@@ -100,7 +100,7 @@ export default function AccountPage({ session }) {
     const tabs = [Overview, Security, Preferences, Password, Settings]
 
     return (
-        <div className="flex flex-row min-w-[100vw] min-h-[100vh] w-[100vw] h-[100vh] max-w-[100vw] max-h-[100vh] overflow-hidden">
+        <div className="flex max-h-[100vh] max-w-[100vw] overflow-hidden">
             <aside className="relative flex flex-col w-[283px] shrink-0 pl-[25px] pt-[36px]">
                 <div className="relative h-[90px] w-[283px] shrink-0">
                     <ProfileTab
@@ -128,8 +128,11 @@ export default function AccountPage({ session }) {
                     </button>
                 </div>
             </aside>
+            <main>
+                {tabs[activeTab]()}
+            </main>
 
-            {tabs[activeTab]()}
+
 
         </div>
     )
