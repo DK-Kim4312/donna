@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Image from 'next/image'
+import styles from './avatar-image.module.css'
 
 export default function Avatar({ uid, url, size, onUpload }) {
   const supabase = createClientComponentClient()
@@ -60,8 +61,8 @@ export default function Avatar({ uid, url, size, onUpload }) {
           height={size}
           src={avatarUrl}
           alt="Avatar"
-          className="avatar image"
-          style={{ height: size, width: size }}
+          className={styles.avatar}
+          style={{height: size, width: size}}
         />
       ) : (
         <div className="avatar no-image" style={{ height: size, width: size }} />

@@ -1,18 +1,22 @@
 'use client'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useContext } from 'react'
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import '../globals.css'
 import ProfileTab from '../../components/ProfileTab'
-import OverviewPage from './subpages/OverviewPage'
+import { PreferencesIcon, SecurityIcon, PasswordIcon, SettingsIcon } from '../../styles/Icons'
+import Avatar from '../profile/avatar'
+import Link from 'next/link'
+
 
 export default function AccountPage({ session }) {
     const supabase = createClientComponentClient()
     const [loading, setLoading] = useState(true)
     const [firstname, setFirstname] = useState(null)
+    const [lastname, setLastname] = useState(null)
     const [avatar_url, setAvatarUrl] = useState(null)
     const user = session?.user
 
-    const [activeTab, setActiveTab] = useState(0)
+    var [activeTab, setActiveTab] = useState(0)
 
     const getProfile = useCallback(async () => {
         try {
@@ -20,7 +24,7 @@ export default function AccountPage({ session }) {
 
             const { data, error, status } = await supabase
                 .from('profiles')
-                .select(`firstname, avatar_url`)
+                .select(`firstname, lastname, avatar_url`)
                 .eq('id', user?.id)
                 .single()
 
@@ -29,6 +33,7 @@ export default function AccountPage({ session }) {
             }
 
             if (data) {
+                setLastname(data.lastname)
                 setFirstname(data.firstname)
                 setAvatarUrl(data.avatar_url)
             }
@@ -45,15 +50,6 @@ export default function AccountPage({ session }) {
 
     // main
 
-
-
-    const Overview = () => {
-
-        return (
-            <OverviewPage />
-        )
-
-    }
 
     const Security = () => {
         return (
@@ -97,10 +93,11 @@ export default function AccountPage({ session }) {
 
     }
 
-    const tabs = [Overview, Security, Preferences, Password, Settings]
+    const tabs = ["", Security, Preferences, Password, Settings]
 
     return (
-        <div className="flex max-h-[100vh] max-w-[100vw] overflow-hidden">
+
+        <div className="flex max-h-[100vh] min-h-[100vh] max-w-[100vw] min-w-[100vw] overflow-hidden">
             <aside className="relative flex flex-col w-[283px] shrink-0 pl-[25px] pt-[36px]">
                 <div className="relative h-[90px] w-[283px] shrink-0">
                     <ProfileTab
@@ -128,11 +125,87 @@ export default function AccountPage({ session }) {
                     </button>
                 </div>
             </aside>
-            <main>
-                {tabs[activeTab]()}
-            </main>
 
+            {activeTab === 0 ? <div className='flex ml-10 mt-10 mb-10 mr-10'>
+                <div className="w-[25vw] h-[90vh] mr-10 relative bg-white shadow border b-1 flex flex-col items-center">
+                    <div className="mt-10">
+                        <Avatar
+                            uid={user.id}
+                            url={avatar_url}
+                            size={150}
+                            placeholder={firstname ? firstname.charAt(0) : '?'}
+                            onUpload={(url) => {
+                                setAvatarUrl(url)
+                                updateProfile({ firstname, lastname, username, organization, avatar_url: url })
+                            }}
+                        />
+                    </div>
+                    <div className="mt-5">
+                        <div className="text-lg">{firstname} {lastname}</div>
+                        <Link className='text-[#52ab98]' href="/upgrade-to-premium">Upgrade To Premium </Link>
+                    </div>
+                    <div className="mt-5">
+                        <div className="text-sm">{user.email}</div>
+                        <Link className=" text-[#52ab98] text-sm" href="/profile">Update Account Details</Link>
+                    </div>
+                    <div className="mt-[35vh]">
+                        <form action="/auth/logout" method="post">
+                            <button type="submit">
+                                Log out
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div className="flex flex-col">
+                    <div className="h-[calc(45vh-20px)] w-[43vw] grid grid-cols-2 gap-10">
+                        <div className="w-[20vw] h-[100%] relative bg-white shadow border b-1 flex flex-col items-center justify-center">
+                            <div className="self-stretch flex-col justify-start items-center gap-[18px] inline-flex">
+                                <div className="text-black text-3xl font-medium font-['Poppins']">Preferences</div>
+                                <PreferencesIcon />
+                                <div className="w-[179px] text-center text-black text-xs font-medium font-['Poppins']">Fine tune your Personal Assistant to work exactly the way you want!</div>
+                                <button className="justify-start items-center gap-2.5 inline-flex" onClick={() => setActiveTab(1)}>
+                                    Update Preferences
+                                </button>
+                            </div>
+                        </div>
 
+                        <div className="w-[20vw] h-[100%] relative bg-white shadow border b-1 flex flex-col items-center justify-center">
+                            <div className="self-stretch flex-col justify-start items-center gap-[18px] inline-flex">
+                                <div className="text-black text-3xl font-medium font-['Poppins']">Security</div>
+                                <SecurityIcon />
+                                <div className="w-[179px] text-center text-black text-xs font-medium font-['Poppins']">Keep your Verification Methods and Security Methods updated!</div>
+                                <button className="justify-start items-center gap-2.5 inline-flex" onClick={() => setActiveTab(2)}>
+                                    Update Security Info
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="h-[calc(45vh-20px)] w-[43vw] mt-10 grid grid-cols-2 gap-10">
+                        <div className="w-[20vw] h-[100%] relative bg-white shadow border b-1 flex flex-col items-center justify-center">
+                            <div className="self-stretch flex-col justify-start items-center gap-[18px] inline-flex">
+                                <div className="text-black text-3xl font-medium font-['Poppins']">Password</div>
+                                <PasswordIcon />
+                                <div className="w-[179px] text-center text-black text-xs font-medium font-['Poppins']">Make your password stronger, or change it if you want to!</div>
+                                <button className="justify-start items-center gap-2.5 inline-flex" onClick={() => setActiveTab(3)}>
+                                    Update Password
+                                </button>
+                            </div>
+                        </div>
+
+                        <div className="w-[20vw] h-[100%] relative bg-white shadow border b-1 flex flex-col items-center justify-center">
+                            <div className="self-stretch flex-col justify-start items-center gap-[18px] inline-flex">
+                                <div className="text-black text-3xl font-medium font-['Poppins']">Settings</div>
+                                <SettingsIcon />
+                                <div className="w-[179px] text-center text-black text-xs font-medium font-['Poppins']">Change your settings to personalise the feel of your app and see how we manage your data!</div>
+                                <button className="justify-start items-center gap-2.5 inline-flex" onClick={() => setActiveTab(4)}>
+                                    Update Settings
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> : tabs[activeTab]()
+            }
 
         </div>
     )
