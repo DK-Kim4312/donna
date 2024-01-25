@@ -21,8 +21,8 @@ export default async function Home() {
     <div className="bg-[#fff] h-[100%] w-[100%] flex flex-col">
       <h1 className="mt-[30vh] m-auto text-3xl flex font-bold">Welcome to Donna!</h1>
       <div className=" m-auto w-[8em]">
-        <Link className="flex" href="/profile">
-          Go to Profile
+        <Link className="flex" href="/account">
+          Go to Account
         </Link>
         <Link className="flex" href="/main">
           Go to Calendar
