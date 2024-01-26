@@ -6,6 +6,7 @@ import ProfileTab from '../../components/ProfileTab'
 import { PreferencesIcon, SecurityIcon, PasswordIcon, SettingsIcon } from '../../styles/Icons'
 import Avatar from '../profile/avatar'
 import Link from 'next/link'
+import PasswordPage from '../account/subpages/PasswordPage'
 
 
 export default function AccountPage({ session }) {
@@ -75,9 +76,7 @@ export default function AccountPage({ session }) {
     const Password = () => {
 
         return (
-            <div className='bg-[#ccc] h-full w-[20vw]'>
-                Password
-            </div>
+            <PasswordPage />
         )
 
 

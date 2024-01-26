@@ -28,7 +28,7 @@ export default function ProfileTab({ uid, url, firstname }) {
 
     function toProfile() {
         if (uid) {
-            window.location.href = `/profile`
+            window.location.href = `/account`
         } else {
             window.location.href = `/login`
         }

@@ -48,13 +48,13 @@ export default function EventModal() {
     }
     toast("Event has been created.");
 
-    
+
 
     setShowEventModal(false);
   }
   return (
 
-      <form className="bg-white rounded-lg shadow-2xl w-[500px]">
+      <form className="absolute bg-white rounded-lg shadow-2xl w-[500px] z-10 mt-[10vh] ml-[40vw]">
         <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
           <span className="material-icons-outlined text-gray-400">
             Event Menu

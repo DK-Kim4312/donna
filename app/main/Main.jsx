@@ -75,7 +75,7 @@ export default function Main({ session }) {
             <CreateEventButton />
             <GenerateScheduleButton />
           </div>
-          <div className="absolute bottom-[5px] w-[100%] ml-[5px] mr-[5px]">
+          <div className="bottom-[5px] w-[100%] ml-[5px] mr-[5px] mt-[150px]">
             <ChatView />
           </div>
         </aside>
