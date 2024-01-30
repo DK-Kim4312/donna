@@ -7,6 +7,7 @@ import { PreferencesIcon, SecurityIcon, PasswordIcon, SettingsIcon } from '../..
 import Avatar from '../profile/avatar'
 import Link from 'next/link'
 import PasswordPage from '../account/subpages/PasswordPage'
+import SettingsPage from '../account/subpages/SettingsPage'
 
 
 export default function AccountPage({ session }) {
@@ -85,9 +86,7 @@ export default function AccountPage({ session }) {
     const Settings = () => {
 
         return (
-            <div className='bg-[#ccc] h-full w-[20vw]'>
-                Settings
-            </div>
+            <SettingsPage />
         )
 
     }
