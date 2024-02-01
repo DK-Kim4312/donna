@@ -3,8 +3,8 @@ export default function SettingsPage() {
 
     const Language = () => {
         return (
-            <div className="flex flex-col items-center justify-center border b-1 ">
-                <h1 className="text-2xl font-bold">Language</h1>
+            <div className="flex flex-col items-center justify-center ml-5 mr-5 border b-1">
+                <h1 className=" flex flex-row flex-grow text-2xl font-bold">Language</h1>
                 <p className="text-xl">English</p>
             </div>
         )
@@ -29,7 +29,7 @@ export default function SettingsPage() {
     }
 
     return (
-        <div className="flex flex-col items-center justify-center bg-white">
+        <div className="flex flex-col items-center justify-center w-full">
             <h1>Settings Page</h1>
             <Language />
             <Region />
