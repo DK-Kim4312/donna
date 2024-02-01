@@ -42,10 +42,9 @@ export default function Calendar() {
   const [idToEdit, setIdToEdit] = useState<number | null>(null)
   const [showAddModal, setShowAddModal] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
-
+  
   const [title, setTitle] = useState<String>();
   const [description, setDescription] = useState<String>('');
-
   const [start, setStart] = useState<Date>("");
   const [end, setEnd] = useState<Date>("");
   const [allDay, setAllDay] = useState<boolean>(false);
