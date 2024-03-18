@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Donna AI - Calendar + Chat AI Assistant Web App
+
+Donna AI is an innovative application that combines the functionalities of a calendar and a chat-based AI assistant. With Donna, users can manage their schedules efficiently while also benefiting from AI-powered assistance in various tasks.
+
+## Features
+
+- **Calendar Integration**: Donna AI seamlessly integrates a calendar system, allowing users to schedule and manage their events, appointments, and tasks effortlessly.
+
+- **Chat-based AI Assistant**: Donna provides an intuitive chat interface where users can interact with an AI assistant to perform tasks, set reminders, receive notifications, and more.
+
+- **NextJS**: The frontend of Donna AI is built using NextJS, a popular React framework known for its performance and flexibility.
+
+- **Supabase (PostgreSQL)**: Donna AI utilizes Supabase, a powerful open-source platform, for its backend infrastructure. PostgreSQL is employed as the database management system, ensuring reliability and scalability.
 
 ## Getting Started
 
-First, run the development server:
+To get started with Donna AI, follow these steps:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Clone this repository to your local machine:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    ```
+    git clone https://github.com/DK-Kim4312/donna.git
+    ```
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+2. Navigate to the project directory:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    ```
+    cd donna
+    ```
 
-## Learn More
+3. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+    ```
+    npm install
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. Set up environment variables:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+   - Create a `.env.local` file in the root directory.
+   - Add the following environment variables and replace the placeholder values with your own:
+   
+    ```
+    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+    GOOGLE_CLIENT_ID=your_google_client_id
+    GOOGLE_CLIENT_SECRET=your_google_client_secret
+    ```
 
-## Deploy on Vercel
+5. Run the development server:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    ```
+    npm run dev
+    ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+6. Open your browser and visit `http://localhost:3000` to access Donna AI.
+
+## Contributing
+
+Contributions to Donna AI are welcome! If you'd like to contribute, please follow these guidelines:
+
+1. Fork the repository and create your branch from `main`.
+2. Make your changes and ensure they adhere to the project's coding style.
+3. Test your changes thoroughly.
+4. Create a pull request with a clear description of your changes.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+## Support
+
+If you encounter any issues or have any questions or suggestions, feel free to [open an issue](https://github.com/DK-Kim4312/donna/issues) on GitHub.
+
+## Credits
+
+Donna AI is developed and maintained by [DK-Kim4312](https://github.com/DK-Kim4312) and contributors.
+
+Thank you for using Donna AI! We hope it enhances your productivity and simplifies your daily tasks.
