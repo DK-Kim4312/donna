@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export default function ProfileTab({ user }) {
+    
 
     const supabase = createClientComponentClient()
     const [loading, setLoading] = useState(true);
@@ -16,9 +17,9 @@ export default function ProfileTab({ user }) {
         async function fetchUser() {
             const response = await fetch(`/api/user/get/${user.id}`)
             const data = await response.json()
+            
             setFirstname(data.firstname)
             setAvatar_Url(data.avatar_url)
-
         }
         async function downloadImage(path) {
             try {

@@ -15,6 +15,7 @@ export default function Main({ session }) {
   const user = session?.user
 
 
+
   return (
     <React.Fragment>
       {showEventModal && <EventModal />}
