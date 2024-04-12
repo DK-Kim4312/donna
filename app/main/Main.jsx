@@ -49,9 +49,8 @@ export default function Main({ session }) {
 
     } catch (error) {
       console.log('error', error.message)
-    } finally {
-      setLoading(false)
     }
+    setLoading(false)
   }, [user, supabase])
 
   useEffect(() => {
