@@ -25,10 +25,10 @@ export default function Main({ session }) {
             <ProfileTab
               user={user} />
           </div>
-          <div className="relative flex flex-row items-center justify-center">
+          {/* <div className="relative flex flex-row items-center justify-center">
             <CreateEventButton />
             <GenerateScheduleButton />
-          </div>
+          </div> */}
           <div className="bottom-[5px] w-[100%] ml-[5px] mr-[5px] mt-[150px]">
             <ChatView />
           </div>
