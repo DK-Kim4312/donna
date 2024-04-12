@@ -1,13 +1,10 @@
 'use client'
-import React, { useEffect, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import React, { use, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function ProfileTab({ user }) {
-    
 
-    const supabase = createClientComponentClient()
     const [loading, setLoading] = useState(true);
     const [firstname, setFirstname] = useState('');
     const [avatar_url, setAvatar_Url] = useState('');
@@ -17,36 +14,32 @@ export default function ProfileTab({ user }) {
         async function fetchUser() {
             const response = await fetch(`/api/user/get/${user.id}`)
             const data = await response.json()
-            console.log(data)
             setFirstname(data.firstname)
             setAvatar_Url(data.avatar_url)
         }
-        async function downloadImage(path) {
-            try {
-                const { data, error } = await supabase.storage.from('avatars').download(path)
-                if (error) {
-                    throw error
-                }
-
-                const url = URL.createObjectURL(data)
-                setAvatarUrl(url)
-            } catch (error) {
-                console.log('Error downloading image: ', error)
-            }
-        }
         if (user) {
             fetchUser()
-
-            if (avatar_url) downloadImage(avatar_url)
-
         }
 
-        setLoading(false)
-    }
-        , [user])
+        
+    }, [user])
+
+    useEffect(() => {
+        async function downloadImage(path) {
+            const response = await fetch(`/api/user/get/avatar/${path}`)
+            const data = await response.blob()
+
+            const url = URL.createObjectURL(data)
+            setAvatarUrl(url)
+        }
+        if (avatar_url) {
+            downloadImage(avatar_url)
+            setLoading(false)
+        }
+    }, [avatar_url])
 
     function toProfile() {
-        if (uid) {
+        if (user) {
             window.location.href = `/profile`
         } else {
             window.location.href = `/login`
@@ -54,14 +47,14 @@ export default function ProfileTab({ user }) {
     }
 
     function toPremium() {
-        if (uid) {
+        if (user) {
             window.location.href = `/upgrade-to-premium`
         } else {
             window.location.href = `/login`
         }
     }
 
-    if(loading) return (<div>Loading...</div>);
+    if (loading) return (<div>Loading...</div>);
     return (
 
         <div className="relative inline-flex shrink-0 rounded-md bg-[#fff] h-12 w-[80%] min-w-[80%]">
