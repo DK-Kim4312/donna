@@ -1,5 +1,7 @@
 // landing page
 import React from "react";
+import Link from "next/link";
+
 
 
 export default function Landing() {
@@ -15,15 +17,15 @@ export default function Landing() {
                 </p>
 
                 <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-                    <a
-                        href="/login"
+                    <Link
+                        href="/main"
                         className="p-6 mt-6 text-left border w-96 rounded-xl bg-white hover:text-[#52ab98] focus:text-[#52ab98]"
                     >
                         <h3 className="text-2xl font-bold">Sign Up for Beta Testing &rarr;</h3>
                         <p className="mt-4 text-xl">
                             Try our beta stage product for free.
                         </p>
-                    </a>
+                    </Link>
                 </div>
             </main>
 

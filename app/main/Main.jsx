@@ -32,13 +32,13 @@ export default function Main({ session }) {
     try {
       setLoading(true)
 
-      const { data, error, status } = await supabase
-        .from('profiles')
+      const { data, error } = await supabase
+        .from('users')
         .select(`firstname, avatar_url`)
         .eq('id', user?.id)
         .single()
 
-      if (error && status !== 406) {
+      if (error) {
         throw error
       }
 
@@ -46,18 +46,24 @@ export default function Main({ session }) {
         setFirstname(data.firstname)
         setAvatarUrl(data.avatar_url)
       }
+
     } catch (error) {
-      alert('Error loading user data!')
+      console.log('error', error.message)
     } finally {
       setLoading(false)
     }
   }, [user, supabase])
 
   useEffect(() => {
-    getProfile()
-  }, [user, getProfile])
-  // ---------Sidebar -----------
+    if (user) {
+      getProfile()
+    }
 
+  }, [user, getProfile])
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
   return (
     <React.Fragment>
       {showEventModal && <EventModal />}
@@ -79,7 +85,7 @@ export default function Main({ session }) {
             <ChatView />
           </div>
         </aside>
-          <Calendar />
+        <Calendar user={user} />
 
       </div>
 

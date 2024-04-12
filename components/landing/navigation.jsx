@@ -11,7 +11,7 @@ export default function Navigation() {
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="disabled" href="#">
             About
           </Link>
         </NavbarItem>
@@ -21,7 +21,7 @@ export default function Navigation() {
           </Link>
         </NavbarItem>
         <NavbarItem>
-          <Link color="foreground" href="#">
+          <Link color="foreground" href="/upgrade-to-premium">
             Pricing
           </Link>
         </NavbarItem>
