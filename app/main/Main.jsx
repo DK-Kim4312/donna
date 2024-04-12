@@ -14,7 +14,7 @@ export default function Main({ session }) {
   // ---------Sidebar -----------
   const user = session?.user
 
-  }
+
   return (
     <React.Fragment>
       {showEventModal && <EventModal />}
@@ -23,7 +23,7 @@ export default function Main({ session }) {
         <aside className="relative flex flex-col w-[360px] shrink-0 pl-[25px] pt-[36px]">
           <div className="relative h-[90px] w-[360px] shrink-0">
             <ProfileTab
-              user={user}/>
+              user={user} />
           </div>
           <div className="relative flex flex-row items-center justify-center">
             <CreateEventButton />
