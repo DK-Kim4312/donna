@@ -21,7 +21,7 @@ export default function ProfileForm({ session }) {
       setLoading(true)
 
       const { data, error, status } = await supabase
-        .from('profiles')
+        .from('users')
         .select(`firstname, lastname, username, organization, avatar_url`)
         .eq('id', user?.id)
         .single()
@@ -38,7 +38,7 @@ export default function ProfileForm({ session }) {
         setAvatarUrl(data.avatar_url)
       }
     } catch (error) {
-      alert('Error loading user data!')
+      console.log('error', error)
     } finally {
       setLoading(false)
     }
@@ -52,7 +52,7 @@ export default function ProfileForm({ session }) {
     try {
       setLoading(true)
 
-      const { error } = await supabase.from('profiles').upsert({
+      const { error } = await supabase.from('users').upsert({
         id: user?.id,
         firstname,
         lastname,

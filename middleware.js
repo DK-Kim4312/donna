@@ -13,9 +13,6 @@ export async function middleware(req) {
   if (user && req.nextUrl.pathname === '/login') {
     return NextResponse.redirect(new URL('/', req.url))
   }
-  if (!user && req.nextUrl.pathname === '/main') {
-    return NextResponse.redirect(new URL('/login', req.url))
-  }
 
   return res
 }
