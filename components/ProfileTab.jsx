@@ -60,7 +60,7 @@ export default function ProfileTab({ user }) {
         }
     }
 
-
+    if(loading) return (<div>Loading...</div>);
     return (
 
         <div className="relative inline-flex shrink-0 rounded-md bg-[#fff] h-12 w-[80%] min-w-[80%]">

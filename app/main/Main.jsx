@@ -2,7 +2,7 @@
 import React, { useContext } from "react";
 import EventModal from "../../components/EventModal";
 import ChatView from "../../components/ChatView";
-import ProfileTab from "./profile-tab";
+import ProfileTab from "../../components/ProfileTab";
 import CreateEventButton from "../../components/CreateEventButton";
 import GenerateScheduleButton from "../../components/GenerateScheduleButton";
 import Calendar from "../../components/Calendar";
