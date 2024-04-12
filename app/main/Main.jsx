@@ -14,8 +14,6 @@ export default function Main({ session }) {
   // ---------Sidebar -----------
   const user = session?.user
 
-  if (loading) {
-    return <div>Loading...</div>
   }
   return (
     <React.Fragment>
