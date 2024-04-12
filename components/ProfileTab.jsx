@@ -17,7 +17,7 @@ export default function ProfileTab({ user }) {
         async function fetchUser() {
             const response = await fetch(`/api/user/get/${user.id}`)
             const data = await response.json()
-            
+            console.log(data)
             setFirstname(data.firstname)
             setAvatar_Url(data.avatar_url)
         }
