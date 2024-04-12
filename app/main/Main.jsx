@@ -1,24 +1,26 @@
 'use client';
-import React, { useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import EventModal from "../../components/EventModal";
 import ChatView from "../../components/ChatView";
 import ProfileTab from "../../components/ProfileTab";
-import CreateEventButton from "../../components/CreateEventButton";
-import GenerateScheduleButton from "../../components/GenerateScheduleButton";
+// import CreateEventButton from "../../components/CreateEventButton";
+// import GenerateScheduleButton from "../../components/GenerateScheduleButton";
 import Calendar from "../../components/Calendar";
 import GlobalContext from "../../context/GlobalContext";
+import CalendarContext from "../../components/CalendarContext";
 
 export default function Main({ session }) {
-  const { showEventModal } = useContext(GlobalContext);
+  const { setUser } = useContext(GlobalContext);
 
   // ---------Sidebar -----------
   const user = session?.user
-
-
+  useEffect(() => {
+    setUser(user);
+  }, [user]);
 
   return (
     <React.Fragment>
-      {showEventModal && <EventModal />}
+      {/* {showEventModal && <EventModal />} */}
       <div className="flex flex-row min-w-[100vw] min-h-[100vh] w-[100vw] h-[100vh] max-w-[100vw] max-h-[100vh] overflow-hidden">
         {/*Sidebar*/}
         <aside className="relative flex flex-col w-[360px] shrink-0 pl-[25px] pt-[36px]">
@@ -34,7 +36,8 @@ export default function Main({ session }) {
             <ChatView />
           </div>
         </aside>
-        <Calendar user={user} />
+        {/* <Calendar user={user} /> */}
+        <CalendarContext />
 
       </div>
 

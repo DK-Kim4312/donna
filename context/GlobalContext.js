@@ -1,22 +1,5 @@
-import React from "react";
+import {createContext} from "react";
 
-const GlobalContext = React.createContext(
-    {
-        monthIndex: 0,
-        setMonthIndex: (index) => {},
-        miniCalendarMonth: 0,
-        setMiniCalendarMonth: (index) => {},
-        setDaySelected: (day) => {},
-        daySelected: null,
-        showEventModal: false,
-        setShowEventModal: () => {},
-        calendarTypeSelected: null,
-        setCalendarTypeSelected: () => {},
-        selectedEvent: null,
-        setSelectedEvent: () => {},
-        dispatchCalEvent: ({ type, payload }) => {},
-        savedEvents: [],
-    }
-);
+const GlobalContext = createContext();
 
 export default GlobalContext;

@@ -17,7 +17,7 @@ export default function ProfileTab({ user }) {
             setFirstname(data.firstname)
             setAvatar_Url(data.avatar_url)
         }
-        if (user) {
+        if (user && user.id) {
             fetchUser()
         }
 
@@ -34,8 +34,8 @@ export default function ProfileTab({ user }) {
         }
         if (avatar_url) {
             downloadImage(avatar_url)
-            setLoading(false)
-        }
+        } 
+        setLoading(false)
     }, [avatar_url])
 
     function toProfile() {

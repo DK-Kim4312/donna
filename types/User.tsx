@@ -1,4 +1,3 @@
-
 export type User = {
     id: string ; //uuid
     updated_at: string; // timestamptz

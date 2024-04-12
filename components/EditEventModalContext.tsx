@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState, useContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -10,38 +10,17 @@ import dayjs, { Dayjs } from 'dayjs';
 import { toast } from "sonner"
 import { Event } from "../types/Event"
 import { Checkbox } from '@mui/material';
+import GlobalContext from '../context/GlobalContext';
 import { v4 as uuidv4 } from 'uuid';
 
-export default function EditEventModal({
-    showEditModal,
-    setShowEditModal,
-    user,
-    numEvents,
-    setNumEvents,
-    event_id,
-    original_title,
-    original_start,
-    original_end,
-    original_allDay,
-}
-    : {
-        showEditModal: boolean,
-        setShowEditModal: (showAddModal: boolean) => void,
-        user: any,
-        numEvents: number,
-        setNumEvents: (numEvents: number) => void
-        event_id: string,
-        original_title: string,
-        original_start: Date,
-        original_end: Date,
-        original_allDay: boolean
-    }) {
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [title, setTitle] = useState<string>(original_title ? original_title : '');
+export default function EditEventModalContext() {
+    const { user, showEditModal, setShowEditModal, selectedEvent, setSelectedEvent, dispatchCalEvent } = useContext(GlobalContext);
+
+    const [title, setTitle] = useState<string>(selectedEvent ? selectedEvent.title : '');
     const [description, setDescription] = useState<string>('');
-    const [start, setStart] = useState<Date>(original_start ? original_start : new Date());
-    const [end, setEnd] = useState<Date>(original_end ? original_end : new Date());
-    const [allDay, setAllDay] = useState<boolean>(original_allDay);
+    const [start, setStart] = useState<Date>(selectedEvent ? selectedEvent.start : new Date());
+    const [end, setEnd] = useState<Date>(selectedEvent ? selectedEvent : new Date());
+    const [allDay, setAllDay] = useState<boolean>(selectedEvent ? selectedEvent.allDay : false);
     const [flexible, setFlexible] = useState(false);
     const [repeat, setRepeat] = useState(false);
     const [priority, setPriority] = useState(3);
@@ -52,29 +31,14 @@ export default function EditEventModal({
             return;
         }
         const newEvent: Event = {
-            id: event_id,
+            id: selectedEvent.id,
             user_id: user.id,
             title: title,
             start: start,
             end: end,
             allDay: allDay,
         }
-        const response = await fetch('/api/event/edit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newEvent),
-        });
-        if (response.ok) {
-            // Handle success
-            toast.success("Event edited successfully");
-            setNumEvents(numEvents + 1);
-
-        } else {
-            // Handle errors
-            toast.error("Error creating event");
-        }
+        dispatchCalEvent({ type: "UPDATE_EVENT", payload: newEvent });
     }
 
     function handleCloseEditModal() {
@@ -113,25 +77,10 @@ export default function EditEventModal({
             return;
         }
         const eventKeys = {
-            id: event_id,
+            id: selectedEvent.id,
             user_id: user.id,
         }
-        const response = await fetch('/api/event/delete', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(eventKeys),
-        });
-        if (response.ok) {
-            // Handle success
-            toast.success("Event deleted successfully");
-            setNumEvents(numEvents - 1);
-
-        } else {
-            // Handle errors
-            toast.error("Error deleting event");
-        }
+        dispatchCalEvent({ type: "DELETE_EVENT", payload: eventKeys });
     }
 
 

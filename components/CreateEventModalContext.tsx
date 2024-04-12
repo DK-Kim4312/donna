@@ -1,143 +1,67 @@
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useState, useContext } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/20/solid'
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import HoverRating from "../styles/objects/HoverRating";
-import SwitchCheckbox from "../styles/objects/SwitchCheckbox";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { toast } from "sonner"
 import { Event } from "../types/Event"
-import { Checkbox } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
+import { Checkbox } from '@mui/material';
+import GlobalContext from '../context/GlobalContext';
 
-export default function EditEventModal({
-    showEditModal,
-    setShowEditModal,
-    user,
-    numEvents,
-    setNumEvents,
-    event_id,
-    original_title,
-    original_start,
-    original_end,
-    original_allDay,
-}
-    : {
-        showEditModal: boolean,
-        setShowEditModal: (showAddModal: boolean) => void,
-        user: any,
-        numEvents: number,
-        setNumEvents: (numEvents: number) => void
-        event_id: string,
-        original_title: string,
-        original_start: Date,
-        original_end: Date,
-        original_allDay: boolean
-    }) {
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [title, setTitle] = useState<string>(original_title ? original_title : '');
+export default function CreateEventModal() {
+    const { user, showAddModal, setShowAddModal, selectedDateStart,setSelectedDateStart, selectedDateEnd, setSelectedDateEnd, dispatchCalEvent } = useContext(GlobalContext);
+
+    const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
-    const [start, setStart] = useState<Date>(original_start ? original_start : new Date());
-    const [end, setEnd] = useState<Date>(original_end ? original_end : new Date());
-    const [allDay, setAllDay] = useState<boolean>(original_allDay);
+    const [start, setStart] = useState<Date>(selectedDateStart ? selectedDateStart : new Date());
+    const [end, setEnd] = useState<Date>(selectedDateEnd ? selectedDateEnd : new Date());
+    const [allDay, setAllDay] = useState<boolean>(false);
     const [flexible, setFlexible] = useState(false);
     const [repeat, setRepeat] = useState(false);
     const [priority, setPriority] = useState(3);
-
-    async function handleEditEvent() {
+    
+    async function handleAddEvent() {
         if (!user) {
-            alert("Please log in to edit event");
+            alert("Please log in to create an event");
             return;
         }
         const newEvent: Event = {
-            id: event_id,
+            id: uuidv4(),
             user_id: user.id,
             title: title,
             start: start,
             end: end,
             allDay: allDay,
         }
-        const response = await fetch('/api/event/edit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(newEvent),
-        });
-        if (response.ok) {
-            // Handle success
-            toast.success("Event edited successfully");
-            setNumEvents(numEvents + 1);
 
-        } else {
-            // Handle errors
-            toast.error("Error creating event");
-        }
-    }
-
-    function handleCloseEditModal() {
-        setShowEditModal(false);
-    }
-
-    function handlePriorityChange(newPriority: number) {
-        setPriority(newPriority);
+        dispatchCalEvent({ type: "PUSH_EVENT", payload: newEvent });
     }
 
     function handleCheckAllDay() {
         setAllDay(!allDay);
     }
 
+    function handleCloseAddModal() {
+        setShowAddModal(false);
+    }
 
-    function handleSubmitEdit(e) {
+    function handlePriorityChange(newPriority: number) {
+        setPriority(newPriority);
+    }
+
+    function handleSubmitAdd(e) {
         e.preventDefault();
-        handleEditEvent();
-        handleCloseEditModal();
+        handleAddEvent();
+        handleCloseAddModal();
     }
-
-
-    function handleSubmitDelete(e) {
-        e.preventDefault();
-        if (confirm("Are you sure you want to delete this event?")) {
-            handleDeleteEvent();
-            handleCloseEditModal();
-        }
-
-    }
-
-
-    async function handleDeleteEvent() {
-        if (!user) {
-            alert("Please log in to delete event");
-            return;
-        }
-        const eventKeys = {
-            id: event_id,
-            user_id: user.id,
-        }
-        const response = await fetch('/api/event/delete', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(eventKeys),
-        });
-        if (response.ok) {
-            // Handle success
-            toast.success("Event deleted successfully");
-            setNumEvents(numEvents - 1);
-
-        } else {
-            // Handle errors
-            toast.error("Error deleting event");
-        }
-    }
-
 
     return (
-        <Transition.Root show={showEditModal} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={setShowEditModal}>
+        <Transition.Root show={showAddModal} as={Fragment}>
+            <Dialog as="div" className="relative z-10" onClose={setShowAddModal}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
@@ -164,10 +88,10 @@ export default function EditEventModal({
                             <form className="bg-white rounded-lg shadow-2xl w-[500px]">
                                 <header className="bg-gray-100 px-4 py-2 flex justify-between items-center">
                                     <span className="material-icons-outlined text-gray-400">
-                                        Edit Event
+                                        Add Event
                                     </span>
                                     <div>
-                                        <button onClick={(e) => handleCloseEditModal}>
+                                        <button onClick={(e) => handleCloseAddModal}>
                                             <span className="material-icons-outlined text-gray-400">
                                                 close
                                             </span>
@@ -214,7 +138,7 @@ export default function EditEventModal({
                                                 onChange={(e) => setFlexible(e.target.checked)}
                                             />
                                         </div>
-
+                                        
                                         <div className="flex flex-row justify-between align-center">
                                             <p> Repeat </p>
                                             <Checkbox
@@ -222,6 +146,7 @@ export default function EditEventModal({
                                                 onChange={(e) => setRepeat(e.target.checked)}
                                             />
                                         </div>
+
                                         <div className="inline-flex">
                                             <HoverRating
                                                 label="Priority Level"
@@ -243,14 +168,7 @@ export default function EditEventModal({
                                 <footer className="flex justify-end border-t p-3 mt-5">
                                     <button
                                         type="submit"
-                                        onClick={handleSubmitDelete}
-                                        className="bg-[#52ab98] hover:bg-blue-600 px-6 py-2 rounded text-white"
-                                    >
-                                        Delete
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        onClick={handleSubmitEdit}
+                                        onClick={handleSubmitAdd}
                                         className="bg-[#52ab98] hover:bg-blue-600 px-6 py-2 rounded text-white"
                                     >
                                         Save
@@ -262,6 +180,5 @@ export default function EditEventModal({
                 </div>
             </Dialog>
         </Transition.Root>
-
     );
 }
