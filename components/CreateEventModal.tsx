@@ -1,4 +1,3 @@
-import { createClient } from "@/utils/supabase/client";
 import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/20/solid'
@@ -11,6 +10,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { toast } from "sonner"
 import { Event } from "../types/Event"
 import { v4 as uuidv4 } from 'uuid';
+import { Checkbox } from '@mui/material';
 
 export default function CreateEventModal({
     showAddModal,
@@ -27,11 +27,11 @@ export default function CreateEventModal({
         user: any,
         numEvents: number,
         setNumEvents: (numEvents: number) => void
-        inputStart: Dayjs,
-        inputEnd: Dayjs
+        inputStart: Date,
+        inputEnd: Date
     }) {
-    const [title, setTitle] = useState<String>('');
-    const [description, setDescription] = useState<String>('');
+    const [title, setTitle] = useState<string>('');
+    const [description, setDescription] = useState<string>('');
     const [start, setStart] = useState<Date>(inputStart ? inputStart : new Date());
     const [end, setEnd] = useState<Date>(inputEnd ? inputEnd : new Date());
     const [allDay, setAllDay] = useState<boolean>(false);
@@ -68,6 +68,10 @@ export default function CreateEventModal({
             // Handle errors
             toast.error("Error creating event");
         }
+    }
+
+    function handleCheckAllDay() {
+        setAllDay(!allDay);
     }
 
     function handleCloseAddModal() {
@@ -138,31 +142,43 @@ export default function CreateEventModal({
                                                 label="startDate"
                                                 value={dayjs(start)}
                                                 className=" w-full focus:border-[#52ab98]"
-                                                onChange={(newDate) => setStart(newDate)}
+                                                onChange={(newDate) => setStart(newDate ? newDate.toDate() : new Date())}
                                             />
                                             <DateTimePicker
                                                 label="endDate"
                                                 value={dayjs(end)}
                                                 className="w-full focus:border-[#52ab98]"
-                                                onChange={(newDate) => setEnd(newDate)}
+                                                onChange={(newDate) => setEnd(newDate ? newDate.toDate() : new Date())}
                                             />
                                         </LocalizationProvider>
 
-                                        <SwitchCheckbox
-                                            label="All Day"
-                                            checked={allDay}
-                                            onChange={(e) => setAllDay(e.target.checked)}
-                                        />
-                                        <SwitchCheckbox
-                                            label="Flexible"
-                                            checked={flexible}
-                                            onChange={(e) => setFlexible(e.target.checked)}
-                                        />
-                                        <SwitchCheckbox
-                                            label="Repeat"
-                                            checked={repeat}
-                                            onChange={(e) => setRepeat(e.target.checked)}
-                                        />
+                                        <div className="flex flex-row justify-between align-center">
+                                            <p> All Day </p>
+                                            <Checkbox
+                                                label="All Day"
+                                                checked={allDay}
+                                                onChange={handleCheckAllDay}
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-row justify-between align-center">
+                                            <p> Flexible </p>
+                                            <Checkbox
+                                                label="Flexible"
+                                                checked={flexible}
+                                                onChange={(e) => setFlexible(e.target.checked)}
+                                            />
+                                        </div>
+                                        
+                                        <div className="flex flex-row justify-between align-center">
+                                            <p> Repeat </p>
+                                            <Checkbox
+                                                label="Repeat"
+                                                checked={repeat}
+                                                onChange={(e) => setRepeat(e.target.checked)}
+                                            />
+                                        </div>
+                                        
                                         <div className="inline-flex">
                                             <HoverRating
                                                 label="Priority Level"

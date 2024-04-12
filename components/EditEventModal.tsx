@@ -68,7 +68,7 @@ export default function CreateEventModal({
         });
         if (response.ok) {
             // Handle success
-            toast.success("Event created successfully");
+            toast.success("Event edited successfully");
             setNumEvents(numEvents + 1);
 
         } else {

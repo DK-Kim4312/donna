@@ -33,7 +33,7 @@ export default function Calendar({ user }) {
   const [clickedTimeStart, setClickedTimeStart] = useState<Date>(new Date());
   const [clickedTimeEnd, setClickedTimeEnd] = useState<Date>(new Date());
 
-  const [clickedEvent, setClickedEvent] = useState<Event | null>(null);
+  const [clickedEvent, setClickedEvent] = useState<Event>({} as Event);
 
 
   // get all events
@@ -52,8 +52,18 @@ export default function Calendar({ user }) {
   }, [numEvents])
 
 
-  function handleEventClick(arg: { event: Event }) {
-    setClickedEvent(arg.event)
+  function handleEventClick(arg: { event }) {
+    // cast to Event add user_id
+
+    let selectedEvent = {} as Event;
+    selectedEvent.id = arg.event.id
+    selectedEvent.title = arg.event.title
+    selectedEvent.start = arg.event.start
+    selectedEvent.end = arg.event.end
+    selectedEvent.allDay = arg.event.allDay
+    selectedEvent.user_id = user.id
+
+    setClickedEvent(selectedEvent)
     setShowEditModal(true)
   }
 
