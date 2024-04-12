@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
     try {
         const receivedAvatarURL = request.url.split('/').pop(); 
+        if( receivedAvatarURL === undefined ) throw new Error("No avatar URL provided");
 
         const supabase = createClient();
 
