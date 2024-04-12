@@ -1,4 +1,3 @@
-import { createClient } from "@/utils/supabase/client";
 import { Fragment, useEffect, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/20/solid'
@@ -10,6 +9,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs, { Dayjs } from 'dayjs';
 import { toast } from "sonner"
 import { Event } from "../types/Event"
+import { Checkbox } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function CreateEventModal({
@@ -37,8 +37,8 @@ export default function CreateEventModal({
         original_allDay: boolean
     }) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [title, setTitle] = useState<String>(original_title ? original_title : '');
-    const [description, setDescription] = useState<String>('');
+    const [title, setTitle] = useState<string>(original_title ? original_title : '');
+    const [description, setDescription] = useState<string>('');
     const [start, setStart] = useState<Date>(original_start ? original_start : new Date());
     const [end, setEnd] = useState<Date>(original_end ? original_end : new Date());
     const [allDay, setAllDay] = useState<boolean>(original_allDay);
@@ -85,6 +85,11 @@ export default function CreateEventModal({
         setPriority(newPriority);
     }
 
+    function handleCheckAllDay() {
+        setAllDay(!allDay);
+    }
+
+
     function handleSubmitEdit(e) {
         e.preventDefault();
         handleEditEvent();
@@ -101,12 +106,13 @@ export default function CreateEventModal({
 
     }
 
+
     async function handleDeleteEvent() {
         if (!user) {
             alert("Please log in to delete event");
             return;
         }
-        const event: Event = {
+        const eventKeys = {
             id: event_id,
             user_id: user.id,
         }
@@ -115,7 +121,7 @@ export default function CreateEventModal({
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(event),
+            body: JSON.stringify(eventKeys),
         });
         if (response.ok) {
             // Handle success
@@ -183,31 +189,39 @@ export default function CreateEventModal({
                                                 label="startDate"
                                                 value={dayjs(start)}
                                                 className=" w-full focus:border-[#52ab98]"
-                                                onChange={(newDate) => setStart(newDate)}
+                                                onChange={(newDate) => setStart(newDate ? newDate.toDate() : new Date())}
                                             />
                                             <DateTimePicker
                                                 label="endDate"
                                                 value={dayjs(end)}
                                                 className="w-full focus:border-[#52ab98]"
-                                                onChange={(newDate) => setEnd(newDate)}
+                                                onChange={(newDate) => setEnd(newDate ? newDate.toDate() : new Date())}
                                             />
                                         </LocalizationProvider>
 
-                                        <SwitchCheckbox
-                                            label="All Day"
-                                            checked={allDay}
-                                            onChange={(e) => setAllDay(e.target.checked)}
-                                        />
-                                        <SwitchCheckbox
-                                            label="Flexible"
-                                            checked={flexible}
-                                            onChange={(e) => setFlexible(e.target.checked)}
-                                        />
-                                        <SwitchCheckbox
-                                            label="Repeat"
-                                            checked={repeat}
-                                            onChange={(e) => setRepeat(e.target.checked)}
-                                        />
+                                        <div className="flex flex-row justify-between align-center">
+                                            <p> All Day </p>
+                                            <Checkbox
+                                                checked={allDay}
+                                                onChange={handleCheckAllDay}
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-row justify-between align-center">
+                                            <p> Flexible </p>
+                                            <Checkbox
+                                                checked={flexible}
+                                                onChange={(e) => setFlexible(e.target.checked)}
+                                            />
+                                        </div>
+
+                                        <div className="flex flex-row justify-between align-center">
+                                            <p> Repeat </p>
+                                            <Checkbox
+                                                checked={repeat}
+                                                onChange={(e) => setRepeat(e.target.checked)}
+                                            />
+                                        </div>
                                         <div className="inline-flex">
                                             <HoverRating
                                                 label="Priority Level"

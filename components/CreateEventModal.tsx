@@ -155,7 +155,6 @@ export default function CreateEventModal({
                                         <div className="flex flex-row justify-between align-center">
                                             <p> All Day </p>
                                             <Checkbox
-                                                label="All Day"
                                                 checked={allDay}
                                                 onChange={handleCheckAllDay}
                                             />
@@ -164,7 +163,6 @@ export default function CreateEventModal({
                                         <div className="flex flex-row justify-between align-center">
                                             <p> Flexible </p>
                                             <Checkbox
-                                                label="Flexible"
                                                 checked={flexible}
                                                 onChange={(e) => setFlexible(e.target.checked)}
                                             />
@@ -173,12 +171,11 @@ export default function CreateEventModal({
                                         <div className="flex flex-row justify-between align-center">
                                             <p> Repeat </p>
                                             <Checkbox
-                                                label="Repeat"
                                                 checked={repeat}
                                                 onChange={(e) => setRepeat(e.target.checked)}
                                             />
                                         </div>
-                                        
+
                                         <div className="inline-flex">
                                             <HoverRating
                                                 label="Priority Level"
