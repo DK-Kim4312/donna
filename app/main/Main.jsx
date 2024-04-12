@@ -1,8 +1,6 @@
 'use client';
-import React, { useState, useEffect, useCallback, useContext } from "react";
+import React, { useContext } from "react";
 import EventModal from "../../components/EventModal";
-import styles from "../../styles/Main.module.css";
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import ChatView from "../../components/ChatView";
 import ProfileTab from "./profile-tab";
 import CreateEventButton from "../../components/CreateEventButton";
@@ -13,52 +11,8 @@ import GlobalContext from "../../context/GlobalContext";
 export default function Main({ session }) {
   const { showEventModal } = useContext(GlobalContext);
 
-  useEffect(() => {
-    if (showEventModal) {
-      console.log("showEventModal");
-    } else {
-      console.log("hideEventModal");
-    }
-  }, [showEventModal]);
-
   // ---------Sidebar -----------
-  const supabase = createClientComponentClient()
-  const [loading, setLoading] = useState(true)
-  const [firstname, setFirstname] = useState(null)
-  const [avatar_url, setAvatarUrl] = useState(null)
   const user = session?.user
-
-  const getProfile = useCallback(async () => {
-    try {
-      setLoading(true)
-
-      const { data, error } = await supabase
-        .from('users')
-        .select(`firstname, avatar_url`)
-        .eq('id', user?.id)
-        .single()
-
-      if (error) {
-        throw error
-      }
-
-      if (data) {
-        setFirstname(data.firstname)
-        setAvatarUrl(data.avatar_url)
-      }
-
-    } catch (error) {
-      console.log('error', error.message)
-    }
-    setLoading(false)
-  }, [user, supabase])
-
-  useEffect(() => {
-    if (user) {
-      getProfile()
-    }
-
-  }, [user, getProfile])
 
   if (loading) {
     return <div>Loading...</div>
@@ -71,10 +25,7 @@ export default function Main({ session }) {
         <aside className="relative flex flex-col w-[360px] shrink-0 pl-[25px] pt-[36px]">
           <div className="relative h-[90px] w-[360px] shrink-0">
             <ProfileTab
-              uid={user?.id}
-              firstname={firstname}
-              url={avatar_url}
-              placeholder={firstname ? firstname.charAt(0) : '?'} />
+              user={user}/>
           </div>
           <div className="relative flex flex-row items-center justify-center">
             <CreateEventButton />

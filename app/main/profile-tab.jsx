@@ -4,11 +4,22 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function ProfileTab({ uid, url, firstname }) {
+export default function ProfileTab({ user }) {
+
     const supabase = createClientComponentClient()
+    const [loading, setLoading] = useState(true);
+    const [firstname, setFirstname] = useState('');
+    const [avatar_url, setAvatar_Url] = useState('');
     const [avatarUrl, setAvatarUrl] = useState(null)
 
     useEffect(() => {
+        async function fetchUser() {
+            const response = await fetch(`/api/user/get/${user.id}`)
+            const data = await response.json()
+            setFirstname(data.firstname)
+            setAvatar_Url(data.avatar_url)
+
+        }
         async function downloadImage(path) {
             try {
                 const { data, error } = await supabase.storage.from('avatars').download(path)
@@ -22,9 +33,16 @@ export default function ProfileTab({ uid, url, firstname }) {
                 console.log('Error downloading image: ', error)
             }
         }
+        if (user) {
+            fetchUser()
 
-        if (url) downloadImage(url)
-    }, [url, supabase])
+            if (avatar_url) downloadImage(avatar_url)
+
+        }
+
+        setLoading(false)
+    }
+        , [user])
 
     function toProfile() {
         if (uid) {
