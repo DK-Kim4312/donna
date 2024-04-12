@@ -1,10 +1,8 @@
-"use strict";
-"use server";
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { Toaster } from "../components/ui/sonner";
 import './globals.css'
-
+export const dynamic = 'force-dynamic'
 import AuthProvider from '../components/providers/AuthProvider';
 import ContextProvider from '../context/ContextProvider';
 
