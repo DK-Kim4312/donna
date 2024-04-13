@@ -1,14 +1,13 @@
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import './globals.css'
 import { User } from '../types/User';
 export const dynamic = 'force-dynamic'
 import { CalendarContextProvider } from '../context/CalendarContext';
+import {createClient} from '../utils/supabase/client';
+
 
 
 export default async function RootLayout({ children }) {
-  const supabase = createServerComponentClient({ cookies });
-
+  const supabase = createClient();
   const {
     data: { session },
   } = await supabase.auth.getSession();

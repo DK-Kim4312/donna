@@ -1,72 +1,77 @@
 'use client'
 import Avatar from './avatar'
-import { useCallback, useEffect, useState } from 'react'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import { useCallback, useEffect, useState, useContext } from 'react'
+import { CalendarContext } from '../../context/CalendarContext'
+import { User } from '../../types/User'
+
 import Link from 'next/link'
 import '../globals.css'
 import './profile.module.css'
 
-export default function ProfileForm({ session }) {
-  const supabase = createClientComponentClient()
+export default function ProfileForm() {
+
+  const { user, setUser } = useContext(CalendarContext)
+
   const [loading, setLoading] = useState(true)
   const [firstname, setFirstname] = useState(null)
   const [lastname, setLastname] = useState(null)
   const [username, setUsername] = useState(null)
   const [organization, setOrganization] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
-  const user = session?.user
-
-  const getProfile = useCallback(async () => {
-    try {
-      setLoading(true)
-
-      const { data, error, status } = await supabase
-        .from('users')
-        .select(`firstname, lastname, username, organization, avatar_url`)
-        .eq('id', user?.id)
-        .single()
-
-      if (error && status !== 406) {
-        throw error
-      }
-
-      if (data) {
-        setFirstname(data.firstname)
-        setLastname(data.lastname)
-        setUsername(data.username)
-        setOrganization(data.organization)
-        setAvatarUrl(data.avatar_url)
-      }
-    } catch (error) {
-      console.log('error', error)
-    } finally {
-      setLoading(false)
-    }
-  }, [user, supabase])
 
   useEffect(() => {
-    getProfile()
-  }, [user, getProfile])
+    function fetchProfile() {
+      setFirstname(user.firstname)
+      setLastname(user.lastname)
+      setUsername(user.username)
+      setOrganization(user.organization)
+      setAvatarUrl(user.avatar_url)
+      setLoading(false)
+    }
+    if (user) {
+      fetchProfile()
+    }
+  }, [user])
 
-  async function updateProfile({ firstname, lastname, username, organization, avatar_url }) {
-    try {
-      setLoading(true)
-
-      const { error } = await supabase.from('users').upsert({
-        id: user?.id,
+  async function updateProfile() {
+    const response = await fetch('/api/user/update', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: user.id,
         firstname,
         lastname,
         username,
         organization,
         avatar_url,
-        updated_at: new Date().toISOString(),
-      })
-      if (error) throw error
-      alert('Profile updated!')
-    } catch (error) {
-      alert('Error updating the data!')
-    } finally {
-      setLoading(false)
+      }),
+    })
+    if (response.ok) {
+      // update successful
+    } else {
+      // update failed
+      alert('Update failed')
+    }
+  }
+
+  async function updateAvatar() {
+    const response = await fetch('/api/user/update/avatar', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: user.id,
+        avatar_url,
+      }),
+    })
+    if (response.ok) {
+      // update successful
+    } else {
+      // update failed
+      alert('Update failed')
     }
   }
 
@@ -82,7 +87,7 @@ export default function ProfileForm({ session }) {
             placeholder={firstname ? firstname.charAt(0) : '?'}
             onUpload={(url) => {
               setAvatarUrl(url)
-              updateProfile({ firstname, lastname, username, organization, avatar_url: url })
+              updateAvatar()
             }}
           />
         </div>
@@ -135,7 +140,7 @@ export default function ProfileForm({ session }) {
 
           <div className="mt-4">
             <button
-              onClick={() => updateProfile({ firstname, lastname, username, organization, avatar_url })}
+              onClick={() => updateProfile}
               disabled={loading}
             >
               {loading ? 'Loading ...' : 'Update'}
@@ -144,7 +149,7 @@ export default function ProfileForm({ session }) {
 
           <div className="ml-4 mt-4">
             <button
-              onClick={() => window.location.href = '/'}
+              onClick={() => window.location.href = '/main'}
               disabled={loading}
             >
               Back to home
