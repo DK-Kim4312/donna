@@ -38,7 +38,7 @@ export default function CreateEventModal() {
             end: end,
             allDay: allDay,
         }
-        
+
     }
 
     function handleCheckAllDay() {
@@ -169,7 +169,7 @@ export default function CreateEventModal() {
                                     <button
                                         type="submit"
                                         onClick={handleSubmitAdd}
-                                        className="bg-[#52ab98] hover:bg-blue-600 px-6 py-2 rounded text-white"
+                                        className="bg-[#52ab98] hover:bg-[#52ab9870] px-6 py-2 rounded text-white"
                                     >
                                         Save
                                     </button>
