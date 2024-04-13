@@ -6,7 +6,9 @@ import { User } from '../types/User';
 import { createClient } from "../utils/supabase/client";
 
 
-export const CalendarContext = createContext<CalendarContextType>();
+export const CalendarContext = createContext<CalendarContextType>(
+    {} as CalendarContextType
+);
 
 type CalendarContextProviderProps = {
     session_user: any;
@@ -35,9 +37,7 @@ export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = (
                     const data = await response.json();
                     setUser(data);
                 }
-                
             }
-
         } 
         if(session_user) {
             fetchUserData();
@@ -60,21 +60,6 @@ export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = (
             authListener?.unsubscribe();
         };
     }, [accessToken, supabase]);
-
-    
-
-    useEffect(() => {
-        const initEvents = async () => {
-            const response = await fetch(`/api/event/getAll/${user.id}`)
-            const data = await response.json()
-            console.log(data)
-            setEvents(data)
-        }
-        if(user.id)
-            initEvents();
-    }, [user]);
-
-
 
     async function addEvent(event: Event) {
         setEvents([...events, event]);

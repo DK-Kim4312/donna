@@ -1,3 +1,6 @@
+import { Event } from "./Event";
+import { User } from "./User";
+
 export type CalendarContextType = {
     user: User;
     setUser: React.Dispatch<React.SetStateAction<User>>;

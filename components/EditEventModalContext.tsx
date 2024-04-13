@@ -19,7 +19,7 @@ export default function EditEventModalContext() {
     const [title, setTitle] = useState<string>(selectedEvent ? selectedEvent.title : '');
     const [description, setDescription] = useState<string>('');
     const [start, setStart] = useState<Date>(selectedEvent ? selectedEvent.start : new Date());
-    const [end, setEnd] = useState<Date>(selectedEvent ? selectedEvent : new Date());
+    const [end, setEnd] = useState<Date>(selectedEvent ? selectedEvent.end : new Date());
     const [allDay, setAllDay] = useState<boolean>(selectedEvent ? selectedEvent.allDay : false);
     const [flexible, setFlexible] = useState(false);
     const [repeat, setRepeat] = useState(false);
@@ -76,11 +76,7 @@ export default function EditEventModalContext() {
             alert("Please log in to delete event");
             return;
         }
-        const eventKeys = {
-            id: selectedEvent.id,
-            user_id: user.id,
-        }
-        deleteEvent(eventKeys);
+        deleteEvent(selectedEvent);
     }
 
 
