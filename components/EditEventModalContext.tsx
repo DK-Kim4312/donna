@@ -10,11 +10,11 @@ import dayjs, { Dayjs } from 'dayjs';
 import { toast } from "sonner"
 import { Event } from "../types/Event"
 import { Checkbox } from '@mui/material';
-import GlobalContext from '../context/GlobalContext';
 import { v4 as uuidv4 } from 'uuid';
+import { CalendarContext } from '../context/CalendarContext';
 
 export default function EditEventModalContext() {
-    const { user, showEditModal, setShowEditModal, selectedEvent, setSelectedEvent, dispatchCalEvent } = useContext(GlobalContext);
+    const { user, showEditModal, setShowEditModal, selectedEvent, setSelectedEvent, editEvent, deleteEvent } = useContext(CalendarContext);
 
     const [title, setTitle] = useState<string>(selectedEvent ? selectedEvent.title : '');
     const [description, setDescription] = useState<string>('');
@@ -38,7 +38,7 @@ export default function EditEventModalContext() {
             end: end,
             allDay: allDay,
         }
-        dispatchCalEvent({ type: "UPDATE_EVENT", payload: newEvent });
+        editEvent(newEvent);
     }
 
     function handleCloseEditModal() {
@@ -80,7 +80,7 @@ export default function EditEventModalContext() {
             id: selectedEvent.id,
             user_id: user.id,
         }
-        dispatchCalEvent({ type: "DELETE_EVENT", payload: eventKeys });
+        deleteEvent(eventKeys);
     }
 
 

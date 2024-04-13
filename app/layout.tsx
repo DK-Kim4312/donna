@@ -1,10 +1,10 @@
 import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import { Toaster } from "../components/ui/sonner";
 import './globals.css'
+import { User } from '../types/User';
 export const dynamic = 'force-dynamic'
-import AuthProvider from '../components/providers/AuthProvider';
-import ContextProvider from '../context/ContextProvider';
+import { CalendarContextProvider } from '../context/CalendarContext';
+
 
 export default async function RootLayout({ children }) {
   const supabase = createServerComponentClient({ cookies });
@@ -24,10 +24,9 @@ export default async function RootLayout({ children }) {
         </link>
       </head>
       <body>
-        <ContextProvider>
-          <AuthProvider accessToken={session?.access_token}>{children}</AuthProvider>
-        </ContextProvider>
-        <Toaster />
+        <CalendarContextProvider session_user={session?.user} accessToken={session?.access_token}>
+          {children}
+        </CalendarContextProvider>
       </body>
     </html>
 

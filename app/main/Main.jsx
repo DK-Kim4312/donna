@@ -1,26 +1,24 @@
 'use client';
 import React, { useEffect, useContext } from "react";
-import EventModal from "../../components/EventModal";
+//import EventModal from "../../components/EventModal";
 import ChatView from "../../components/ChatView";
 import ProfileTab from "../../components/ProfileTab";
-// import CreateEventButton from "../../components/CreateEventButton";
-// import GenerateScheduleButton from "../../components/GenerateScheduleButton";
+import CreateEventButton from "../../components/CreateEventButton";
+import GenerateScheduleButton from "../../components/GenerateScheduleButton";
 import Calendar from "../../components/Calendar";
-import GlobalContext from "../../context/GlobalContext";
-import CalendarContext from "../../components/CalendarContext";
+import { CalendarContext } from "../../context/CalendarContext";
+import CreateEventModalContext from "../../components/CreateEventModalContext";
+import EditEventModalContext from "../../components/EditEventModalContext";
 
-export default function Main({ session }) {
-  const { setUser } = useContext(GlobalContext);
 
-  // ---------Sidebar -----------
-  const user = session?.user
-  useEffect(() => {
-    setUser(user);
-  }, [user]);
+export default function Main() {
+  const { user, showAddModal, showEditModal } = useContext(CalendarContext);
+
 
   return (
     <React.Fragment>
-      {/* {showEventModal && <EventModal />} */}
+      {showAddModal && <CreateEventModalContext />}
+      {showEditModal && <EditEventModalContext />}
       <div className="flex flex-row min-w-[100vw] min-h-[100vh] w-[100vw] h-[100vh] max-w-[100vw] max-h-[100vh] overflow-hidden">
         {/*Sidebar*/}
         <aside className="relative flex flex-col w-[360px] shrink-0 pl-[25px] pt-[36px]">
@@ -28,16 +26,15 @@ export default function Main({ session }) {
             <ProfileTab
               user={user} />
           </div>
-          {/* <div className="relative flex flex-row items-center justify-center">
+          <div className="relative flex flex-row items-center justify-center">
             <CreateEventButton />
             <GenerateScheduleButton />
-          </div> */}
+          </div>
           <div className="bottom-[5px] w-[100%] ml-[5px] mr-[5px] mt-[150px]">
             <ChatView />
           </div>
         </aside>
-        {/* <Calendar user={user} /> */}
-        <CalendarContext />
+        <Calendar />
 
       </div>
 

@@ -1,28 +1,15 @@
 'use client'
-import React, { use, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { CalendarContext } from '../context/CalendarContext'
+import Box from '@mui/material/Box';
+import Skeleton from '@mui/material/Skeleton';
 
-export default function ProfileTab({ user }) {
-
-    const [loading, setLoading] = useState(true);
-    const [firstname, setFirstname] = useState('');
-    const [avatar_url, setAvatar_Url] = useState('');
+export default function ProfileTab() {
+    const { user, setUser } = useContext(CalendarContext)
+    const [loading, setLoading] = useState(true)
     const [avatarUrl, setAvatarUrl] = useState(null)
-
-    useEffect(() => {
-        async function fetchUser() {
-            const response = await fetch(`/api/user/get/${user.id}`)
-            const data = await response.json()
-            setFirstname(data.firstname)
-            setAvatar_Url(data.avatar_url)
-        }
-        if (user && user.id) {
-            fetchUser()
-        }
-
-        
-    }, [user])
 
     useEffect(() => {
         async function downloadImage(path) {
@@ -32,11 +19,11 @@ export default function ProfileTab({ user }) {
             const url = URL.createObjectURL(data)
             setAvatarUrl(url)
         }
-        if (avatar_url) {
-            downloadImage(avatar_url)
+        if (user.avatar_url) {
+            downloadImage(user.avatar_url)
         } 
         setLoading(false)
-    }, [avatar_url])
+    }, [user])
 
     function toProfile() {
         if (user) {
@@ -54,7 +41,17 @@ export default function ProfileTab({ user }) {
         }
     }
 
-    if (loading) return (<div>Loading...</div>);
+    if (loading) {
+        return (
+            <Box sx={{ display: 'flex' }}>
+                <Skeleton variant="circular" width={40} height={40} />
+                <Box sx={{ width: '80%' }}>
+                    <Skeleton width='80%'/>
+                    <Skeleton width="60%" />
+                </Box>
+            </Box>
+        )
+    }
     return (
 
         <div className="relative inline-flex shrink-0 rounded-md bg-[#fff] h-12 w-[80%] min-w-[80%]">

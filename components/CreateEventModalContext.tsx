@@ -10,10 +10,11 @@ import { toast } from "sonner"
 import { Event } from "../types/Event"
 import { v4 as uuidv4 } from 'uuid';
 import { Checkbox } from '@mui/material';
-import GlobalContext from '../context/GlobalContext';
+import { CalendarContext } from '../context/CalendarContext';
+
 
 export default function CreateEventModal() {
-    const { user, showAddModal, setShowAddModal, selectedDateStart,setSelectedDateStart, selectedDateEnd, setSelectedDateEnd, dispatchCalEvent } = useContext(GlobalContext);
+    const { user, showAddModal, setShowAddModal, selectedDateStart,setSelectedDateStart, selectedDateEnd, setSelectedDateEnd } = useContext(CalendarContext);
 
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -37,8 +38,7 @@ export default function CreateEventModal() {
             end: end,
             allDay: allDay,
         }
-
-        dispatchCalEvent({ type: "PUSH_EVENT", payload: newEvent });
+        
     }
 
     function handleCheckAllDay() {
