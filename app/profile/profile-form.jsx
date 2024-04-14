@@ -93,10 +93,6 @@ export default function ProfileForm() {
         </div>
 
         <div className='flex justify-between'>
-          <label htmlFor="email">Email</label>
-          <input id="email" type="text" className='w-[70%] border-2 border-gray-300 rounded-md' value={session?.user.email} disabled />
-        </div>
-        <div className='flex justify-between'>
           <label htmlFor="firstname">First name</label>
           <input
             id="firstname"
