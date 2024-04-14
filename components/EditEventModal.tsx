@@ -13,7 +13,7 @@ import { Checkbox } from '@mui/material';
 import { v4 as uuidv4 } from 'uuid';
 import { CalendarContext } from '../context/CalendarContext';
 
-export default function EditEventModalContext() {
+export default function EditEventModal() {
     const { user, showEditModal, setShowEditModal, selectedEvent, setSelectedEvent, editEvent, deleteEvent } = useContext(CalendarContext);
 
     const [title, setTitle] = useState<string>(selectedEvent ? selectedEvent.title : '');

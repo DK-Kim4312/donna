@@ -1,9 +1,6 @@
 // landing page
 import React from "react";
 import Link from "next/link";
-
-
-
 export default function Landing() {
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-[#52ab9870]">
