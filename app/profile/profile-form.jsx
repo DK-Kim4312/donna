@@ -33,19 +33,6 @@ export default function ProfileForm() {
     }
   }, [user])
 
-  useEffect(() => {
-    async function getUser() {
-      const response = await fetch('/api/user/get')
-      if (response.ok) {
-        const data = await response.json()
-        setUser(data)
-      } else {
-        alert('Error loading user data!')
-      }
-    }
-    getUser()
-  } , [])
-
   async function updateProfile() {
     const response = await fetch('/api/user/update', {
       method: 'POST',
