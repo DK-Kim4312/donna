@@ -4,9 +4,9 @@ Donna AI is an innovative application that combines the functionalities of a cal
 
 ## Features
 
-- **Calendar Integration**: Donna AI seamlessly integrates a calendar system, allowing users to schedule and manage their events, appointments, and tasks effortlessly.
+- **Calendar Integration**: Donna AI seamlessly integrates a calendar system, allowing users to schedule and manage their events, appointments, and tasks effortlessly. We are using Full Calendar at the moment. 
 
-- **Chat-based AI Assistant**: Donna provides an intuitive chat interface where users can interact with an AI assistant to perform tasks, set reminders, receive notifications, and more.
+- **Chat-based AI Assistant**: Donna provides an intuitive chat interface where users can interact with an AI assistant to perform tasks, set reminders, receive notifications, and more. (LLM not yet integrated)
 
 - **NextJS**: The frontend of Donna AI is built using NextJS, a popular React framework known for its performance and flexibility.
 
