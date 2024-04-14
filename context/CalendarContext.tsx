@@ -13,7 +13,7 @@ export const CalendarContext = createContext<CalendarContextType>(
 );
 
 type CalendarContextProviderProps = {
-    session_user: any;
+    accessToken: any;
     children: React.ReactNode;
 };
 
@@ -29,23 +29,23 @@ export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = (
     const [selectedEvent, setSelectedEvent] = React.useState<Event>({} as Event);
     const [calendarTypeSelected, setCalendarTypeSelected] = React.useState<string>('Week');
     useEffect(() => {
+        async function fetchUserData(session) {
+            let user_id = session?.user.id
+            if (user_id) {
+                const response = await fetch(`/api/user/get/${user_id}`);
+                if(response.ok) {
+                    const userInfo = await response.json();
+                    setUser(userInfo);
+                }
+            }
+        } 
         const {
           data: { subscription: authListener },
         } = supabase.auth.onAuthStateChange((event, session) => {
           if (session?.access_token !== accessToken) {
             router.refresh();
           } else {
-            async function fetchUserData() {
-                let user_id = session?.user.id
-                if (user_id) {
-                    const response = await fetch(`/api/user/get/${user_id}`);
-                    if(response.ok) {
-                        const userInfo = await response.json();
-                        setUser(userInfo);
-                    }
-                }
-            } 
-            fetchUserData();
+            fetchUserData(session);
           }
         });
 

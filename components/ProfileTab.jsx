@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { CalendarContext } from '../context/CalendarContext'
@@ -11,21 +11,22 @@ export default function ProfileTab() {
     const [loading, setLoading] = useState(true)
     const [avatarObject, setAvatarObject] = useState(null)
 
-    useEffect(() => {
-        async function downloadImage(path) {
-            const response = await fetch(`/api/user/get/avatar/${path}`)
-            const data = await response.blob()
+    const downloadImage = useCallback(async (path) => {
+        const response = await fetch(`/api/user/get/avatar/${path}`)
+        const data = await response.blob()
 
-            const url = URL.createObjectURL(data)
-            setAvatarObject(url)
-        }
-        console.log(user)
-        if (user.avatar_url) {
-            console.log(user.avatar_url)
+        const url = URL.createObjectURL(data)
+        setAvatarObject(url)
+    }, [ user.avatar_url ])
+
+    useEffect(() => {
+        if (user.avatar_url && avatarObject === null) {
             downloadImage(user.avatar_url)
-        } 
-        setLoading(false)
-    }, [user])
+            setLoading(false)
+        } else {
+            setLoading(false)
+        }
+    } , [user, downloadImage])
 
     function toProfile() {
         if (user) {
