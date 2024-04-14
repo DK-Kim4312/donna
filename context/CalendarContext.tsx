@@ -1,9 +1,11 @@
 "use client"
-import React, { useContext, createContext, useEffect } from 'react';
+import React, { useContext, createContext, useEffect, useCallback } from 'react';
 import { CalendarContextType } from '../types/CalendarContextType';
 import { Event } from '../types/Event';
 import { User } from '../types/User';
-import { createClient } from "../utils/supabase/client";
+import { useRouter } from 'next/navigation';
+
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 
 export const CalendarContext = createContext<CalendarContextType>(
@@ -15,8 +17,9 @@ type CalendarContextProviderProps = {
     children: React.ReactNode;
 };
 
-export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = ({ session_user, children }) => {
-    const supabase = createClient();
+export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = ({ accessToken, children }) => {
+    const supabase = createClientComponentClient();
+    const router = useRouter();
     const [user, setUser] = React.useState<User>({} as User);
     const [events, setEvents] = React.useState<Event[]>([]);
     const [showAddModal, setShowAddModal] = React.useState<boolean>(false);
@@ -25,25 +28,31 @@ export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = (
     const [selectedDateEnd, setSelectedDateEnd] = React.useState<Date>(new Date());
     const [selectedEvent, setSelectedEvent] = React.useState<Event>({} as Event);
     const [calendarTypeSelected, setCalendarTypeSelected] = React.useState<string>('Week');
-
-
     useEffect(() => {
-        async function fetchUserData() {
-            let user_id = session_user.id;
-            if (user_id) {
-                const response = await fetch(`/api/user/get/${user_id}`);
-                if(response.ok) {
-                    const data = await response.json();
-                    setUser(data);
+        const {
+          data: { subscription: authListener },
+        } = supabase.auth.onAuthStateChange((event, session) => {
+          if (session?.access_token !== accessToken) {
+            router.refresh();
+          } else {
+            async function fetchUserData() {
+                let user_id = session?.user.id
+                if (user_id) {
+                    const response = await fetch(`/api/user/get/${user_id}`);
+                    if(response.ok) {
+                        const userInfo = await response.json();
+                        setUser(userInfo);
+                    }
                 }
-            }
-        } 
-        if(session_user) {
+            } 
             fetchUserData();
-        }
-        
+          }
+        });
 
-    } , [session_user])
+        return () => {
+          authListener?.unsubscribe();
+        };
+      }, [accessToken, supabase, router]);
 
     async function addEvent(event: Event) {
         setEvents([...events, event]);

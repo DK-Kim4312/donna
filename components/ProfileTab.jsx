@@ -71,7 +71,7 @@ export default function ProfileTab() {
                     </div>
                 </button>
                 <div className="ml-2 mt-1">
-                    <div className="text-sm font-semibold">{firstname}</div>
+                    <div className="text-sm font-semibold">{user.firstname}</div>
                     <button className="text-xs h-0.5 w-13 font-light" variant="ghost" onClick={toPremium}>
                         &gt; Upgrade to Premium
                     </button>

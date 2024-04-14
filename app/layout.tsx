@@ -7,12 +7,12 @@ import { cookies } from 'next/headers'
 
 
 export default async function RootLayout({ children }) {
-  const cookieStore = cookies()
-  const supabase = createServerComponentClient({ cookies: () => cookieStore })
-  const { data: session, error } = await supabase.auth.getUser()
-  if (error) {
-    console.error(error)
-  }
+  const supabase = createServerComponentClient({ cookies });
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
   return (
 
     <html lang="en">
@@ -24,7 +24,7 @@ export default async function RootLayout({ children }) {
         </link>
       </head>
       <body>
-        <CalendarContextProvider session_user={session?.user} >
+        <CalendarContextProvider accessToken={session?.access_token} >
           {children}
         </CalendarContextProvider>
       </body>
