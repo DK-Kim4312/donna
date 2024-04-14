@@ -2,16 +2,17 @@ import './globals.css'
 import { User } from '../types/User';
 export const dynamic = 'force-dynamic'
 import { CalendarContextProvider } from '../context/CalendarContext';
-import {createClient} from '../utils/supabase/client';
-
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
 
 
 export default async function RootLayout({ children }) {
-  const supabase = createClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
+  const cookieStore = cookies()
+  const supabase = createServerComponentClient({ cookies: () => cookieStore })
+  const { data: session, error } = await supabase.auth.getUser()
+  if (error) {
+    console.error(error)
+  }
   return (
 
     <html lang="en">
@@ -23,7 +24,7 @@ export default async function RootLayout({ children }) {
         </link>
       </head>
       <body>
-        <CalendarContextProvider session_user={session?.user} accessToken={session?.access_token}>
+        <CalendarContextProvider session_user={session?.user} >
           {children}
         </CalendarContextProvider>
       </body>

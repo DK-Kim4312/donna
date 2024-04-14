@@ -12,11 +12,10 @@ export const CalendarContext = createContext<CalendarContextType>(
 
 type CalendarContextProviderProps = {
     session_user: any;
-    accessToken: string | undefined;
     children: React.ReactNode;
 };
 
-export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = ({ session_user, accessToken, children }) => {
+export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = ({ session_user, children }) => {
     const supabase = createClient();
     const [user, setUser] = React.useState<User>({} as User);
     const [events, setEvents] = React.useState<Event[]>([]);
@@ -45,21 +44,6 @@ export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = (
         
 
     } , [session_user])
-
-    useEffect(() => {
-        const {
-            data: { subscription: authListener },
-        } = supabase.auth.onAuthStateChange((event, session) => {
-            if (session?.access_token !== accessToken) {
-                // refresh
-                window.location.reload();
-            }
-        });
-
-        return () => {
-            authListener?.unsubscribe();
-        };
-    }, [accessToken, supabase]);
 
     async function addEvent(event: Event) {
         setEvents([...events, event]);
