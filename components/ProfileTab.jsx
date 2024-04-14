@@ -9,7 +9,7 @@ import Skeleton from '@mui/material/Skeleton';
 export default function ProfileTab() {
     const { user, setUser } = useContext(CalendarContext)
     const [loading, setLoading] = useState(true)
-    const [avatarUrl, setAvatarUrl] = useState(null)
+    const [avatarObject, setAvatarObject] = useState(null)
 
     useEffect(() => {
         async function downloadImage(path) {
@@ -17,9 +17,11 @@ export default function ProfileTab() {
             const data = await response.blob()
 
             const url = URL.createObjectURL(data)
-            setAvatarUrl(url)
+            setAvatarObject(url)
         }
+        console.log(user)
         if (user.avatar_url) {
+            console.log(user.avatar_url)
             downloadImage(user.avatar_url)
         } 
         setLoading(false)
@@ -55,13 +57,13 @@ export default function ProfileTab() {
     return (
 
         <div className="relative inline-flex shrink-0 rounded-md bg-[#fff] h-12 w-[80%] min-w-[80%]">
-            {avatarUrl ? (<>
+            {avatarObject ? (<>
                 <button className="fit items-start bg-[#ccc] rounded-lg w-10 h-10 mt-1 ml-1  overflow-hidden" onClick={toProfile}>
                     <div className="bg-[#transparent] text-white rounded-md">
                         <Image
                             width={50}
                             height={50}
-                            src={avatarUrl}
+                            src={avatarObject}
                             alt="Avatar"
                             className="avatar image"
                             style={{ borderRadius: 5 }}
