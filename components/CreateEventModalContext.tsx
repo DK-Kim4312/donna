@@ -14,7 +14,7 @@ import { CalendarContext } from '../context/CalendarContext';
 
 
 export default function CreateEventModal() {
-    const { user, showAddModal, setShowAddModal, selectedDateStart,setSelectedDateStart, selectedDateEnd, setSelectedDateEnd } = useContext(CalendarContext);
+    const { user, showAddModal, setShowAddModal, selectedDateStart,setSelectedDateStart, selectedDateEnd, setSelectedDateEnd, addEvent } = useContext(CalendarContext);
 
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -38,7 +38,7 @@ export default function CreateEventModal() {
             end: end,
             allDay: allDay,
         }
-
+        addEvent(newEvent);
     }
 
     function handleCheckAllDay() {

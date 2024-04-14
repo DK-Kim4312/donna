@@ -189,14 +189,14 @@ export default function EditEventModalContext() {
                                     <button
                                         type="submit"
                                         onClick={handleSubmitDelete}
-                                        className="bg-[#52ab98] hover:bg-blue-600 px-6 py-2 rounded text-white"
+                                        className="bg-[#52ab98] hover:bg-[#52ab9870] px-6 py-2 rounded text-white"
                                     >
                                         Delete
                                     </button>
                                     <button
                                         type="submit"
                                         onClick={handleSubmitEdit}
-                                        className="bg-[#52ab98] hover:bg-blue-600 px-6 py-2 rounded text-white"
+                                        className="bg-[#52ab98] hover:bg-[#52ab9870] px-6 py-2 rounded text-white"
                                     >
                                         Save
                                     </button>
