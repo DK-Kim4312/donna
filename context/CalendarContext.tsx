@@ -28,6 +28,8 @@ export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = (
     const [selectedDateEnd, setSelectedDateEnd] = React.useState<Date>(new Date());
     const [selectedEvent, setSelectedEvent] = React.useState<Event>({} as Event);
     const [calendarTypeSelected, setCalendarTypeSelected] = React.useState<string>('Week');
+    const [newEventFromChat, setNewEventFromChat] = React.useState<Event>({} as Event);
+    
     useEffect(() => {
         async function fetchUserData(session) {
             let user_id = session?.user.id
@@ -136,7 +138,9 @@ export const CalendarContextProvider: React.FC<CalendarContextProviderProps> = (
             selectedEvent,
             setSelectedEvent,
             calendarTypeSelected,
-            setCalendarTypeSelected
+            setCalendarTypeSelected,
+            newEventFromChat,
+            setNewEventFromChat
         }}>
             {children}
         </CalendarContext.Provider>

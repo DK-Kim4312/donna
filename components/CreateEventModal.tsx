@@ -14,7 +14,7 @@ import { CalendarContext } from '../context/CalendarContext';
 
 
 export default function CreateEventModal() {
-    const { user, showAddModal, setShowAddModal, selectedDateStart,setSelectedDateStart, selectedDateEnd, setSelectedDateEnd, addEvent } = useContext(CalendarContext);
+    const { user, showAddModal, setShowAddModal, selectedDateStart,setSelectedDateStart, selectedDateEnd, setSelectedDateEnd, addEvent, newEventFromChat } = useContext(CalendarContext);
 
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
@@ -24,6 +24,15 @@ export default function CreateEventModal() {
     const [flexible, setFlexible] = useState(false);
     const [repeat, setRepeat] = useState(false);
     const [priority, setPriority] = useState(3);
+
+    useEffect(() => {
+        if (newEventFromChat && newEventFromChat.title) {
+            setTitle(newEventFromChat.title);
+            setStart(newEventFromChat.start);
+            setEnd(newEventFromChat.end);
+            setAllDay(newEventFromChat.allDay);
+        }
+    }, [newEventFromChat]);
     
     async function handleAddEvent() {
         if (!user) {

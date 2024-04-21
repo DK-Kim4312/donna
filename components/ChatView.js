@@ -1,41 +1,56 @@
 // components/ChatView.js
 "use client";
-import React, { useState, useEffect } from 'react';
+"use strict";
+
+import React, { useState, useEffect, useContext } from 'react';
 import { IconamoonSend } from '../styles/Icons';
 import styles from '../styles/ChatBox.module.scss';
 import cn from 'classnames'
+import { CalendarContext } from '../context/CalendarContext';
+import { handleRequest } from '../nlp/ProcessEvents';
 
 const ChatView = () => {
+  const { user, events, setShowAddModal, setSelectedEvent, deleteEvent, setNewEventFromChat } = useContext(CalendarContext);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
+  const [ botResponse, setBotResponse ] = useState('');
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if (newMessage.trim() !== '') {
       const userMessage = { text: newMessage, isUser: true };
+      const response = await handleRequest( userMessage , events);
       setMessages([...messages, userMessage]);
       setNewMessage('');
+      
+      if (response) {
+        setBotResponse(response.response);
+        if (response.action === 'CREATE') {
+          setNewEventFromChat(response.event);
+          setShowAddModal(true);
+        } else if (response.action === 'DELETE') {
+          setSelectedEvent(response.event);
+          if ( confirm(`Are you sure you want to delete event ${response.event.title} ?`) ) {
+            deleteEvent(response.event);
+          }
+        } else if (response.action === 'UPDATE') {
+          setSelectedEvent(response.event);
+          setShowEditModal(true);
+        }
+      }
     }
-  };
-
-  // function to return a random message after user sends a message
-  const getBotMessage = () => {
-    const botMessages = [
-      'On it! Let me see what I can do.',
-      'I\'ll get right on it!',
-      'I\'m on it!',
-      'I\'ll get back to you on that.',
-    ];
-    return botMessages[Math.floor(Math.random() * botMessages.length)];
   };
 
   useEffect(() => {
     if (messages.length > 0 && messages[messages.length - 1].isUser) {
       setTimeout(() => {
-        const botResponse = { text: getBotMessage(), isUser: false };
+        if (botResponse !== '') {
+          setMessages([...messages, { text: botResponse, isUser: false }]);
+          setBotResponse('');
+        }
         setMessages([...messages, botResponse]);
       }, 1000); // Delayed response for simulation (1 second)
     }
-  }, [messages]);
+  }, [messages, botResponse]);
 
 
 
