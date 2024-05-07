@@ -39,3 +39,19 @@ lib/oauthConfig.ts
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python
+*.log
+*.pyc
+__pycache__
+*.sqlite3
+
+# Environments
+
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
